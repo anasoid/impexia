@@ -7,6 +7,12 @@
  */
 
 
+// 3rd party plugin repositories can be configured in settings.gradle
+plugins {
+	id "org.sonarqube" version "2.5"
+
+}
+ 
 // Apply the java plugin to add support for Java
 
 apply plugin: 'java'
@@ -14,6 +20,9 @@ allprojects {
     apply plugin: 'maven'
 }
 
+repositories {
+        jcenter()
+  }
 
 subprojects {
     apply plugin: 'java'
@@ -22,9 +31,7 @@ subprojects {
     sourceCompatibility = JavaVersion.VERSION_1_7
     targetCompatibility = JavaVersion.VERSION_1_7
 
-    repositories {
-        jcenter()
-  }
+
 }
 
 project.ext {
