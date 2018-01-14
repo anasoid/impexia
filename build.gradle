@@ -41,6 +41,9 @@ allprojects {
 
 	
 	ext.junitVersion= '4.12'
+	
+	ext.gradleScriptDir = "${rootProject.projectDir}/gradle"
+	apply from: "${gradleScriptDir}/ide.gradle"
 }
 
 
@@ -67,6 +70,17 @@ subprojects {
 }
 
 check.dependsOn jacocoTestReport
+}
+
+
+
+ext {
+	linkHomepage = 'https://github.com/anasoid/impexia'
+	linkIssue = 'https://github.com/anasoid/impexia/issues'
+	linkScmUrl = 'https://github.com/anasoid/impexia'
+
+
+
 }
 
 task jacocoRootReport(type: org.gradle.testing.jacoco.tasks.JacocoReport) {

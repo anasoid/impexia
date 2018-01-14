@@ -1,0 +1,44 @@
+apply plugin: "eclipse"
+apply plugin: "idea"
+
+eclipse.jdt {
+	sourceCompatibility = 1.8
+	targetCompatibility = 1.8
+}
+
+
+
+// Include project specific settings
+task eclipseSettings(type: Copy) {
+	from rootProject.files(
+		"src/ide/eclipse/org.eclipse.jdt.ui.prefs",
+		"src/ide/eclipse/org.eclipse.wst.common.project.facet.core.xml")
+	into project.file('.settings/')
+	outputs.upToDateWhen { false }
+}
+
+task eclipseWstComponent(type: Copy) {
+	from rootProject.files("src/ide/eclipse/org.eclipse.wst.common.component")
+	into project.file('.settings/')
+	expand(deployname: project.name)
+	outputs.upToDateWhen { false }
+}
+
+task eclipseJdtPrepare(type: Copy) {
+	from rootProject.file("src/ide/eclipse/org.eclipse.jdt.core.prefs")
+	into project.file(".settings/")
+	outputs.upToDateWhen { false }
+}
+
+task cleanEclipseJdtUi(type: Delete) {
+	delete project.file(".settings/org.eclipse.jdt.core.prefs")
+	delete project.file(".settings/org.eclipse.jdt.ui.prefs")
+	delete project.file(".settings/org.eclipse.wst.common.component")
+	delete project.file(".settings/org.eclipse.wst.common.project.facet.core.xml")
+}
+
+tasks["eclipseJdt"].dependsOn(eclipseJdtPrepare)
+tasks["cleanEclipse"].dependsOn(cleanEclipseJdtUi)
+tasks["eclipse"].dependsOn(eclipseSettings, eclipseWstComponent)
+
+
