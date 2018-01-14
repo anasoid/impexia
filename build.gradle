@@ -16,17 +16,29 @@ plugins {
 // Apply the java plugin to add support for Java
 
 
+
 allprojects {
     apply plugin: 'java'
     apply plugin: 'maven'
+	
+	apply plugin: "jacoco"
+	
 	group = 'org.anasoid.impexia'
 	sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
    
+   
+    
+	
    repositories {
         jcenter()
 		mavenCentral()
     }
+	
+	jacoco {
+        toolVersion = '0.8.0'
+    }
+
 	
 	ext.junitVersion= '4.12'
 }
@@ -35,10 +47,39 @@ allprojects {
 
 subprojects {
     
- 
+   
 
+    jacocoTestReport {
 
+        reports {
+            html.enabled = true
+            xml.enabled = true
+            csv.enabled = false
+        }
+	onlyIf = {
+        true
+    }
+    doFirst {
+        executionData = files(executionData.findAll {
+            it.exists()
+        })
+    }
+}
 
+check.dependsOn jacocoTestReport
+}
+
+task jacocoRootReport(type: org.gradle.testing.jacoco.tasks.JacocoReport) {
+    dependsOn = subprojects.test
+    additionalSourceDirs = files(subprojects.sourceSets.main.allSource.srcDirs)
+    sourceDirectories = files(subprojects.sourceSets.main.allSource.srcDirs)
+    classDirectories =  files(subprojects.sourceSets.main.output)
+    executionData = files(subprojects.jacocoTestReport.executionData)
+    reports {
+        html.enabled = true
+        xml.enabled = true
+        csv.enabled = false
+    }
 }
 
 
