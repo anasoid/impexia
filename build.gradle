@@ -15,28 +15,33 @@ plugins {
  
 // Apply the java plugin to add support for Java
 
-apply plugin: 'java'
+
 allprojects {
+    apply plugin: 'java'
     apply plugin: 'maven'
+	group = 'org.anasoid.impexia'
+	sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+   
+   repositories {
+        jcenter()
+		mavenCentral()
+    }
+	
+	ext.junitVersion= '4.12'
 }
 
-repositories {
-        jcenter()
-  }
+
 
 subprojects {
-    apply plugin: 'java'
-    group = 'com.github.anasoid.impexia'
+    
+ 
 
-    sourceCompatibility = JavaVersion.VERSION_1_7
-    targetCompatibility = JavaVersion.VERSION_1_7
 
 
 }
 
-project.ext {
-   junitVersion= '4.12'
-}
+
 // In this section you declare the dependencies for your production and test code
 project.dependencies {
 

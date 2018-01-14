@@ -17,3 +17,8 @@ include 'impexia-core'
 include 'impexia-import'
 
 rootProject.name = 'impexia'
+
+
+rootProject.children.each {project ->
+	project.buildFileName = "${project.name}.gradle"
+}
