@@ -23,6 +23,7 @@ allprojects {
 	
 	apply plugin: "jacoco"
 	
+	
 	group = 'org.anasoid.impexia'
 	sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
@@ -50,7 +51,23 @@ allprojects {
 
 subprojects {
     
+   apply plugin: 'checkstyle'
+   apply plugin: 'pmd'
    
+   
+     checkstyle {
+
+        configFile = rootProject.file('config/checkstyle/google_checks.xml')
+        toolVersion "8.7"
+        ignoreFailures =false
+        maxErrors = 0
+        maxWarnings = 0
+
+     }
+     pmd {
+            consoleOutput = true
+
+        }
 
     jacocoTestReport {
 
