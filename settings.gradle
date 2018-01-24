@@ -14,7 +14,7 @@
 */
 
 include 'impexia-core'
-include 'impexia-import'
+
 
 rootProject.name = 'impexia'
 
