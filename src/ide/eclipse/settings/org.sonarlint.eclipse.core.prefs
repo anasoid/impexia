@@ -1,6 +1,6 @@
 autoEnabled=true
 eclipse.preferences.version=1
 extraProperties=
-moduleKey=org.anasoid.impexia\:impexia\:impexia-core
-projectKey=org.anasoid.impexia\:impexia
+moduleKey=org.anasoid.impexia\\:impexia\\:${deployname}
+projectKey=org.anasoid.impexia\\:impexia
 serverId=SonarCloud/anasoid

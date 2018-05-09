@@ -40,16 +40,28 @@ task eclipseJdtPrepare(type: Copy) {
 	outputs.upToDateWhen { false }
 }
 
+
+task eclipseSonar(type: Copy) {
+	from rootProject.files("src/ide/eclipse/settings/org.sonarlint.eclipse.core.prefs")
+	into project.file('.settings/')
+	expand(deployname: project.name)
+	outputs.upToDateWhen { false }
+
+}
+task deleteEclipseSonarRoot(type: Delete) {
+	delete rootProject.file(".settings/org.eclipse.jdt.core.prefs")
+}
 task cleanEclipseJdtUi(type: Delete) {
 	delete project.file(".settings/org.eclipse.jdt.core.prefs")
 	delete project.file(".settings/org.eclipse.jdt.ui.prefs")
 	delete project.file(".settings/org.eclipse.wst.common.component")
 	delete project.file(".settings/org.eclipse.wst.common.project.facet.core.xml")
+	delete project.file(".settings/org.sonarlint.eclipse.core.prefs")
 	delete project.file(".checkstyle")
 }
 
 tasks["eclipseJdt"].dependsOn(eclipseJdtPrepare)
 tasks["cleanEclipse"].dependsOn(cleanEclipseJdtUi)
-tasks["eclipse"].dependsOn(eclipseSettings, eclipseWstComponent,eclipseCheckstyle)
+tasks["eclipse"].dependsOn(eclipseSettings,eclipseSonar,deleteEclipseSonarRoot,eclipseWstComponent,eclipseCheckstyle)
 
 

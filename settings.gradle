@@ -14,7 +14,7 @@
 */
 
 include 'impexia-core'
-
+include 'impexia-jpa'
 
 rootProject.name = 'impexia'
 
