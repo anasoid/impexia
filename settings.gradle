@@ -15,6 +15,11 @@
 
 include 'impexia-core'
 include 'impexia-jpa'
+include 'impexia-meta'
+include 'impexia-imp'
+include 'impexia-exp'
+include 'impexia-csv'
+include 'impexia-sql'
 
 rootProject.name = 'impexia'
 

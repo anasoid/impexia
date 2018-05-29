@@ -14,8 +14,8 @@ apply plugin: 'java-library'
 dependencies {
 
     implementation  project(":impexia-exp")
-	implementation  project(":impexia-imp")
-	
+    implementation  project(":impexia-imp")
+  
     testImplementation  "junit:junit:$junitVersion"
 	
 	
