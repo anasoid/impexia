@@ -10,10 +10,12 @@ addons:
 jdk:
 - oraclejdk8
 script:
-- "./gradlew sonarqube"
+- ./gradlew sonarqube
+- ./gradlew check
+- ./gradlew codeCoverageRepor
 
 after_success:
-- bash <(curl -s https://codecov.io/bash)
+-  bash <(curl -s https://codecov.io/bash)
 
 
 cache:
