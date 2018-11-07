@@ -41,14 +41,13 @@ jobs:
       - run:
           name: Save test results 
           command: |
-            mkdir -p ~/reports/
-            cp -r ./build/reports ~/reports;
-            cp -r ./build/*.log ~/reports;
+            mkdir -p ~/junit/
+            find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} ~/junit/ \;
           when: always
       - store_test_results:
-          path: ~/reports
+          path: ~/junit
       - store_artifacts:
-          path: ~/reports
+          path: ~/junit   
 
 workflows:
   version: 2
