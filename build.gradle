@@ -9,8 +9,9 @@
 
 // 3rd party plugin repositories can be configured in settings.gradle
 plugins {
-	id "org.sonarqube" version "2.5"
-
+	id "io.spring.dependency-management"     version "1.0.6.RELEASE"
+	id "org.sonarqube" version "2.6.2"
+    id "net.ossindex.audit" version "0.4.5-beta"
 }
  
 // Apply the java plugin to add support for Java
@@ -53,7 +54,11 @@ subprojects {
     
    apply plugin: 'checkstyle'
    apply plugin: 'pmd'
+   apply plugin: 'maven'
+   apply plugin: "jacoco"
+   apply plugin: "net.ossindex.audit"
    
+
    
      checkstyle {
 
@@ -135,12 +140,6 @@ task jacocoRootReport(type: org.gradle.testing.jacoco.tasks.JacocoReport) {
 }
 
 
-// In this section you declare the dependencies for your production and test code
-project.dependencies {
 
-
-  
-    testImplementation("junit:junit:$junitVersion")
-}
 
 
