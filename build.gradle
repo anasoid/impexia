@@ -54,12 +54,19 @@ subprojects {
     
    apply plugin: 'checkstyle'
    apply plugin: 'pmd'
+   apply plugin: 'maven-publish'
    apply plugin: 'maven'
    apply plugin: "jacoco"
    apply plugin: "net.ossindex.audit"
    
+   publishing {
+    publications {
+        mavenJava(MavenPublication) {
+          from components.java
 
-   
+        }
+     }
+   }
      checkstyle {
 
         configFile = rootProject.file('config/checkstyle/google_checks.xml')
