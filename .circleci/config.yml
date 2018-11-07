@@ -22,21 +22,33 @@ jobs:
       - save_cache:
           paths:
             - ~/.gradle
+            - ~/.ossindex
           key: v1-dependencies-{{ checksum "build.gradle" }}
         
+      # run build!
+      - run: gradle build -x test
+      
       # run tests!
       - run: gradle test
+      
+    # SONAR
+      - run:
+          name:  sonar check (add integration and unit test)
+          command: |
+                  ./gradlew sonarqube -Dsonar.organization=anasoid  -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$sonar_login -Dsonar.branch.name=$CIRCLE_BRANCH  -Dsonar.jacoco.reportPaths=build/jacoco/test.exec,build/jacoco/integrationTest_server.exec -Dsonar.junit.reportPaths=build/test-results/integrationTest,build/test-results/test
+
        # save tests!
       - run:
           name: Save test results 
           command: |
-            mkdir -p ~/junit/
-            find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} ~/junit/ \;
+            mkdir -p ~/reports/
+            cp -r ./build/reports ~/reports;
+            cp -r ./build/*.log ~/reports;
           when: always
       - store_test_results:
-          path: ~/junit
+          path: ~/reports
       - store_artifacts:
-          path: ~/junit   
+          path: ~/reports
 
 workflows:
   version: 2
