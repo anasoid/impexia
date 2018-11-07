@@ -51,3 +51,8 @@ jobs:
           path: ~/junit
       - store_artifacts:
           path: ~/junit   
+
+workflows:
+  version: 2
+    jobs:
+      - build
