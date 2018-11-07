@@ -37,11 +37,11 @@ allprojects {
     }
 	
 	jacoco {
-        toolVersion = '0.8.0'
+        toolVersion = '0.8.2'
     }
 
 	
-	ext.junitVersion= '4.12'
+
 	
 	ext.gradleScriptDir = "${rootProject.projectDir}/gradle"
 	apply from: "${gradleScriptDir}/ide.gradle"
@@ -84,9 +84,30 @@ subprojects {
             it.exists()
         })
     }
+    
+    test {
+	    useJUnitPlatform()
+	     testLogging {
+		events "passed", "skipped", "failed"
+	     }
+	    // listen to events in the test execution lifecycle
+       beforeTest { descriptor ->
+            logger.lifecycle("Running test: " + descriptor)
+       }
+   }
+    dependencies {
+
+    testCompile("org.junit.jupiter:junit-jupiter-api:$junitVersion")
+	testCompile("org.junit.jupiter:junit-jupiter-params:$junitVersion")
+    testRuntime("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
+   }
 }
 
 check.dependsOn jacocoTestReport
+
+
+
+
 }
 
 
@@ -121,4 +142,5 @@ project.dependencies {
   
     testImplementation("junit:junit:$junitVersion")
 }
+
 

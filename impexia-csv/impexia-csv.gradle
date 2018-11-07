@@ -16,7 +16,6 @@ dependencies {
     implementation  project(":impexia-meta")
     implementation  project(":impexia-core")
 	
-    testImplementation  "junit:junit:$junitVersion"
 	
 	
 }
