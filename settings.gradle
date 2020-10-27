@@ -29,4 +29,3 @@ rootProject.children.each {project ->
 }
 
 
-enableFeaturePreview('STABLE_PUBLISHING')

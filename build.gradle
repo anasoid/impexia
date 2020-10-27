@@ -11,7 +11,7 @@
 plugins {
 	id "io.spring.dependency-management"     version "1.0.6.RELEASE"
 	id "org.sonarqube" version "2.6.2"
-    id "net.ossindex.audit" version "0.4.5-beta"
+
 }
  
 // Apply the java plugin to add support for Java
@@ -57,7 +57,7 @@ subprojects {
    apply plugin: 'maven-publish'
    apply plugin: 'maven'
    apply plugin: "jacoco"
-   apply plugin: "net.ossindex.audit"
+
    
    publishing {
     publications {
@@ -91,11 +91,7 @@ subprojects {
 	onlyIf = {
         true
     }
-    doFirst {
-        executionData = files(executionData.findAll {
-            it.exists()
-        })
-    }
+
     
     test {
 	    useJUnitPlatform()
@@ -115,7 +111,7 @@ subprojects {
    }
 }
 
-check.dependsOn jacocoTestReport
+
 
 
 
@@ -133,18 +129,7 @@ ext {
 
 }
 
-task jacocoRootReport(type: org.gradle.testing.jacoco.tasks.JacocoReport) {
-    dependsOn = subprojects.test
-    additionalSourceDirs = files(subprojects.sourceSets.main.allSource.srcDirs)
-    sourceDirectories = files(subprojects.sourceSets.main.allSource.srcDirs)
-    classDirectories =  files(subprojects.sourceSets.main.output)
-    executionData = files(subprojects.jacocoTestReport.executionData)
-    reports {
-        html.enabled = true
-        xml.enabled = true
-        csv.enabled = false
-    }
-}
+
 
 
 
