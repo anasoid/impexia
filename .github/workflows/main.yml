@@ -33,3 +33,14 @@ jobs:
       run: ./gradlew dependencyCheckAggregate
     - name: Build with Gradle
       run: ./gradlew build
+
+    - name: Publish Test Report
+      uses: mikepenz/action-junit-report@v1
+      with:
+        report_paths: '**/build/test-results/test/TEST-*.xml'
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: Package
+        path: build/libs
