@@ -137,7 +137,11 @@ codeCoverageReport.dependsOn {
     subprojects*.test
 }
 
-
+sonarqube {
+    properties {
+        property "sonar.coverage.jacoco.xmlReportPaths", "${rootDir}/build/reports/jacoco/codeCoverageReport/codeCoverageReport.xml"
+    }
+}
 ext {
     linkHomepage = 'https://github.com/anasoid/impexia'
     linkIssue = 'https://github.com/anasoid/impexia/issues'
