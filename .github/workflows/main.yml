@@ -31,8 +31,13 @@ jobs:
 
     - name: dependencyCheck
       run: ./gradlew dependencyCheckAggregate
+
     - name: Build with Gradle
       run: ./gradlew build
+
+    - name: Build with Gradle
+      run: ./gradlew sonarqube -Dsonar.organization=anasoid  -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+
 
     - name: Publish Test Report
       uses: mikepenz/action-junit-report@v1
