@@ -26,6 +26,14 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-gradle-
 
+    - uses: actions/cache@v2
+      with:
+        path: |
+          ~/.sonar
+        key: ${{ runner.os }}-sonar-${{ hashFiles('**/*.gradle*') }}
+        restore-keys: |
+          ${{ runner.os }}-sonar-
+
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
@@ -35,7 +43,7 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew build
 
-    - name: Build with Gradle
+    - name: Sonar check
       run: ./gradlew sonarqube -Dsonar.organization=anasoid  -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
