@@ -11,11 +11,15 @@ buildscript {
 plugins {
     id "io.spring.dependency-management" version "1.0.6.RELEASE"
     id "org.sonarqube" version "3.0"
+    id 'jacoco'
 
 }
 
 // Apply the java plugin to add support for Java
 apply plugin: 'org.owasp.dependencycheck'
+
+
+
 
 allprojects {
     apply plugin: 'java'
@@ -33,7 +37,7 @@ allprojects {
     }
 
     jacoco {
-        toolVersion = '0.8.2'
+        toolVersion = '0.8.5'
     }
 
 
@@ -105,6 +109,32 @@ subprojects {
     }
 
 
+}
+
+
+
+task codeCoverageReport(type: JacocoReport) {
+
+    // Gather execution data from all subprojects
+    executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
+
+    // Add all relevant sourcesets from the subprojects
+    subprojects.each {
+        sourceSets it.sourceSets.main
+    }
+
+    reports {
+        xml.enabled true
+        html.enabled true
+        csv.enabled false
+    }
+}
+test {
+    finalizedBy codeCoverageReport // report is always generated after tests run
+}
+// always run the tests before generating the report
+codeCoverageReport.dependsOn {
+    subprojects*.test
 }
 
 
