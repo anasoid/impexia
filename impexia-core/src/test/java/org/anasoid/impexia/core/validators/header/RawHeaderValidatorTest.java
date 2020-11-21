@@ -76,6 +76,28 @@ class RawHeaderValidatorTest {
   }
 
   @Test
+  void failInvalidModifierAttributeMulti() throws ImpexHeaderException {
+    DefaultImpexHeader impexHeader = new DefaultImpexHeader("product", ImpexAction.INSERT);
+    impexHeader.addAttribute(
+        new DefaultImpexAttribute("code")
+            .addModifier(new DefaultImpexModifier("uniq", "tr"))
+            .addModifier(new DefaultImpexModifier(Modifier.UNIQUE.getCode(), "true")));
+
+    try {
+      headerValidator.validate(impexHeader, Mode.IMPORT);
+      Assertions.fail("Import not valid modifier accepted");
+    } catch (AttributeModifierException e) {
+      Assertions.assertTrue(e.getMessage().contains(INVALID_MODIFIER_MESSAGE));
+    }
+    try {
+      headerValidator.validate(impexHeader, Mode.EXPORT);
+      Assertions.fail("Import not valid modifier accepted");
+    } catch (AttributeModifierException e) {
+      Assertions.assertTrue(e.getMessage().contains(INVALID_MODIFIER_MESSAGE));
+    }
+  }
+
+  @Test
   void validCustomModifierAttribute() throws ImpexHeaderException {
     DefaultImpexHeader impexHeader = new DefaultImpexHeader("product", ImpexAction.INSERT);
     impexHeader.addAttribute(
