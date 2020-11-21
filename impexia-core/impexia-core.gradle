@@ -10,12 +10,10 @@
 apply plugin: "java-library"
 
 
-
 dependencies {
 
-  
+    implementation(project(":impexia-meta"))
 
-	
-	
+
 }
 
