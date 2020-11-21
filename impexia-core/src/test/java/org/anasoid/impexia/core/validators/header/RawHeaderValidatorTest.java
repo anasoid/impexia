@@ -4,6 +4,7 @@ import org.anasoid.impexia.core.meta.header.DefaultImpexAttribute;
 import org.anasoid.impexia.core.meta.header.DefaultImpexHeader;
 import org.anasoid.impexia.core.meta.header.DefaultImpexModifier;
 import org.anasoid.impexia.meta.Mode;
+import org.anasoid.impexia.meta.exceptions.header.ActionException;
 import org.anasoid.impexia.meta.exceptions.header.AttributeModifierException;
 import org.anasoid.impexia.meta.exceptions.header.ImpexHeaderException;
 import org.anasoid.impexia.meta.header.ImpexAction;
@@ -21,6 +22,10 @@ class RawHeaderValidatorTest {
   private static HeaderValidator headerValidator;
   private static String INVALID_MODIFIER_MESSAGE =
       "custom attribute accepted only when Class modifier is used";
+
+  private static String INVALID_MODIFIER_MODE_MESSAGE = "is not acceptable by Mode";
+  private static String INVALID_MODIFIER_LEVEL_MESSAGE = "is not acceptable by Level";
+  private static String INVALID_MODIFIER_BOOLEAN_MESSAGE = "should be boolean";
 
   @BeforeAll
   static void init() {
@@ -45,6 +50,8 @@ class RawHeaderValidatorTest {
       Assertions.fail("Import not valid modifier accepted");
     } catch (AttributeModifierException e) {
       Assertions.assertTrue(e.getMessage().contains(INVALID_MODIFIER_MESSAGE));
+    } catch (Exception e) {
+      Assertions.fail();
     }
   }
 
@@ -66,6 +73,28 @@ class RawHeaderValidatorTest {
     } catch (AttributeModifierException e) {
       Assertions.assertTrue(e.getMessage().contains(INVALID_MODIFIER_MESSAGE));
     }
+  }
+
+  @Test
+  void validCustomModifierAttribute() throws ImpexHeaderException {
+    DefaultImpexHeader impexHeader = new DefaultImpexHeader("product", ImpexAction.INSERT);
+    impexHeader.addAttribute(
+        new DefaultImpexAttribute("code")
+            .addModifier(new DefaultImpexModifier("uniq", "tr"))
+            .addModifier(new DefaultImpexModifier(Modifier.TRANSLATOR.getCode(), "tr")));
+
+    headerValidator.validate(impexHeader, Mode.IMPORT);
+  }
+
+  @Test
+  void validCustomModifierHeader() throws ImpexHeaderException {
+    DefaultImpexHeader impexHeader =
+        new DefaultImpexHeader("product", ImpexAction.INSERT)
+            .addModifier(new DefaultImpexModifier(Modifier.ERROR_HANDLER.getCode(), "tr"))
+            .addModifier(new DefaultImpexModifier("uniq", "tr"))
+            .addAttribute(new DefaultImpexAttribute("code"));
+
+    headerValidator.validate(impexHeader, Mode.IMPORT);
   }
 
   @Test
@@ -93,5 +122,73 @@ class RawHeaderValidatorTest {
             .addModifier(new DefaultImpexModifier(Modifier.UNIQUE.getCode(), "true")));
 
     headerValidator.validate(impexHeader, Mode.IMPORT);
+  }
+
+  @Test
+  void validateModifierBooleanFail() {
+    DefaultImpexHeader impexHeader = new DefaultImpexHeader("product", ImpexAction.INSERT);
+    impexHeader.addAttribute(
+        new DefaultImpexAttribute("code")
+            .addModifier(new DefaultImpexModifier(Modifier.UNIQUE.getCode(), "tr")));
+
+    try {
+      headerValidator.validate(impexHeader, Mode.IMPORT);
+      Assertions.fail("boolean check fail");
+    } catch (AttributeModifierException e) {
+      Assertions.assertTrue(e.getMessage().contains(INVALID_MODIFIER_BOOLEAN_MESSAGE));
+    } catch (Exception e) {
+      Assertions.fail();
+    }
+  }
+
+  @Test
+  void validateModifierMode() {
+    DefaultImpexHeader impexHeader = new DefaultImpexHeader("product", ImpexAction.INSERT);
+    impexHeader.addAttribute(
+        new DefaultImpexAttribute("code")
+            .addModifier(new DefaultImpexModifier(Modifier.UNIQUE.getCode(), "true")));
+
+    try {
+      headerValidator.validate(impexHeader, Mode.EXPORT);
+      Assertions.fail("Unique not valid for export");
+    } catch (AttributeModifierException e) {
+      Assertions.assertTrue(e.getMessage().contains(INVALID_MODIFIER_MODE_MESSAGE));
+    } catch (Exception e) {
+      Assertions.fail();
+    }
+  }
+
+  @Test
+  void validateModifierLevel() {
+    DefaultImpexHeader impexHeader =
+        new DefaultImpexHeader("product", ImpexAction.INSERT)
+            .addModifier(new DefaultImpexModifier(Modifier.UNIQUE.getCode(), "true"))
+            .addAttribute(new DefaultImpexAttribute("code"));
+
+    try {
+      headerValidator.validate(impexHeader, Mode.IMPORT);
+      Assertions.fail("Unique not valid for header");
+    } catch (AttributeModifierException e) {
+      Assertions.assertTrue(e.getMessage().contains(INVALID_MODIFIER_LEVEL_MESSAGE));
+    } catch (Exception e) {
+      Assertions.fail();
+    }
+  }
+
+  @Test
+  void validateModifierAction() {
+    DefaultImpexHeader impexHeader =
+        new DefaultImpexHeader("product", null)
+            .addAttribute(new DefaultImpexAttribute("code"))
+            .addModifier(new DefaultImpexModifier(Modifier.UNIQUE.getCode(), "true"));
+
+    try {
+      headerValidator.validate(impexHeader, Mode.IMPORT);
+      Assertions.fail("Action an't be null");
+    } catch (ActionException e) {
+      // nothing
+    } catch (Exception e) {
+      Assertions.fail();
+    }
   }
 }
