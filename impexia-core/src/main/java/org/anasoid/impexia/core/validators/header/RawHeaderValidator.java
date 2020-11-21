@@ -35,8 +35,7 @@ public class RawHeaderValidator extends AbstractHeaderValidator {
 
   @Override
   protected boolean validateAttribute(
-      ImpexHeader header, ImpexAttribute attribute, Mode mode, Level level)
-      throws ImpexHeaderException {
+      ImpexHeader header, ImpexAttribute attribute, Mode mode, Level level) {
     return false;
   }
 
