@@ -25,12 +25,12 @@ import java.util.List;
 @SuppressWarnings("PMD")
 public abstract class ImpexAttribute {
 
-  protected String field;
+  protected ImpexMapping field;
   protected boolean special;
   protected String rawMapping;
   protected List<ImpexModifier> modifiers = new ArrayList<>();
 
-  public String getField() {
+  public ImpexMapping getField() {
     return field;
   }
 
