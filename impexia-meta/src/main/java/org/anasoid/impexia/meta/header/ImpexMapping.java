@@ -13,31 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * @author : anas
- * Date :   03-Nov-2020
+ * Date :   21-Nov-2020
  */
 
-package org.anasoid.impexia.core.meta.header;
+package org.anasoid.impexia.meta.header;
 
-import org.anasoid.impexia.meta.header.ImpexAttribute;
-import org.anasoid.impexia.meta.header.ImpexMapping;
-import org.anasoid.impexia.meta.header.ImpexModifier;
+import java.util.List;
 
-public class DefaultImpexAttribute extends ImpexAttribute {
+/** Impex mapping description container. */
+@SuppressWarnings("PMD")
+public class ImpexMapping {
 
-  public DefaultImpexAttribute(ImpexMapping field) {
-    this.field = field;
+  protected String field;
+  protected List<ImpexMapping> mappings;
+
+  public String getField() {
+    return field;
   }
 
-  public DefaultImpexAttribute addModifier(ImpexModifier modifier) {
-    this.modifiers.add(modifier);
-    return this;
-  }
-
-  public void setSpecial(boolean special) {
-    this.special = special;
-  }
-
-  public void setRawMapping(String rawMapping) {
-    this.rawMapping = rawMapping;
+  public List<ImpexMapping> getMappings() {
+    return mappings;
   }
 }
