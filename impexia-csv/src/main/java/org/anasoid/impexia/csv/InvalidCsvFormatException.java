@@ -13,36 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * @author : anas
- * Date :   03-Nov-2020
+ * Date :   24-Nov-2020
  */
 
-package org.anasoid.impexia.meta.header;
+package org.anasoid.impexia.csv;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
 
-/** Impex attribute description container. */
-@SuppressWarnings({"PMD.AbstractClassWithoutAbstractMethod"})
-public abstract class ImpexAttribute {
+public class InvalidCsvFormatException extends IOException {
+  static final long serialVersionUID = 7818375554546090155L;
 
-  protected ImpexMapping field;
-  protected boolean special;
-  protected String rawMapping;
-  protected List<ImpexModifier> modifiers = new ArrayList<>();
-
-  public ImpexMapping getField() {
-    return field;
+  public InvalidCsvFormatException(String message) {
+    super(message);
   }
 
-  public boolean isSpecial() {
-    return special;
+  public InvalidCsvFormatException(String message, Throwable cause) {
+    super(message, cause);
   }
 
-  public String getRawMapping() {
-    return rawMapping;
-  }
-
-  public List<ImpexModifier> getModifiers() {
-    return modifiers;
+  public InvalidCsvFormatException(Throwable cause) {
+    super(cause);
   }
 }

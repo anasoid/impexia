@@ -74,6 +74,8 @@ subprojects {
     pmd {
         consoleOutput = true
         sourceSets = [sourceSets.main]
+        ruleSetFiles = files("${rootProject.projectDir}/config/pmd/pmd.xml")
+        ruleSets = []
     }
 
     jacocoTestReport {
@@ -114,6 +116,7 @@ subprojects {
 
             testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
             testImplementation("org.junit.jupiter:junit-jupiter-params:$junitVersion")
+            testImplementation("commons-io:commons-io:$commonsIoVersion")
             testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
         }
     }

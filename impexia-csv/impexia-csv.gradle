@@ -10,13 +10,12 @@
 apply plugin: 'java-library'
 
 
-
 dependencies {
 
-    implementation  project(":impexia-meta")
-    implementation  project(":impexia-core")
-	
-	
-	
+    implementation(project(":impexia-core"))
+    implementation(project(":impexia-meta"))
+    implementation("com.opencsv:opencsv:$opencsvVersion")
+
+
 }
 

@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /** Impex Header description container. */
-@SuppressWarnings("PMD")
+@SuppressWarnings({"PMD.AbstractClassWithoutAbstractMethod"})
 public abstract class ImpexHeader {
 
   protected String type;
