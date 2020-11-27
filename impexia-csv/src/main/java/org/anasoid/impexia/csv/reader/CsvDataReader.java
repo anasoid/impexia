@@ -179,7 +179,7 @@ public class CsvDataReader implements IDataReader {
   private boolean isCommetOrEmpty(String... line) {
     if (line.length == 0 || line[0] == null || line[0].length() == 0) {
       return true;
-    } else if (line.length > 0 || (line[0] != null)) {
+    } else {
       boolean iscomment = false;
       for (int i = 0; i < line[0].length(); i++) {
         if (line[0].charAt(i) == configCsv.getCommentChar()) {
@@ -190,8 +190,6 @@ public class CsvDataReader implements IDataReader {
         }
       }
       return iscomment;
-    } else {
-      return false;
     }
   }
 
