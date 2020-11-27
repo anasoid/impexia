@@ -21,7 +21,7 @@ package org.anasoid.impexia.meta.header;
 import java.util.List;
 
 /** Impex mapping description container. */
-@SuppressWarnings("PMD")
+@SuppressWarnings({"PMD.AbstractClassWithoutAbstractMethod"})
 public class ImpexMapping {
 
   protected String field;

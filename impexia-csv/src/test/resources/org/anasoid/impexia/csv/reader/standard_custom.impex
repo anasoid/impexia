@@ -1,0 +1,10 @@
+Toskip
+| Comment1
+| Comment2
+
+INSERT_UPDATE product, code[unique = true], name,description
+                     , 1                  , Toys,descr1
+
+                     , 2                  , 'multi
+ line',descr2
+                     , 3                  , 'Processus ',,

@@ -31,6 +31,7 @@ import org.anasoid.impexia.meta.modifier.Level;
 import org.anasoid.impexia.meta.modifier.Modifier;
 
 /** Default header Validator. */
+@SuppressWarnings("PMD.LawOfDemeter")
 public class RawHeaderValidator extends AbstractHeaderValidator {
 
   @Override
@@ -39,7 +40,7 @@ public class RawHeaderValidator extends AbstractHeaderValidator {
     return false;
   }
 
-  @SuppressWarnings("PMD")
+  @SuppressWarnings({ "PMD.EmptyCatchBlock"})
   @Override
   protected boolean validateModifier(
       ImpexHeader impexHeader,
@@ -70,7 +71,7 @@ public class RawHeaderValidator extends AbstractHeaderValidator {
     return true;
   }
 
-  @SuppressWarnings({"PMD"})
+  @SuppressWarnings({ "PMD.EmptyCatchBlock"})
   protected void validateCustomModifier(
       ImpexHeader header,
       ImpexAttribute attribute,
@@ -112,8 +113,8 @@ public class RawHeaderValidator extends AbstractHeaderValidator {
       throws ImpexHeaderException {
 
     if (modifierEnum.isBoolean()
-        && !impexModifier.getValue().equalsIgnoreCase("true")
-        && !impexModifier.getValue().equalsIgnoreCase("false")) {
+        && !Boolean.TRUE.toString().equalsIgnoreCase(impexModifier.getValue())
+        && !Boolean.FALSE.toString().equalsIgnoreCase(impexModifier.getValue())) {
       throw new AttributeModifierException(
           MessageFormat.format("Field ({0}) should be boolean ", impexModifier.getKey()));
     }

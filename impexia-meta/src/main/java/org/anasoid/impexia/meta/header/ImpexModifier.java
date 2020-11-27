@@ -21,7 +21,7 @@ package org.anasoid.impexia.meta.header;
 import org.anasoid.impexia.meta.modifier.Modifier;
 
 /** Impex Modifier description container. */
-@SuppressWarnings("PMD")
+@SuppressWarnings({"PMD.AbstractClassWithoutAbstractMethod"})
 public abstract class ImpexModifier {
 
   protected String key;
