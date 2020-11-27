@@ -123,7 +123,7 @@ public class CsvDataReader implements IDataReader {
     return internalCsvReader;
   }
 
-  private void initializeHeader() throws IOException {
+  private void initializeHeader() throws IOException {  //NOSONAR
 
     if (configCsv.isContainHeader()) {
       if (header != null) {
@@ -138,11 +138,14 @@ public class CsvDataReader implements IDataReader {
         LOGGER.debug("Read header for file : {}", file);
       }
       boolean found = false;
-      String action = header[0].toUpperCase();
-      for (ImpexAction impexAction : ImpexAction.values()) {
-        if (action.startsWith(impexAction.toString())) {
-          found = true;
-          break;
+
+      if (header[0] != null) {
+        String action = header[0].toUpperCase();
+        for (ImpexAction impexAction : ImpexAction.values()) {
+          if (action.startsWith(impexAction.toString())) {
+            found = true;
+            break;
+          }
         }
       }
       if (!found) {
@@ -164,7 +167,7 @@ public class CsvDataReader implements IDataReader {
       line = readLine();
       if (line == null) {
         hasNext = false;
-        return null;
+        return null; // NOSONAR
       }
       if (!isCommetOrEmpty(line)) {
         if (!isHeader) {
@@ -173,14 +176,17 @@ public class CsvDataReader implements IDataReader {
         return line;
       }
     }
-    return null;
+    return null; // NOSONAR
   }
 
-  private boolean isCommetOrEmpty(String... line) {
-    if (line.length == 0 || line[0] == null || line[0].length() == 0) {
+  private boolean isCommetOrEmpty(String... line) {  //NOSONAR
+    if (line.length == 0 || (line.length == 1 && ((line[0] == null) || line[0].length() == 0))) {
       return true;
     } else {
       boolean iscomment = false;
+      if (line[0] == null) {
+        return false;
+      }
       for (int i = 0; i < line[0].length(); i++) {
         if (line[0].charAt(i) == configCsv.getCommentChar()) {
           iscomment = true;

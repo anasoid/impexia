@@ -1,0 +1,6 @@
+# Comment1
+
+;
+INSERT_UPDATE product; code[unique = true]; name;description
+                     ; 1                  ; Toys;descr1
+

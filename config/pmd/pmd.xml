@@ -17,6 +17,7 @@
 
     <!-- Duplicate from sonar -->
     <exclude name="ExcessiveParameterList"/>
+    <exclude name="CyclomaticComplexity"/>
 
   </rule>
 

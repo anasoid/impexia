@@ -99,11 +99,13 @@ class CsvDataReaderTest {
             .getClassLoader()
             .getResource("org/anasoid/impexia/csv/reader/standard_header_error.impex");
     try {
-      CsvDataReader dateReader =
-          new CsvDataReader(new File(url.getFile()), new ConfigCsvReaderBuilder().build());
+
+      new CsvDataReader(new File(url.getFile()), new ConfigCsvReaderBuilder().build());
       Assertions.fail("Header invalid should faild");
     } catch (InvalidCsvFormatException e) {
       // success
+    } catch (Exception e) {
+      Assertions.fail(e);
     }
   }
 
@@ -111,8 +113,8 @@ class CsvDataReaderTest {
   void notFoundFile() throws IOException {
 
     try {
-      CsvDataReader dateReader =
-          new CsvDataReader(new File("./notfound.impex"), new ConfigCsvReaderBuilder().build());
+
+      new CsvDataReader(new File("./notfound.impex"), new ConfigCsvReaderBuilder().build());
       Assertions.fail("Fle nout found");
     } catch (java.io.FileNotFoundException e) {
       // success
@@ -134,7 +136,7 @@ class CsvDataReaderTest {
     // header
     DataLine line = dateReader.nextRecord();
     Assertions.assertEquals("code[unique = true]", line.getRecord()[1].trim());
-    Assertions.assertEquals(dateReader.getRecordCount(), 2);
+    Assertions.assertEquals(2, dateReader.getRecordCount());
     Assertions.assertEquals(1, dateReader.getCurrentPass());
   }
 
@@ -146,13 +148,33 @@ class CsvDataReaderTest {
             .getResource("org/anasoid/impexia/csv/reader/standard.impex");
 
     try {
-      CsvDataReader dateReader =
-          new CsvDataReader(
-              new File(url.getFile()),
-              new ConfigCsvReaderBuilder().setNeedTotal(true).setSkipLines(100).build());
+
+      new CsvDataReader(
+          new File(url.getFile()),
+          new ConfigCsvReaderBuilder().setNeedTotal(true).setSkipLines(100).build());
       Assertions.fail("Header not found");
     } catch (InvalidCsvFormatException e) {
       // success
+    } catch (Exception e) {
+      Assertions.fail(e);
+    }
+  }
+
+  @Test
+  void testImpexCommentError() throws IOException {
+    URL url =
+        this.getClass()
+            .getClassLoader()
+            .getResource("org/anasoid/impexia/csv/reader/standard_comment_error.impex");
+
+    try {
+
+      new CsvDataReader(new File(url.getFile()), new ConfigCsvReaderBuilder().build());
+      Assertions.fail("Header not found");
+    } catch (InvalidCsvFormatException e) {
+      // success
+    } catch (Exception e) {
+      Assertions.fail(e);
     }
   }
 
@@ -163,17 +185,19 @@ class CsvDataReaderTest {
             .getClassLoader()
             .getResource("org/anasoid/impexia/csv/reader/standard_header_error.impex");
     try {
-      CsvDataReader dateReader =
-          new CsvDataReader(
-              new File(url.getFile()), new ConfigCsvReaderBuilder().setNeedTotal(true).build());
+
+      new CsvDataReader(
+          new File(url.getFile()), new ConfigCsvReaderBuilder().setNeedTotal(true).build());
       Assertions.fail("Header invalid should faild");
     } catch (InvalidCsvFormatException e) {
       // success
+    } catch (Exception e) {
+      Assertions.fail(e);
     }
   }
 
   @Test
-  void loadStandardFileRestartSkip() throws IOException {
+  void loadStandardFileRestartSkip() throws IOException { // NOSONAR
     URL url =
         this.getClass()
             .getClassLoader()
@@ -231,7 +255,24 @@ class CsvDataReaderTest {
   }
 
   @Test
-  void loadStandardFileCustom() throws IOException {
+  void loadCommentFile() throws IOException {
+    URL url =
+        this.getClass()
+            .getClassLoader()
+            .getResource("org/anasoid/impexia/csv/reader/standard_comment.impex");
+    CsvDataReader dateReader =
+        new CsvDataReader(new File(url.getFile()), new ConfigCsvReaderBuilder().build());
+    Assertions.assertEquals(4, dateReader.getHeader().length);
+    // first line
+    DataLine line = dateReader.nextRecord();
+    Assertions.assertEquals("1", line.getRecord()[1].trim());
+    Assertions.assertEquals(1, line.getRecordNumber());
+
+    dateReader.close();
+  }
+
+  @Test
+  void loadStandardFileCustom() throws IOException { // NOSONAR
     URL url =
         this.getClass()
             .getClassLoader()

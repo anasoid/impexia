@@ -52,7 +52,7 @@ class RawHeaderValidatorTest {
     } catch (AttributeModifierException e) {
       Assertions.assertTrue(e.getMessage().contains(INVALID_MODIFIER_MESSAGE));
     } catch (Exception e) {
-      Assertions.fail();
+      Assertions.fail(e);
     }
   }
 
@@ -161,7 +161,7 @@ class RawHeaderValidatorTest {
     } catch (AttributeModifierException e) {
       Assertions.assertTrue(e.getMessage().contains(INVALID_MODIFIER_BOOLEAN_MESSAGE));
     } catch (Exception e) {
-      Assertions.fail();
+      Assertions.fail(e);
     }
   }
 
@@ -178,7 +178,7 @@ class RawHeaderValidatorTest {
     } catch (AttributeModifierException e) {
       Assertions.assertTrue(e.getMessage().contains(INVALID_MODIFIER_MODE_MESSAGE));
     } catch (Exception e) {
-      Assertions.fail();
+      Assertions.fail(e);
     }
   }
 
@@ -195,7 +195,7 @@ class RawHeaderValidatorTest {
     } catch (AttributeModifierException e) {
       Assertions.assertTrue(e.getMessage().contains(INVALID_MODIFIER_LEVEL_MESSAGE));
     } catch (Exception e) {
-      Assertions.fail();
+      Assertions.fail(e);
     }
   }
 
@@ -212,7 +212,7 @@ class RawHeaderValidatorTest {
     } catch (ActionException e) {
       // nothing
     } catch (Exception e) {
-      Assertions.fail();
+      Assertions.fail(e);
     }
   }
 }
