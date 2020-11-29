@@ -31,7 +31,7 @@ import java.text.MessageFormat;
 import org.anasoid.impexia.core.data.DataLine;
 import org.anasoid.impexia.core.data.DataLineBuilder;
 import org.anasoid.impexia.core.data.IDataReader;
-import org.anasoid.impexia.csv.InvalidCsvFormatException;
+import org.anasoid.impexia.csv.exceptions.InvalidCsvFormatException;
 import org.anasoid.impexia.meta.header.ImpexAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -123,7 +123,7 @@ public class CsvDataReader implements IDataReader {
     return internalCsvReader;
   }
 
-  private void initializeHeader() throws IOException {  //NOSONAR
+  private void initializeHeader() throws IOException { // NOSONAR
 
     if (configCsv.isContainHeader()) {
       if (header != null) {
@@ -179,7 +179,7 @@ public class CsvDataReader implements IDataReader {
     return null; // NOSONAR
   }
 
-  private boolean isCommetOrEmpty(String... line) {  //NOSONAR
+  private boolean isCommetOrEmpty(String... line) { // NOSONAR
     if (line.length == 0 || (line.length == 1 && ((line[0] == null) || line[0].length() == 0))) {
       return true;
     } else {

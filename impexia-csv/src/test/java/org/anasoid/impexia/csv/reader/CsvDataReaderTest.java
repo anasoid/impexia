@@ -22,7 +22,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import org.anasoid.impexia.core.data.DataLine;
-import org.anasoid.impexia.csv.InvalidCsvFormatException;
+import org.anasoid.impexia.csv.exceptions.InvalidCsvFormatException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -104,8 +104,6 @@ class CsvDataReaderTest {
       Assertions.fail("Header invalid should faild");
     } catch (InvalidCsvFormatException e) {
       // success
-    } catch (Exception e) {
-      Assertions.fail(e);
     }
   }
 
@@ -115,7 +113,7 @@ class CsvDataReaderTest {
     try {
 
       new CsvDataReader(new File("./notfound.impex"), new ConfigCsvReaderBuilder().build());
-      Assertions.fail("Fle nout found");
+      Assertions.fail("File nout found");
     } catch (java.io.FileNotFoundException e) {
       // success
     }
@@ -155,8 +153,6 @@ class CsvDataReaderTest {
       Assertions.fail("Header not found");
     } catch (InvalidCsvFormatException e) {
       // success
-    } catch (Exception e) {
-      Assertions.fail(e);
     }
   }
 
@@ -173,8 +169,6 @@ class CsvDataReaderTest {
       Assertions.fail("Header not found");
     } catch (InvalidCsvFormatException e) {
       // success
-    } catch (Exception e) {
-      Assertions.fail(e);
     }
   }
 
@@ -191,8 +185,6 @@ class CsvDataReaderTest {
       Assertions.fail("Header invalid should faild");
     } catch (InvalidCsvFormatException e) {
       // success
-    } catch (Exception e) {
-      Assertions.fail(e);
     }
   }
 

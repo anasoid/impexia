@@ -51,8 +51,6 @@ class RawHeaderValidatorTest {
       Assertions.fail("Import not valid modifier accepted");
     } catch (AttributeModifierException e) {
       Assertions.assertTrue(e.getMessage().contains(INVALID_MODIFIER_MESSAGE));
-    } catch (Exception e) {
-      Assertions.fail(e);
     }
   }
 
@@ -149,7 +147,7 @@ class RawHeaderValidatorTest {
   }
 
   @Test
-  void validateModifierBooleanFail() {
+  void validateModifierBooleanFail() throws ImpexHeaderException {
     DefaultImpexHeader impexHeader = new DefaultImpexHeader("product", ImpexAction.INSERT);
     impexHeader.addAttribute(
         new DefaultImpexAttribute(new DefaultImpexMapping("code"))
@@ -160,13 +158,11 @@ class RawHeaderValidatorTest {
       Assertions.fail("boolean check fail");
     } catch (AttributeModifierException e) {
       Assertions.assertTrue(e.getMessage().contains(INVALID_MODIFIER_BOOLEAN_MESSAGE));
-    } catch (Exception e) {
-      Assertions.fail(e);
     }
   }
 
   @Test
-  void validateModifierMode() {
+  void validateModifierMode() throws ImpexHeaderException {
     DefaultImpexHeader impexHeader = new DefaultImpexHeader("product", ImpexAction.INSERT);
     impexHeader.addAttribute(
         new DefaultImpexAttribute(new DefaultImpexMapping("code"))
@@ -177,13 +173,11 @@ class RawHeaderValidatorTest {
       Assertions.fail("Unique not valid for export");
     } catch (AttributeModifierException e) {
       Assertions.assertTrue(e.getMessage().contains(INVALID_MODIFIER_MODE_MESSAGE));
-    } catch (Exception e) {
-      Assertions.fail(e);
     }
   }
 
   @Test
-  void validateModifierLevel() {
+  void validateModifierLevel() throws ImpexHeaderException {
     DefaultImpexHeader impexHeader =
         new DefaultImpexHeader("product", ImpexAction.INSERT)
             .addModifier(new DefaultImpexModifier(Modifier.UNIQUE.getCode(), "true"))
@@ -194,13 +188,11 @@ class RawHeaderValidatorTest {
       Assertions.fail("Unique not valid for header");
     } catch (AttributeModifierException e) {
       Assertions.assertTrue(e.getMessage().contains(INVALID_MODIFIER_LEVEL_MESSAGE));
-    } catch (Exception e) {
-      Assertions.fail(e);
     }
   }
 
   @Test
-  void validateModifierAction() {
+  void validateModifierAction() throws ImpexHeaderException {
     DefaultImpexHeader impexHeader =
         new DefaultImpexHeader("product", null)
             .addAttribute(new DefaultImpexAttribute(new DefaultImpexMapping("code")))
@@ -211,8 +203,6 @@ class RawHeaderValidatorTest {
       Assertions.fail("Action an't be null");
     } catch (ActionException e) {
       // nothing
-    } catch (Exception e) {
-      Assertions.fail(e);
     }
   }
 }

@@ -13,25 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * @author : anas
- * Date :   24-Nov-2020
+ * Date :   27-Nov-2020
  */
 
-package org.anasoid.impexia.csv;
+package org.anasoid.impexia.core.data;
 
+import java.io.Closeable;
 import java.io.IOException;
 
-public class InvalidCsvFormatException extends IOException {
-  static final long serialVersionUID = 7818375554546090155L;
+/** Interface to define DataWriter for Impex. */
+public interface IDataWriter extends Closeable {
 
-  public InvalidCsvFormatException(String message) {
-    super(message);
-  }
+  /**
+   * Write header.
+   *
+   * @param header impex header
+   */
+  void writeHeader(String... header) throws IOException;
 
-  public InvalidCsvFormatException(String message, Throwable cause) {
-    super(message, cause);
-  }
-
-  public InvalidCsvFormatException(Throwable cause) {
-    super(cause);
-  }
+  /**
+   * Write line.
+   *
+   * @param nextLine data line.
+   */
+  void writeLine(String... nextLine) throws IOException;
 }

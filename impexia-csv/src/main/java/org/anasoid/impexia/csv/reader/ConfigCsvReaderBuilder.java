@@ -2,7 +2,7 @@ package org.anasoid.impexia.csv.reader;
 
 import com.opencsv.CSVReader;
 import com.opencsv.ICSVParser;
-import org.anasoid.impexia.csv.reader.ConfigCsvReader.CsvReaderNullFieldIndicator;
+import org.anasoid.impexia.csv.CsvReaderNullFieldIndicator;
 
 public class ConfigCsvReaderBuilder {
 

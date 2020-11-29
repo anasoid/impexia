@@ -18,6 +18,13 @@
 
 package org.anasoid.impexia.csv.reader;
 
+import org.anasoid.impexia.csv.CsvReaderNullFieldIndicator;
+
+/**
+ * Config used to read CSV file new config using builder.
+ *
+ * @see ConfigCsvReaderBuilder
+ */
 public class ConfigCsvReader {
 
   private final String charsetName;
@@ -74,23 +81,6 @@ public class ConfigCsvReader {
     this.verifyReader = verifyReader;
   }
 
-  /**
-   * Enumeration used to tell the CSVParser what to consider null.
-   *
-   * <ul>
-   *   <li>EMPTY_SEPARATORS -default. two sequential separators are null.
-   *   <li>EMPTY_QUOTES - two sequential quotes are null
-   *   <li>BOTH - both are null
-   *   <li>NEITHER . Both are considered empty string.
-   * </ul>
-   */
-  public enum CsvReaderNullFieldIndicator {
-    EMPTY_SEPARATORS,
-    EMPTY_QUOTES,
-    BOTH,
-    NEITHER
-  }
-
   /** char used to start comment line. */
   public char getCommentChar() {
     return commentChar;
@@ -106,10 +96,7 @@ public class ConfigCsvReader {
     return quoteChar;
   }
 
-  /**
-   * The character to use for escaping a separator or quote default (\\).
-   *
-   */
+  /** The character to use for escaping a separator or quote default (\\). */
   public char getEscapeChar() {
     return escapeChar;
   }
@@ -165,10 +152,7 @@ public class ConfigCsvReader {
     return needTotal;
   }
 
-  /**
-   * if file contain header or not.
-   *
-   */
+  /** if file contain header or not. */
   public boolean isContainHeader() {
     return containHeader;
   }

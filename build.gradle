@@ -89,36 +89,35 @@ subprojects {
             true
         }
 
-
-        test {
-            useJUnitPlatform()
-            testLogging {
-                events "passed", "skipped", "failed"
-            }
-            // listen to events in the test execution lifecycle
-            beforeTest { descriptor ->
-                logger.lifecycle("Running test: " + descriptor)
-            }
+    }
+    test {
+        useJUnitPlatform()
+        testLogging {
+            events "passed", "skipped", "failed"
         }
-
-
-        dependencies {
-
-            // SLF4J as a facade over Log4j2 required dependencies
-            implementation("org.apache.logging.log4j:log4j-api:$log4j2Version")
-            implementation("org.apache.logging.log4j:log4j-core:$log4j2Version")
-            implementation("org.apache.logging.log4j:log4j-slf4j-impl:$log4j2Version")
-            // Bridges from other logging implementations to SLF4J. Be careful not to bridge SLF4J itself to
-            implementation("org.slf4j:jul-to-slf4j:$slf4jVersion")
-            implementation("org.slf4j:jcl-over-slf4j:$slf4jVersion")
-            implementation("org.slf4j:log4j-over-slf4j:$slf4jVersion")
-
-
-            testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
-            testImplementation("org.junit.jupiter:junit-jupiter-params:$junitVersion")
-            testImplementation("commons-io:commons-io:$commonsIoVersion")
-            testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
+        // listen to events in the test execution lifecycle
+        beforeTest { descriptor ->
+            logger.lifecycle("Running test: " + descriptor)
         }
+    }
+
+
+    dependencies {
+
+        // SLF4J as a facade over Log4j2 required dependencies
+        implementation("org.apache.logging.log4j:log4j-api:$log4j2Version")
+        implementation("org.apache.logging.log4j:log4j-core:$log4j2Version")
+        implementation("org.apache.logging.log4j:log4j-slf4j-impl:$log4j2Version")
+        // Bridges from other logging implementations to SLF4J. Be careful not to bridge SLF4J itself to
+        implementation("org.slf4j:jul-to-slf4j:$slf4jVersion")
+        implementation("org.slf4j:jcl-over-slf4j:$slf4jVersion")
+        implementation("org.slf4j:log4j-over-slf4j:$slf4jVersion")
+
+
+        testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
+        testImplementation("org.junit.jupiter:junit-jupiter-params:$junitVersion")
+        testImplementation("commons-io:commons-io:$commonsIoVersion")
+        testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
     }
 
 
@@ -134,7 +133,13 @@ task codeCoverageReport(type: JacocoReport) {
     subprojects.each {
         sourceSets it.sourceSets.main
     }
-
+    afterEvaluate { // (optional) : to exclude classes / packages from coverage
+        classDirectories.from = files(classDirectories.files.collect {
+            fileTree(
+                    dir: it,
+                    exclude: ['org/anasoid/impexia/csv/opencsv/**'])
+        })
+    }
     reports {
         xml.enabled true
         html.enabled true
