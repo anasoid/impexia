@@ -62,6 +62,7 @@ subprojects {
             }
         }
     }
+    System.setProperty( "org.checkstyle.google.suppressionfilter.config", rootProject.projectDir.toString()+"/config/checkstyle/checkstyle-suppressions.xml" )
     checkstyle {
 
         configFile = rootProject.file('config/checkstyle/google_checks.xml')
@@ -113,6 +114,8 @@ subprojects {
         implementation("org.slf4j:jcl-over-slf4j:$slf4jVersion")
         implementation("org.slf4j:log4j-over-slf4j:$slf4jVersion")
 
+        //Apache common
+        implementation("org.apache.commons:commons-lang3:$commonsLangVersion")
 
         testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
         testImplementation("org.junit.jupiter:junit-jupiter-params:$junitVersion")
