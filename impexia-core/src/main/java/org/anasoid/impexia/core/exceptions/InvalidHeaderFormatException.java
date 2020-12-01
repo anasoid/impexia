@@ -13,15 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * @author : anas
- * Date :   03-Nov-2020
+ * Date :   30-Nov-2020
  */
 
-package org.anasoid.impexia.meta.header;
+package org.anasoid.impexia.core.exceptions;
 
-/** Impex action type (Insert, Insert_Update, Remove). */
-public enum ImpexAction {
-  INSERT,
-  INSERT_UPDATE,
-  UPDATE,
-  REMOVE
+public class InvalidHeaderFormatException extends Exception {
+  static final long serialVersionUID = -3387554563124229948L;
+
+  public InvalidHeaderFormatException(String message) {
+    super(message);
+  }
+
+  public InvalidHeaderFormatException(String message, Throwable cause) {
+    super(message, cause);
+  }
 }
