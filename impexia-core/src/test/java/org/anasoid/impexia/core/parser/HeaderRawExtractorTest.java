@@ -30,7 +30,7 @@ import org.junit.jupiter.params.provider.ValueSource;
  *
  * @see HeaderParser
  */
-class HeaderParserTest {
+class HeaderRawExtractorTest {
 
   @ParameterizedTest
   @CsvSource({
@@ -41,7 +41,7 @@ class HeaderParserTest {
   })
   void testSuccessHeader(String condidate, String action, String field, String modifiers)
       throws InvalidHeaderFormatException {
-    HeaderParser.AttributeSplit split = HeaderParser.split(condidate, true);
+    AttributeSplit split = HeaderRawExtractor.split(condidate, true);
     Assertions.assertEquals(ImpexAction.valueOf(action), split.getAction());
     Assertions.assertEquals(field, split.getField());
     Assertions.assertNull(split.getMappings());
@@ -58,7 +58,7 @@ class HeaderParserTest {
       })
   void testHeaderError(String condidate) {
     try {
-      HeaderParser.split(condidate, true);
+      HeaderRawExtractor.split(condidate, true);
       Assertions.fail(condidate);
     } catch (InvalidHeaderFormatException e) {
       // success
@@ -74,7 +74,7 @@ class HeaderParserTest {
   })
   void testSuccessAttribute(String candidate, String field, String mapping, String modifiers)
       throws InvalidHeaderFormatException {
-    HeaderParser.AttributeSplit split = HeaderParser.split(candidate, false);
+    AttributeSplit split = HeaderRawExtractor.split(candidate, false);
     Assertions.assertNull(split.getAction());
     Assertions.assertEquals(field, split.getField());
     Assertions.assertEquals(mapping, split.getMappings());
@@ -90,11 +90,12 @@ class HeaderParserTest {
         " code) [unique = true] ",
         " code [unique = true] (id)",
         " code [unique = true]",
-        " code(id) [unique = true"
+        " code(id) [unique = true",
+        " code(id [unique = true]"
       })
   void testAttributeError(String condidate) {
     try {
-      HeaderParser.split(condidate, false);
+      HeaderRawExtractor.split(condidate, false);
       Assertions.fail(condidate);
     } catch (InvalidHeaderFormatException e) {
       // success
