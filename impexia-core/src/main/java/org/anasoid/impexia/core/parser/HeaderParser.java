@@ -18,6 +18,8 @@
 
 package org.anasoid.impexia.core.parser;
 
+import static org.anasoid.impexia.core.ParserConstants.BRACKET_END;
+import static org.anasoid.impexia.core.ParserConstants.BRACKET_START;
 import static org.anasoid.impexia.core.ParserConstants.FIELD_MAPPING_SEPARATOR;
 import static org.anasoid.impexia.core.ParserConstants.PARENTHESES_END;
 import static org.anasoid.impexia.core.ParserConstants.PARENTHESES_START;
@@ -34,7 +36,7 @@ import org.apache.commons.lang3.StringUtils;
 
 /** Header parser. */
 @SuppressWarnings("PMD.AbstractClassWithoutAbstractMethod")
-public final class HeaderParser {
+public final class HeaderParser { // NOPMD
 
   private HeaderParser() {}
 
@@ -133,7 +135,7 @@ public final class HeaderParser {
         if (parentehseNB == 0) {
           String fragment = sb.toString().trim();
           validateFragment(fragment);
-          if (fragment.isEmpty()) {
+          if (StringUtils.isBlank(fragment)) {
             throw new InvalidHeaderFormatException(
                 MessageFormat.format("Invalid header at (({0}))", rawMapping));
           }
@@ -160,6 +162,49 @@ public final class HeaderParser {
       }
     } else {
       result.add(fragment);
+    }
+
+    return result;
+  }
+
+  @SuppressWarnings("PMD.NPathComplexity")
+  protected static List<String> splitModifier(String rawModifiers) // NOSONAR
+      throws InvalidHeaderFormatException {
+
+    if (StringUtils.isBlank(rawModifiers)
+        || (rawModifiers.charAt(0) != BRACKET_START)
+        || (rawModifiers.charAt(rawModifiers.length() - 1) != BRACKET_END)) {
+      throw new InvalidHeaderFormatException(
+          MessageFormat.format(InvalidHeaderFormatException.ERROR_INVALID_MODIFIER, rawModifiers));
+    }
+
+    String cleanModifiers = rawModifiers.replaceAll("\\]\\s*\\[", "][");
+
+    List<String> result = new ArrayList<>();
+
+    StringBuilder sb = new StringBuilder();
+    for (int i = 0; i < cleanModifiers.length() - 1; i++) {
+      char current = cleanModifiers.charAt(i);
+      char next = cleanModifiers.charAt(i + 1);
+      if ((current == BRACKET_END && next == BRACKET_START)
+          || (i == cleanModifiers.length() - 2 && next == BRACKET_END)) {
+        sb.append(current);
+        if (i == cleanModifiers.length() - 2) {
+          sb.append(next);
+        }
+        String fragment = sb.toString();
+        fragment = fragment.substring(1, fragment.length() - 1).trim();
+        if (StringUtils.isBlank(fragment) || fragment.indexOf('=') == -1) {
+          throw new InvalidHeaderFormatException(
+              MessageFormat.format(
+                  InvalidHeaderFormatException.ERROR_INVALID_MODIFIER, rawModifiers));
+        }
+        result.add(fragment);
+        sb = new StringBuilder(); // NOPMD
+
+      } else {
+        sb.append(current);
+      }
     }
 
     return result;
