@@ -27,7 +27,11 @@ import org.anasoid.impexia.core.exceptions.InvalidHeaderFormatException;
 import org.anasoid.impexia.core.meta.header.DefaultImpexAttribute;
 import org.anasoid.impexia.core.meta.header.DefaultImpexHeader;
 import org.anasoid.impexia.core.meta.header.DefaultImpexMapping;
+import org.anasoid.impexia.core.meta.header.DefaultImpexModifier;
 import org.anasoid.impexia.meta.header.ImpexMapping;
+import org.anasoid.impexia.meta.header.ImpexModifier;
+import org.anasoid.impexia.meta.modifier.Modifier;
+import org.apache.commons.lang3.StringUtils;
 
 /** Header parser. */
 @SuppressWarnings("PMD.AbstractClassWithoutAbstractMethod")
@@ -45,6 +49,27 @@ public final class HeaderParser {
       throws InvalidHeaderFormatException {
 
     return null;
+  }
+
+  @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
+  protected static List<ImpexModifier> parseModifier(String rawModifiers)
+      throws InvalidHeaderFormatException {
+    List<ImpexModifier> result = new ArrayList<>();
+    List<String> rawModifierList = HeaderRawExtractor.splitModifier(rawModifiers);
+    for (String rawModifier : rawModifierList) {
+      List<String> extract = extractKeyValueFromModifier(rawModifier);
+      String key = extract.get(0);
+      Modifier modifier = null;
+      try {
+        modifier = Modifier.valueByCode(key);
+      } catch (IllegalArgumentException e) { // NOPMD
+        // nothing
+      }
+      DefaultImpexModifier impexModifier =
+          new DefaultImpexModifier(key, extract.get(1), modifier); // NOPMD
+      result.add(impexModifier);
+    }
+    return result;
   }
 
   @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
@@ -67,15 +92,37 @@ public final class HeaderParser {
     return result;
   }
 
+  private static List<String> extractKeyValueFromModifier(String modifier)
+      throws InvalidHeaderFormatException {
+
+    String cleanModifier = modifier;
+    String key = cleanModifier.substring(0, cleanModifier.indexOf('=')).trim();
+    String value = cleanModifier.substring(cleanModifier.indexOf('=') + 1).trim();
+
+    if ((value.indexOf('"') > -1)
+        && ((value.charAt(0) != '"') || (value.charAt(value.length() - 1) != '"'))) {
+      throw new InvalidHeaderFormatException(
+          MessageFormat.format(InvalidHeaderFormatException.ERROR_INVALID_MODIFIER, modifier));
+    }
+    if ((value.indexOf('"') > -1)) {
+      value = value.substring(1, value.length() - 1).trim();
+    }
+    if (!HeaderParserUtils.validateKey(key) || StringUtils.isBlank(value)) {
+      throw new InvalidHeaderFormatException(
+          MessageFormat.format(InvalidHeaderFormatException.ERROR_INVALID_MODIFIER, modifier));
+    }
+    List<String> result = new ArrayList<>();
+    result.add(key);
+    result.add(value);
+    return result;
+  }
+
   private static List<String> extractFieldFromMapping(String mapping)
       throws InvalidHeaderFormatException {
     int indexP = mapping.indexOf(PARENTHESES_START);
     String field;
     String subMapping = null;
-    if (indexP > -1 && indexP == mapping.length()) {
-      throw new InvalidHeaderFormatException(
-          MessageFormat.format(InvalidHeaderFormatException.ERROR_INVALID_MAPPING, mapping));
-    }
+
     if (indexP > -1) {
       field = mapping.substring(0, indexP);
       subMapping = mapping.substring(indexP, mapping.length());
@@ -86,9 +133,9 @@ public final class HeaderParser {
       throw new InvalidHeaderFormatException(
           MessageFormat.format("Header not valid (({0})), Invalid field", field));
     }
-    List<String> resul = new ArrayList<>();
-    resul.add(field);
-    resul.add(subMapping);
-    return resul;
+    List<String> result = new ArrayList<>();
+    result.add(field);
+    result.add(subMapping);
+    return result;
   }
 }

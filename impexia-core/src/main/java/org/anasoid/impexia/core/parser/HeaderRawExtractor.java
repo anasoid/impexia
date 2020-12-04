@@ -244,7 +244,9 @@ final class HeaderRawExtractor {
         }
         String fragment = sb.toString();
         fragment = fragment.substring(1, fragment.length() - 1).trim();
-        if (StringUtils.isBlank(fragment) || fragment.indexOf('=') == -1) {
+        if (StringUtils.isBlank(fragment)
+            || fragment.indexOf('=') <= 0
+            || fragment.indexOf('=') == fragment.length() - 1) {
           throw new InvalidHeaderFormatException(
               MessageFormat.format(
                   InvalidHeaderFormatException.ERROR_INVALID_MODIFIER, rawModifiers));
