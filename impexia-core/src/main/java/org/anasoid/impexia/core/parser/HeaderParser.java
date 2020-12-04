@@ -18,10 +18,18 @@
 
 package org.anasoid.impexia.core.parser;
 
+import static org.anasoid.impexia.core.ParserConstants.FIELD_MAPPING_SEPARATOR;
+import static org.anasoid.impexia.core.ParserConstants.PARENTHESES_END;
+import static org.anasoid.impexia.core.ParserConstants.PARENTHESES_START;
+
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.List;
 import org.anasoid.impexia.core.exceptions.InvalidHeaderFormatException;
 import org.anasoid.impexia.core.meta.header.DefaultImpexAttribute;
 import org.anasoid.impexia.core.meta.header.DefaultImpexHeader;
 import org.anasoid.impexia.meta.header.ImpexMapping;
+import org.apache.commons.lang3.StringUtils;
 
 /** Header parser. */
 @SuppressWarnings("PMD.AbstractClassWithoutAbstractMethod")
@@ -45,5 +53,84 @@ public final class HeaderParser {
       throws InvalidHeaderFormatException {
 
     return null;
+  }
+
+  @SuppressWarnings("PMD.NPathComplexity")
+  protected static List<String> splitMapping(String rawMapping) // NOSONAR
+      throws InvalidHeaderFormatException {
+
+    if (StringUtils.isBlank(rawMapping)
+        || (rawMapping.charAt(0) != PARENTHESES_START)
+        || (rawMapping.charAt(rawMapping.length() - 1) != PARENTHESES_END)) {
+      throw new InvalidHeaderFormatException(
+          MessageFormat.format("Header not valid (({0})), Invalid Mapping", rawMapping));
+    }
+    String cleanMapping = rawMapping.substring(1, rawMapping.length() - 1);
+
+    if (StringUtils.isWhitespace(cleanMapping)) {
+      throw new InvalidHeaderFormatException(
+          MessageFormat.format("Header not valid (({0})), Invalid Mapping", rawMapping));
+    }
+    List<String> result = new ArrayList<>();
+    int parentehseNB = 0;
+
+    StringBuilder sb = new StringBuilder();
+    boolean foundSplit = false;
+    for (char c : cleanMapping.toCharArray()) {
+
+      if (c == PARENTHESES_START) {
+        parentehseNB++;
+      } else if (c == PARENTHESES_END) {
+        parentehseNB--;
+      }
+      if (parentehseNB < 0) {
+        throw new InvalidHeaderFormatException(
+            MessageFormat.format("Parenthese not correctly closed in (({0}))", rawMapping));
+      }
+
+      if (c == FIELD_MAPPING_SEPARATOR) {
+        foundSplit = true;
+        if (parentehseNB == 0) {
+          String fragment = sb.toString().trim();
+          validateFragment(fragment);
+          if (fragment.isEmpty()) {
+            throw new InvalidHeaderFormatException(
+                MessageFormat.format("Invalid header at (({0}))", rawMapping));
+          }
+          result.add(fragment);
+          sb = new StringBuilder(); // NOPMD
+        } else {
+          sb.append(c);
+        }
+      } else {
+        sb.append(c);
+      }
+    }
+    if (parentehseNB > 0) {
+      throw new InvalidHeaderFormatException(
+          MessageFormat.format("Parentheses not correctly closed in (({0}))", rawMapping));
+    }
+    String fragment = sb.toString().trim();
+    if (foundSplit) {
+      if (!StringUtils.isBlank(fragment)) {
+        result.add(fragment);
+      } else {
+        throw new InvalidHeaderFormatException(
+            MessageFormat.format("Invalid header at (({0}))", rawMapping));
+      }
+    } else {
+      result.add(fragment);
+    }
+
+    return result;
+  }
+
+  private static void validateFragment(String fragment) throws InvalidHeaderFormatException {
+
+    if ((fragment.indexOf(FIELD_MAPPING_SEPARATOR) > -1)
+        && (fragment.charAt(fragment.length() - 1) != PARENTHESES_END)) {
+      throw new InvalidHeaderFormatException(
+          MessageFormat.format("Parenthese not correctly closed in (({0}))", fragment));
+    }
   }
 }
