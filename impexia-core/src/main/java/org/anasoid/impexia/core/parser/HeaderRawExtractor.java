@@ -18,14 +18,24 @@
 
 package org.anasoid.impexia.core.parser;
 
+import static org.anasoid.impexia.core.ParserConstants.BRACKET_END;
+import static org.anasoid.impexia.core.ParserConstants.BRACKET_START;
+import static org.anasoid.impexia.core.ParserConstants.FIELD_MAPPING_SEPARATOR;
+import static org.anasoid.impexia.core.ParserConstants.PARENTHESES_END;
+import static org.anasoid.impexia.core.ParserConstants.PARENTHESES_START;
+
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.List;
 import org.anasoid.impexia.core.exceptions.InvalidHeaderFormatException;
 import org.anasoid.impexia.meta.header.ImpexAction;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /** First level of parsing header. Extract raw field, mapping, modifiers as String. */
+@SuppressWarnings("PMD.GodClass")
 final class HeaderRawExtractor {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(HeaderRawExtractor.class);
@@ -135,5 +145,127 @@ final class HeaderRawExtractor {
           MessageFormat.format("Header not valid (({0})) ", candidate));
     }
     return field;
+  }
+
+  @SuppressWarnings("PMD.NPathComplexity")
+  protected static List<String> splitMapping(String rawMapping) // NOSONAR
+      throws InvalidHeaderFormatException {
+
+    if (StringUtils.isBlank(rawMapping)
+        || (rawMapping.charAt(0) != PARENTHESES_START)
+        || (rawMapping.charAt(rawMapping.length() - 1) != PARENTHESES_END)) {
+      throw new InvalidHeaderFormatException(
+          MessageFormat.format(InvalidHeaderFormatException.ERROR_INVALID_MAPPING, rawMapping));
+    }
+    String cleanMapping = rawMapping.substring(1, rawMapping.length() - 1);
+
+    if (StringUtils.isWhitespace(cleanMapping)) {
+      throw new InvalidHeaderFormatException(
+          MessageFormat.format(InvalidHeaderFormatException.ERROR_INVALID_MAPPING, rawMapping));
+    }
+    List<String> result = new ArrayList<>();
+    int parentehseNB = 0;
+
+    StringBuilder sb = new StringBuilder();
+    boolean foundSplit = false;
+    for (char c : cleanMapping.toCharArray()) {
+
+      if (c == PARENTHESES_START) {
+        parentehseNB++;
+      } else if (c == PARENTHESES_END) {
+        parentehseNB--;
+      }
+      if (parentehseNB < 0) {
+        throw new InvalidHeaderFormatException(
+            MessageFormat.format("Parenthese not correctly closed in (({0}))", rawMapping));
+      }
+
+      if (c == FIELD_MAPPING_SEPARATOR) {
+        foundSplit = true;
+        if (parentehseNB == 0) {
+          String fragment = sb.toString().trim();
+          validateFragment(fragment);
+          if (StringUtils.isBlank(fragment)) {
+            throw new InvalidHeaderFormatException(
+                MessageFormat.format("Invalid header at (({0}))", rawMapping));
+          }
+          result.add(fragment);
+          sb = new StringBuilder(); // NOPMD
+        } else {
+          sb.append(c);
+        }
+      } else {
+        sb.append(c);
+      }
+    }
+    if (parentehseNB > 0) {
+      throw new InvalidHeaderFormatException(
+          MessageFormat.format("Parentheses not correctly closed in (({0}))", rawMapping));
+    }
+    String fragment = sb.toString().trim();
+    if (foundSplit) {
+      if (!StringUtils.isBlank(fragment)) {
+        result.add(fragment);
+      } else {
+        throw new InvalidHeaderFormatException(
+            MessageFormat.format("Invalid header at (({0}))", rawMapping));
+      }
+    } else {
+      result.add(fragment);
+    }
+
+    return result;
+  }
+
+  @SuppressWarnings("PMD.NPathComplexity")
+  protected static List<String> splitModifier(String rawModifiers) // NOSONAR
+      throws InvalidHeaderFormatException {
+
+    if (StringUtils.isBlank(rawModifiers)
+        || (rawModifiers.charAt(0) != BRACKET_START)
+        || (rawModifiers.charAt(rawModifiers.length() - 1) != BRACKET_END)) {
+      throw new InvalidHeaderFormatException(
+          MessageFormat.format(InvalidHeaderFormatException.ERROR_INVALID_MODIFIER, rawModifiers));
+    }
+
+    String cleanModifiers = rawModifiers.replaceAll("\\]\\s*\\[", "][");
+
+    List<String> result = new ArrayList<>();
+
+    StringBuilder sb = new StringBuilder();
+    for (int i = 0; i < cleanModifiers.length() - 1; i++) {
+      char current = cleanModifiers.charAt(i);
+      char next = cleanModifiers.charAt(i + 1);
+      if ((current == BRACKET_END && next == BRACKET_START)
+          || (i == cleanModifiers.length() - 2 && next == BRACKET_END)) {
+        sb.append(current);
+        if (i == cleanModifiers.length() - 2) {
+          sb.append(next);
+        }
+        String fragment = sb.toString();
+        fragment = fragment.substring(1, fragment.length() - 1).trim();
+        if (StringUtils.isBlank(fragment) || fragment.indexOf('=') == -1) {
+          throw new InvalidHeaderFormatException(
+              MessageFormat.format(
+                  InvalidHeaderFormatException.ERROR_INVALID_MODIFIER, rawModifiers));
+        }
+        result.add(fragment);
+        sb = new StringBuilder(); // NOPMD
+
+      } else {
+        sb.append(current);
+      }
+    }
+
+    return result;
+  }
+
+  private static void validateFragment(String fragment) throws InvalidHeaderFormatException {
+
+    if ((fragment.indexOf(FIELD_MAPPING_SEPARATOR) > -1)
+        && (fragment.charAt(fragment.length() - 1) != PARENTHESES_END)) {
+      throw new InvalidHeaderFormatException(
+          MessageFormat.format("Parenthese not correctly closed in (({0}))", fragment));
+    }
   }
 }

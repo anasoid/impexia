@@ -18,6 +18,8 @@
 
 package org.anasoid.impexia.core.parser;
 
+import java.util.Iterator;
+import java.util.List;
 import org.anasoid.impexia.core.exceptions.InvalidHeaderFormatException;
 import org.anasoid.impexia.meta.header.ImpexAction;
 import org.junit.jupiter.api.Assertions;
@@ -67,6 +69,30 @@ class HeaderRawExtractorTest {
 
   @ParameterizedTest
   @CsvSource({
+    "'[ unique = true ]','unique = true'",
+    "'[unique=true][key=19]','unique=true|key=19'",
+    "'[unique=true][ key =\" 1]9]','unique=true|key =\" 1]9'",
+  })
+  void testSplitModifierSuccess(String mapping, String result) throws InvalidHeaderFormatException {
+
+    List<String> resList = HeaderRawExtractor.splitModifier(mapping);
+    Assertions.assertEquals(result, toString(resList));
+  }
+
+  @ParameterizedTest
+  @ValueSource(strings = {"[id=sd", "id=sd]", "[id=value][  ]"})
+  void testSplitModifierError(String modifier) {
+    try {
+      List<String> resList = HeaderRawExtractor.splitModifier(modifier);
+      ;
+      Assertions.fail(toString(resList));
+    } catch (InvalidHeaderFormatException e) {
+      // success
+    }
+  }
+
+  @ParameterizedTest
+  @CsvSource({
     "  code (id) [unique = true] , code,  (id),   [unique = true]",
     "  code (id), code,  (id),   ''",
     "  'code (id,catalog(id))[unique = true][unique = true]',"
@@ -100,5 +126,58 @@ class HeaderRawExtractorTest {
     } catch (InvalidHeaderFormatException e) {
       // success
     }
+  }
+
+  @ParameterizedTest
+  @CsvSource({
+    "'(id,name)','id|name'",
+    "'(catalog (id,type) , version )','catalog (id,type)|version'",
+    "'(catalog (id,type), version,domaine (id,subid(id1,id2)) )',"
+        + "'catalog (id,type)|version|domaine (id,subid(id1,id2))'",
+    "'(id1(id11(id111)))','id1(id11(id111))'"
+  })
+  void testSplitMappingSuccess(String mapping, String result) throws InvalidHeaderFormatException {
+
+    List<String> resList = HeaderRawExtractor.splitMapping(mapping);
+    Assertions.assertEquals(result, toString(resList));
+  }
+
+  @ParameterizedTest
+  @ValueSource(
+      strings = {
+        "(id,name",
+        "id,name)",
+        "((id,name)",
+        "(id,name))",
+        "(id,name),",
+        "(id1,id2(id21,)),",
+        "(id1,(id21,id22)),",
+        "(id1,id2((id21,id22))),",
+        "(catalog (id,type)x, version )",
+        "( )",
+        "(id11,  )",
+        "(id11, ,id12 )",
+        " ",
+        "\t",
+      })
+  void testSplitMappingError(String mapping) {
+    try {
+      List<String> result = HeaderRawExtractor.splitMapping(mapping);
+      Assertions.fail(toString(result));
+    } catch (InvalidHeaderFormatException e) {
+      // success
+    }
+  }
+
+  private String toString(List<String> list) {
+    StringBuffer sb = new StringBuffer();
+    Iterator<String> iterator = list.iterator();
+    while (iterator.hasNext()) {
+      sb.append(iterator.next());
+      if (iterator.hasNext()) {
+        sb.append("|");
+      }
+    }
+    return sb.toString();
   }
 }
