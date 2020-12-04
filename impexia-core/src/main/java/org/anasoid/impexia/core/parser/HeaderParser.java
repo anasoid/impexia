@@ -28,6 +28,7 @@ import java.util.List;
 import org.anasoid.impexia.core.exceptions.InvalidHeaderFormatException;
 import org.anasoid.impexia.core.meta.header.DefaultImpexAttribute;
 import org.anasoid.impexia.core.meta.header.DefaultImpexHeader;
+import org.anasoid.impexia.core.meta.header.DefaultImpexMapping;
 import org.anasoid.impexia.meta.header.ImpexMapping;
 import org.apache.commons.lang3.StringUtils;
 
@@ -49,10 +50,49 @@ public final class HeaderParser {
     return null;
   }
 
-  protected static ImpexMapping parseMapping(String rawMapping)
+  @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
+  protected static List<ImpexMapping> parseMapping(String rawMapping)
       throws InvalidHeaderFormatException {
+    List<ImpexMapping> result = new ArrayList<>();
+    DefaultImpexMapping impexMapping;
+    List<String> mappingList = splitMapping(rawMapping);
+    for (String mapping : mappingList) {
+      List<String> extract = extractFieldFromMapping(mapping);
+      if (extract.get(1) != null) {
+        impexMapping = new DefaultImpexMapping(extract.get(0).trim());
+        impexMapping.addAllMapping(parseMapping(extract.get(1)));
+      } else {
+        impexMapping = new DefaultImpexMapping(extract.get(0).trim());
+      }
+      result.add(impexMapping);
+    }
 
-    return null;
+    return result;
+  }
+
+  private static List<String> extractFieldFromMapping(String mapping)
+      throws InvalidHeaderFormatException {
+    int indexP = mapping.indexOf(PARENTHESES_START);
+    String field;
+    String subMapping = null;
+    if (indexP > -1 && indexP == mapping.length()) {
+      throw new InvalidHeaderFormatException(
+          MessageFormat.format(InvalidHeaderFormatException.ERROR_INVALID_MAPPING, mapping));
+    }
+    if (indexP > -1) {
+      field = mapping.substring(0, indexP);
+      subMapping = mapping.substring(indexP, mapping.length());
+    } else {
+      field = mapping;
+    }
+    if (!HeaderParserUtils.validateField(field)) {
+      throw new InvalidHeaderFormatException(
+          MessageFormat.format("Header not valid (({0})), Invalid field", field));
+    }
+    List<String> resul = new ArrayList<>();
+    resul.add(field);
+    resul.add(subMapping);
+    return resul;
   }
 
   @SuppressWarnings("PMD.NPathComplexity")
@@ -63,13 +103,13 @@ public final class HeaderParser {
         || (rawMapping.charAt(0) != PARENTHESES_START)
         || (rawMapping.charAt(rawMapping.length() - 1) != PARENTHESES_END)) {
       throw new InvalidHeaderFormatException(
-          MessageFormat.format("Header not valid (({0})), Invalid Mapping", rawMapping));
+          MessageFormat.format(InvalidHeaderFormatException.ERROR_INVALID_MAPPING, rawMapping));
     }
     String cleanMapping = rawMapping.substring(1, rawMapping.length() - 1);
 
     if (StringUtils.isWhitespace(cleanMapping)) {
       throw new InvalidHeaderFormatException(
-          MessageFormat.format("Header not valid (({0})), Invalid Mapping", rawMapping));
+          MessageFormat.format(InvalidHeaderFormatException.ERROR_INVALID_MAPPING, rawMapping));
     }
     List<String> result = new ArrayList<>();
     int parentehseNB = 0;
