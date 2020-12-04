@@ -18,6 +18,7 @@
 
 package org.anasoid.impexia.meta.header;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /** Impex mapping description container. */
@@ -25,7 +26,7 @@ import java.util.List;
 public class ImpexMapping {
 
   protected String field;
-  protected List<ImpexMapping> mappings;
+  protected List<ImpexMapping> mappings = new ArrayList<>();
 
   public String getField() {
     return field;

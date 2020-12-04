@@ -21,6 +21,7 @@ package org.anasoid.impexia.core.parser;
 import java.util.Iterator;
 import java.util.List;
 import org.anasoid.impexia.core.exceptions.InvalidHeaderFormatException;
+import org.anasoid.impexia.meta.header.ImpexMapping;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -32,6 +33,29 @@ import org.junit.jupiter.params.provider.ValueSource;
  * @see HeaderParser
  */
 class HeaderParserTest {
+
+  @ParameterizedTest
+  @CsvSource({
+    "'(id ,name )','DefaultImpexMapping{field=''id''}|DefaultImpexMapping{field=''name''}'",
+    "'(catalog (id,type) , version )',"
+        + "'DefaultImpexMapping{field=''catalog'', mappings=[DefaultImpexMapping{field=''id''},"
+        + " DefaultImpexMapping{field=''type''}]}|DefaultImpexMapping{field=''version''}'",
+    "'( catalog ( id ,type ), version,domaine (id, subid(id1,id2)) )',"
+        + "'DefaultImpexMapping{field=''catalog'', mappings=[DefaultImpexMapping{field=''id''}, "
+        + "DefaultImpexMapping{field=''type''}]}|"
+        + "DefaultImpexMapping{field=''version''}|"
+        + "DefaultImpexMapping{field=''domaine'', mappings=[DefaultImpexMapping{field=''id''},"
+        + " DefaultImpexMapping{field=''subid'',"
+        + " mappings=[DefaultImpexMapping{field=''id1''}, DefaultImpexMapping{field=''id2''}]}]}'",
+    "'(id1(id11(id111)))','DefaultImpexMapping{field=''id1'',"
+        + " mappings=[DefaultImpexMapping{field=''id11'',"
+        + " mappings=[DefaultImpexMapping{field=''id111''}]}]}'"
+  })
+  void testParseMappingSuccess(String mapping, String result) throws InvalidHeaderFormatException {
+
+    List<ImpexMapping> resList = HeaderParser.parseMapping(mapping);
+    Assertions.assertEquals(result, toStringImpexMapping(resList));
+  }
 
   @ParameterizedTest
   @CsvSource({
@@ -75,6 +99,18 @@ class HeaderParserTest {
   private String toString(List<String> list) {
     StringBuffer sb = new StringBuffer();
     Iterator<String> iterator = list.iterator();
+    while (iterator.hasNext()) {
+      sb.append(iterator.next());
+      if (iterator.hasNext()) {
+        sb.append("|");
+      }
+    }
+    return sb.toString();
+  }
+
+  private String toStringImpexMapping(List<ImpexMapping> list) {
+    StringBuffer sb = new StringBuffer();
+    Iterator<ImpexMapping> iterator = list.iterator();
     while (iterator.hasNext()) {
       sb.append(iterator.next());
       if (iterator.hasNext()) {

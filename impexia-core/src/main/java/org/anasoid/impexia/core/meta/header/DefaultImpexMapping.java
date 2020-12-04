@@ -18,6 +18,7 @@
 
 package org.anasoid.impexia.core.meta.header;
 
+import java.util.Collection;
 import org.anasoid.impexia.meta.header.ImpexMapping;
 
 public class DefaultImpexMapping extends ImpexMapping {
@@ -29,5 +30,20 @@ public class DefaultImpexMapping extends ImpexMapping {
   public DefaultImpexMapping addMapping(ImpexMapping impexMapping) {
     this.getMappings().add(impexMapping);
     return this;
+  }
+
+  public DefaultImpexMapping addAllMapping(Collection<ImpexMapping> impexMappings) {
+    this.getMappings().addAll(impexMappings);
+    return this;
+  }
+
+  @Override
+  public String toString() {
+    return "DefaultImpexMapping{"
+        + "field='"
+        + field
+        + '\''
+        + (!mappings.isEmpty() ? ", mappings=" + mappings : "")
+        + '}';
   }
 }
