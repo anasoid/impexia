@@ -18,6 +18,8 @@
 
 package org.anasoid.impexia.core.parser;
 
+import org.apache.commons.lang3.StringUtils;
+
 /** HeaderParser Utils. */
 final class HeaderParserUtils {
 
@@ -33,11 +35,25 @@ final class HeaderParserUtils {
    */
   protected static boolean validateField(String field) {
     String cleanField = field.trim();
+    if (StringUtils.isBlank(field)) {
+      return false;
+    }
     for (char c : RESERVER_FIELD_CHARS) {
       if (cleanField.indexOf(c) >= 0) {
         return false;
       }
     }
     return true;
+  }
+
+  /**
+   * validate key.
+   *
+   * @param key field to check.
+   * @return true if valid.
+   */
+  protected static boolean validateKey(String key) {
+
+    return StringUtils.isAlpha(key) && StringUtils.isNotBlank(key);
   }
 }

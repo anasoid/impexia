@@ -21,13 +21,12 @@ package org.anasoid.impexia.core.meta.header;
 import org.anasoid.impexia.meta.header.ImpexModifier;
 import org.anasoid.impexia.meta.modifier.Modifier;
 
-/**
- *  Default Impex Modifier description container.
- */
+/** Default Impex Modifier description container. */
 public class DefaultImpexModifier extends ImpexModifier {
 
   /**
    * constructors.
+   *
    * @param key key
    * @param value value
    */
@@ -38,6 +37,7 @@ public class DefaultImpexModifier extends ImpexModifier {
 
   /**
    * constructors.
+   *
    * @param key key
    * @param value value
    * @param modifier Modifier , null if not standard modifier.
@@ -46,5 +46,18 @@ public class DefaultImpexModifier extends ImpexModifier {
     this.key = key;
     this.value = value;
     this.modifier = modifier;
+  }
+
+  @Override
+  public String toString() {
+    return "DefaultImpexModifier{"
+        + "key='"
+        + key
+        + '\''
+        + ", value='"
+        + value
+        + '\''
+        + (modifier != null ? ", modifier=" + modifier.toString() : "")
+        + '}';
   }
 }

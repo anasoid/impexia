@@ -218,7 +218,7 @@ public enum Modifier {
   public static Modifier valueByCode(String code) {
     Modifier[] modifiers = Modifier.values();
     for (Modifier modifier: modifiers) {
-      if (modifier.getCode().equals(code)) {
+      if (modifier.getCode().equalsIgnoreCase(code)) {
         return modifier;
       }
     }

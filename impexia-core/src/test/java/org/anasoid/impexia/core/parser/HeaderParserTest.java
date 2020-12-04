@@ -22,6 +22,7 @@ import java.util.Iterator;
 import java.util.List;
 import org.anasoid.impexia.core.exceptions.InvalidHeaderFormatException;
 import org.anasoid.impexia.meta.header.ImpexMapping;
+import org.anasoid.impexia.meta.header.ImpexModifier;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -33,6 +34,34 @@ import org.junit.jupiter.params.provider.ValueSource;
  * @see HeaderParser
  */
 class HeaderParserTest {
+
+  @ParameterizedTest
+  @CsvSource({
+    "'[ unique = true ]','DefaultImpexModifier{key=''unique'', value=''true'', modifier=UNIQUE}'",
+    "'[unique=true][key=19]',"
+        + "'DefaultImpexModifier{key=''unique'', value=''true'', modifier=UNIQUE}|"
+        + "DefaultImpexModifier{key=''key'', value=''19''}'",
+    "'[unique=true ] [ key =\" 1]9\"]',"
+        + "'DefaultImpexModifier{key=''unique'', value=''true'', modifier=UNIQUE}|"
+        + "DefaultImpexModifier{key=''key'', value=''1]9''}'",
+    "'[ key = \"tr\"ue\" ]','DefaultImpexModifier{key=''key'', value=''tr\"ue''}'",
+  })
+  void testParseModifierSuccess(String mapping, String result) throws InvalidHeaderFormatException {
+
+    List<ImpexModifier> resList = HeaderParser.parseModifier(mapping);
+    Assertions.assertEquals(result, toStringImpexModifier(resList));
+  }
+
+  @ParameterizedTest
+  @ValueSource(strings = {"[key=value", "[key=val\"ue]", "[ =value]", "[ke8y=value]"})
+  void testParseModifierError(String mapping) {
+    try {
+      List<ImpexModifier> resList = HeaderParser.parseModifier(mapping);
+      Assertions.fail(toStringImpexModifier(resList));
+    } catch (InvalidHeaderFormatException e) {
+      // success
+    }
+  }
 
   @ParameterizedTest
   @CsvSource({
@@ -66,7 +95,13 @@ class HeaderParserTest {
         "(id,name))",
         "(id,name),",
         "(id1,id2(id21,)),",
+        "(id1,id 2(id21))",
+        "(id1,id[g(id21))",
+        "(id1,((id21)))",
+        "((id1))",
+        "(id1",
         "(id1,(id21,id22)),",
+        "(id1,(id21,id22)",
         "(id1,id2((id21,id22))),",
         "(catalog (id,type)x, version )",
         "( )",
@@ -82,6 +117,18 @@ class HeaderParserTest {
     } catch (InvalidHeaderFormatException e) {
       // success
     }
+  }
+
+  private String toStringImpexModifier(List<ImpexModifier> list) {
+    StringBuffer sb = new StringBuffer();
+    Iterator<ImpexModifier> iterator = list.iterator();
+    while (iterator.hasNext()) {
+      sb.append(iterator.next());
+      if (iterator.hasNext()) {
+        sb.append("|");
+      }
+    }
+    return sb.toString();
   }
 
   private String toStringImpexMapping(List<ImpexMapping> list) {
