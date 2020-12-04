@@ -36,6 +36,30 @@ class HeaderParserTest {
 
   @ParameterizedTest
   @CsvSource({
+    "'[ unique = true ]','unique = true'",
+    "'[unique=true][key=19]','unique=true|key=19'",
+    "'[unique=true][ key =\" 1]9]','unique=true|key =\" 1]9'",
+  })
+  void testSplitModifierSuccess(String mapping, String result) throws InvalidHeaderFormatException {
+
+    List<String> resList = HeaderParser.splitModifier(mapping);
+    Assertions.assertEquals(result, toString(resList));
+  }
+
+  @ParameterizedTest
+  @ValueSource(strings = {"[id=sd", "id=sd]", "[id=value][  ]"})
+  void testSplitModifierError(String modifier) {
+    try {
+      List<String> resList = HeaderParser.splitModifier(modifier);
+      ;
+      Assertions.fail(toString(resList));
+    } catch (InvalidHeaderFormatException e) {
+      // success
+    }
+  }
+
+  @ParameterizedTest
+  @CsvSource({
     "'(id ,name )','DefaultImpexMapping{field=''id''}|DefaultImpexMapping{field=''name''}'",
     "'(catalog (id,type) , version )',"
         + "'DefaultImpexMapping{field=''catalog'', mappings=[DefaultImpexMapping{field=''id''},"
@@ -55,6 +79,33 @@ class HeaderParserTest {
 
     List<ImpexMapping> resList = HeaderParser.parseMapping(mapping);
     Assertions.assertEquals(result, toStringImpexMapping(resList));
+  }
+
+  @ParameterizedTest
+  @ValueSource(
+      strings = {
+        "(id,name",
+        "id,name)",
+        "((id,name)",
+        "(id,name))",
+        "(id,name),",
+        "(id1,id2(id21,)),",
+        "(id1,(id21,id22)),",
+        "(id1,id2((id21,id22))),",
+        "(catalog (id,type)x, version )",
+        "( )",
+        "(id11,  )",
+        "(id11, ,id12 )",
+        " ",
+        "\t"
+      })
+  void testParseMappingError(String mapping) {
+    try {
+      List<ImpexMapping> resList = HeaderParser.parseMapping(mapping);
+      Assertions.fail(toStringImpexMapping(resList));
+    } catch (InvalidHeaderFormatException e) {
+      // success
+    }
   }
 
   @ParameterizedTest
@@ -80,6 +131,8 @@ class HeaderParserTest {
         "(id,name))",
         "(id,name),",
         "(id1,id2(id21,)),",
+        "(id1,(id21,id22)),",
+        "(id1,id2((id21,id22))),",
         "(catalog (id,type)x, version )",
         "( )",
         "(id11,  )",
@@ -96,9 +149,9 @@ class HeaderParserTest {
     }
   }
 
-  private String toString(List<String> list) {
+  private String toStringImpexMapping(List<ImpexMapping> list) {
     StringBuffer sb = new StringBuffer();
-    Iterator<String> iterator = list.iterator();
+    Iterator<ImpexMapping> iterator = list.iterator();
     while (iterator.hasNext()) {
       sb.append(iterator.next());
       if (iterator.hasNext()) {
@@ -108,9 +161,9 @@ class HeaderParserTest {
     return sb.toString();
   }
 
-  private String toStringImpexMapping(List<ImpexMapping> list) {
+  private String toString(List<String> list) {
     StringBuffer sb = new StringBuffer();
-    Iterator<ImpexMapping> iterator = list.iterator();
+    Iterator<String> iterator = list.iterator();
     while (iterator.hasNext()) {
       sb.append(iterator.next());
       if (iterator.hasNext()) {
