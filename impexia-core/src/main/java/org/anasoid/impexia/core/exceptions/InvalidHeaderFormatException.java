@@ -23,6 +23,7 @@ public class InvalidHeaderFormatException extends Exception {
 
   public static final String ERROR_INVALID_MAPPING = "Header not valid (({0})), Invalid Mapping";
   public static final String ERROR_INVALID_MODIFIER = "Header not valid (({0})), Invalid Modifier";
+  public static final String ERROR_INVALID = "Header not valid (({0}))";
 
   public InvalidHeaderFormatException(String message) {
     super(message);

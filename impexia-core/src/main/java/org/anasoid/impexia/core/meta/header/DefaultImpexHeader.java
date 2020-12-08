@@ -18,6 +18,7 @@
 
 package org.anasoid.impexia.core.meta.header;
 
+import java.util.Collection;
 import org.anasoid.impexia.meta.header.ImpexAction;
 import org.anasoid.impexia.meta.header.ImpexAttribute;
 import org.anasoid.impexia.meta.header.ImpexHeader;
@@ -35,18 +36,27 @@ public class DefaultImpexHeader extends ImpexHeader {
     return this;
   }
 
+  public DefaultImpexHeader addModifier(Collection<ImpexModifier> modifiers) {
+    this.modifiers.addAll(modifiers);
+    return this;
+  }
+
   public DefaultImpexHeader addAttribute(ImpexAttribute attribute) {
     this.attributes.add(attribute);
     return this;
   }
 
-  public DefaultImpexHeader addRawListner(String rawListner) {
-    this.rawListners.add(rawListner);
-    return this;
-  }
-
-  public DefaultImpexHeader setRawErrorHandler(String rawErrorHandler) {
-    this.rawErrorHandler = rawErrorHandler;
-    return this;
+  @Override
+  public String toString() {
+    return "DefaultImpexHeader{"
+        + "type='"
+        + type
+        + '\''
+        + ", action="
+        + action
+        + (!modifiers.isEmpty() ? ", modifier=" + modifiers.toString() : "")
+        + ", attributes="
+        + attributes
+        + '}';
   }
 }

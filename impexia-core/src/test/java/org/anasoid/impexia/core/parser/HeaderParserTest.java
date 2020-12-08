@@ -21,6 +21,7 @@ package org.anasoid.impexia.core.parser;
 import java.util.Iterator;
 import java.util.List;
 import org.anasoid.impexia.core.exceptions.InvalidHeaderFormatException;
+import org.anasoid.impexia.core.meta.header.DefaultImpexHeader;
 import org.anasoid.impexia.meta.header.ImpexMapping;
 import org.anasoid.impexia.meta.header.ImpexModifier;
 import org.junit.jupiter.api.Assertions;
@@ -34,6 +35,39 @@ import org.junit.jupiter.params.provider.ValueSource;
  * @see HeaderParser
  */
 class HeaderParserTest {
+
+  @ParameterizedTest
+  @CsvSource({
+    "insert_update product [batchmode=true]; code (id) [unique=true],"
+        + " 'DefaultImpexHeader{type=''product'', action=INSERT_UPDATE,"
+        + " modifier=[DefaultImpexModifier"
+        + "{key=''batchmode'', value=''true'', modifier=BATCHMODE}],"
+        + " attributes=[DefaultImpexAttribute"
+        + "{field=''code'', mappings=[DefaultImpexMapping{field=''id''}],"
+        + " special=false, modifier="
+        + "[DefaultImpexModifier{key=''unique'', value=''true'', modifier=UNIQUE}]}]}'"
+  })
+  void testParseHeaderSuccess(String header, String result) throws InvalidHeaderFormatException {
+    String[] columns = header.split(";");
+    DefaultImpexHeader impexHeader = HeaderParser.parseHeaderRow(columns);
+    Assertions.assertEquals(result, impexHeader.toString());
+  }
+
+  @ParameterizedTest
+  @ValueSource(
+      strings = {
+        "insert_update product [batchmode=true]",
+        "insert_update product [batchmode=true],insert_update product [batchmode=true]"
+      })
+  void testParseHeaderError(String header) {
+    try {
+      String[] columns = header.split(";");
+      DefaultImpexHeader impexHeader = HeaderParser.parseHeaderRow(columns);
+      Assertions.fail(impexHeader.toString());
+    } catch (InvalidHeaderFormatException e) {
+      // success
+    }
+  }
 
   @ParameterizedTest
   @CsvSource({
