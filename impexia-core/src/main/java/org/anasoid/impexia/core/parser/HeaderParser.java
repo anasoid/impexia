@@ -22,6 +22,7 @@ import static org.anasoid.impexia.core.ParserConstants.PARENTHESES_START;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.anasoid.impexia.core.exceptions.InvalidHeaderFormatException;
 import org.anasoid.impexia.core.meta.header.DefaultImpexAttribute;
@@ -39,16 +40,33 @@ public final class HeaderParser {
 
   private HeaderParser() {}
 
-  protected static DefaultImpexAttribute parseAttribute(AttributeSplit split)
+  @SuppressWarnings({"PMD.AvoidInstantiatingObjectsInLoops", "PMD.AvoidLiteralsInIfCondition"})
+  protected static DefaultImpexHeader parseHeaderRow(String... columns)
       throws InvalidHeaderFormatException {
 
-    return null;
-  }
+    if (columns.length < 2) {
+      throw new InvalidHeaderFormatException(
+          MessageFormat.format(InvalidHeaderFormatException.ERROR_INVALID, Arrays.asList(columns)));
+    }
+    DefaultImpexHeader impexHeader = null;
+    for (int i = 0; i < columns.length; i++) {
 
-  protected static DefaultImpexHeader parseAction(AttributeSplit split)
-      throws InvalidHeaderFormatException {
+      if (i == 0) {
+        AttributeSplit split = HeaderRawExtractor.split(columns[i], true);
+        impexHeader = new DefaultImpexHeader(split.getField(), split.getAction());
+        if (StringUtils.isNotBlank(split.getModifiers())) {
+          impexHeader.addModifier(parseModifier(split.getModifiers()));
+        }
+      } else {
+        AttributeSplit split = HeaderRawExtractor.split(columns[i], false);
+        DefaultImpexAttribute attribute =
+            new DefaultImpexAttribute(split.getField(), parseMapping(split.getMappings()));
+        attribute.addModifier(parseModifier(split.getModifiers()));
+        impexHeader.addAttribute(attribute);
+      }
+    }
 
-    return null;
+    return impexHeader;
   }
 
   @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")

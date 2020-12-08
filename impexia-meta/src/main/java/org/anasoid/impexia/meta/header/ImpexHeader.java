@@ -29,8 +29,6 @@ public abstract class ImpexHeader {
   protected ImpexAction action;
   protected List<ImpexModifier> modifiers = new ArrayList<>();
   protected List<ImpexAttribute> attributes = new ArrayList<>();
-  protected List<String> rawListners = new ArrayList<>();
-  protected String rawErrorHandler;
 
   public String getType() {
     return type;
@@ -46,13 +44,5 @@ public abstract class ImpexHeader {
 
   public List<ImpexAttribute> getAttributes() {
     return attributes;
-  }
-
-  public List<String> getRawListners() {
-    return rawListners;
-  }
-
-  public String getRawErrorHandler() {
-    return rawErrorHandler;
   }
 }

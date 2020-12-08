@@ -18,14 +18,17 @@
 
 package org.anasoid.impexia.core.meta.header;
 
+import java.util.Collection;
+import java.util.List;
 import org.anasoid.impexia.meta.header.ImpexAttribute;
 import org.anasoid.impexia.meta.header.ImpexMapping;
 import org.anasoid.impexia.meta.header.ImpexModifier;
 
 public class DefaultImpexAttribute extends ImpexAttribute {
 
-  public DefaultImpexAttribute(ImpexMapping field) {
+  public DefaultImpexAttribute(String field, List<ImpexMapping> mappings) {
     this.field = field;
+    this.mappings = mappings;
   }
 
   public DefaultImpexAttribute addModifier(ImpexModifier modifier) {
@@ -33,11 +36,25 @@ public class DefaultImpexAttribute extends ImpexAttribute {
     return this;
   }
 
+  public DefaultImpexAttribute addModifier(Collection<ImpexModifier> modifiers) {
+    this.modifiers.addAll(modifiers);
+    return this;
+  }
+
   public void setSpecial(boolean special) {
     this.special = special;
   }
 
-  public void setRawMapping(String rawMapping) {
-    this.rawMapping = rawMapping;
+  @Override
+  public String toString() {
+    return "DefaultImpexAttribute{"
+        + "field='"
+        + field
+        + '\''
+        + (!mappings.isEmpty() ? ", mappings=" + mappings.toString() : "")
+        + ", special="
+        + special
+        + (!modifiers.isEmpty() ? ", modifier=" + modifiers.toString() : "")
+        + '}';
   }
 }

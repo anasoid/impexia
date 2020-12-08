@@ -25,21 +25,22 @@ import java.util.List;
 @SuppressWarnings({"PMD.AbstractClassWithoutAbstractMethod"})
 public abstract class ImpexAttribute {
 
-  protected ImpexMapping field;
+  protected String field;
+  protected List<ImpexMapping> mappings = new ArrayList<>();
   protected boolean special;
-  protected String rawMapping;
+
   protected List<ImpexModifier> modifiers = new ArrayList<>();
 
-  public ImpexMapping getField() {
+  public String getField() {
     return field;
+  }
+
+  public List<ImpexMapping> getMappings() {
+    return mappings;
   }
 
   public boolean isSpecial() {
     return special;
-  }
-
-  public String getRawMapping() {
-    return rawMapping;
   }
 
   public List<ImpexModifier> getModifiers() {
