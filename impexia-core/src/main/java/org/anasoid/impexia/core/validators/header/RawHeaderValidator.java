@@ -40,7 +40,7 @@ public class RawHeaderValidator extends AbstractHeaderValidator {
     return false;
   }
 
-  @SuppressWarnings({ "PMD.EmptyCatchBlock"})
+  @SuppressWarnings({"PMD.EmptyCatchBlock"})
   @Override
   protected boolean validateModifier(
       ImpexHeader impexHeader,
@@ -58,7 +58,7 @@ public class RawHeaderValidator extends AbstractHeaderValidator {
     }
     validateCustomModifier(impexHeader, impexAttribute, impexModifier, modifier, level);
     if (modifier != null) {
-      validateModifierBoolean(impexModifier, modifier);
+      validateModifierValues(impexModifier, modifier);
       validateModifierLevel(modifier, level);
       validateModifierMode(modifier, mode);
     }
@@ -71,7 +71,7 @@ public class RawHeaderValidator extends AbstractHeaderValidator {
     return true;
   }
 
-  @SuppressWarnings({ "PMD.EmptyCatchBlock"})
+  @SuppressWarnings({"PMD.EmptyCatchBlock"})
   protected void validateCustomModifier(
       ImpexHeader header,
       ImpexAttribute attribute,
@@ -90,7 +90,7 @@ public class RawHeaderValidator extends AbstractHeaderValidator {
       for (ImpexModifier otherModifier : modifiers) {
         try {
           Modifier modifierEnum = getModifier(otherModifier);
-          if (modifierEnum.isAcceptCustomAttibute()) {
+          if (modifierEnum.isAcceptCustomAttribute()) {
             acceptCustom = true;
             break;
           }
@@ -109,12 +109,11 @@ public class RawHeaderValidator extends AbstractHeaderValidator {
     }
   }
 
-  protected void validateModifierBoolean(ImpexModifier impexModifier, Modifier modifierEnum)
+  protected void validateModifierValues(ImpexModifier impexModifier, Modifier modifierEnum)
       throws ImpexHeaderException {
 
-    if (modifierEnum.isBoolean()
-        && !Boolean.TRUE.toString().equalsIgnoreCase(impexModifier.getValue())
-        && !Boolean.FALSE.toString().equalsIgnoreCase(impexModifier.getValue())) {
+    if (modifierEnum.getValues() != null
+        && !modifierEnum.getValues().contains(impexModifier.getValue())) {
       throw new AttributeModifierException(
           MessageFormat.format("Field ({0}) should be boolean ", impexModifier.getKey()));
     }

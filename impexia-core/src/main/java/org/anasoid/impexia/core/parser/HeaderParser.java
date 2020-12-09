@@ -32,6 +32,7 @@ import org.anasoid.impexia.core.meta.header.DefaultImpexModifier;
 import org.anasoid.impexia.meta.header.ImpexMapping;
 import org.anasoid.impexia.meta.header.ImpexModifier;
 import org.anasoid.impexia.meta.modifier.Modifier;
+import org.anasoid.impexia.meta.modifier.ModifierManager;
 import org.apache.commons.lang3.StringUtils;
 
 /** Header parser. */
@@ -79,7 +80,7 @@ public final class HeaderParser {
       String key = extract.get(0);
       Modifier modifier = null;
       try {
-        modifier = Modifier.valueByCode(key);
+        modifier = ModifierManager.getInstance().getValueByCode(key);
       } catch (IllegalArgumentException e) { // NOPMD
         // nothing
       }
@@ -143,7 +144,7 @@ public final class HeaderParser {
 
     if (indexP > -1) {
       field = mapping.substring(0, indexP);
-      subMapping = mapping.substring(indexP, mapping.length());
+      subMapping = mapping.substring(indexP);
     } else {
       field = mapping;
     }

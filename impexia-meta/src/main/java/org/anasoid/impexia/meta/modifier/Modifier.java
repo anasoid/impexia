@@ -19,169 +19,51 @@
 package org.anasoid.impexia.meta.modifier;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import org.anasoid.impexia.meta.Mode;
-import org.anasoid.impexia.meta.transformer.Decorator;
-import org.anasoid.impexia.meta.transformer.ErrorHandler;
-import org.anasoid.impexia.meta.transformer.Listner;
-import org.anasoid.impexia.meta.transformer.Translator;
 
-/** List of acceptable Modifiers. */
-public enum Modifier {
-  BATCHMODE("batchmode", group(Mode.EXPORT), group(Level.TYPE), true),
-  LISTNER("listner", group(Mode.IMPORT), group(Level.TYPE), Listner.class),
-  ERROR_HANDLER("errorHandler", group(Mode.IMPORT), group(Level.TYPE), ErrorHandler.class),
-  CELL_DECORATOR(
-      "cellDecorator",
-      group(Mode.EXPORT, Mode.IMPORT),
-      group(Level.FIELD),
-      group(BasicType.values()),
-      group(GroupType.values()),
-      Decorator.class),
-  TRANSLATOR(
-      "translator",
-      group(Mode.EXPORT, Mode.IMPORT),
-      group(Level.FIELD),
-      group(BasicType.values()),
-      group(GroupType.values()),
-      Translator.class),
-  COLLECTION_DELIMITER(
-      "collection-delimiter",
-      group(Mode.EXPORT, Mode.IMPORT),
-      group(Level.FIELD),
-      group(BasicType.values()),
-      group(GroupType.COLLECTION, GroupType.MAP),
-      false),
-  KEY2VALUE_DELIMITER(
-      "key2value-delimiter",
-      group(Mode.EXPORT, Mode.IMPORT),
-      group(Level.FIELD),
-      group(BasicType.values()),
-      group(GroupType.COLLECTION, GroupType.MAP),
-      false),
-  NUMBER_FORMAT(
-      "numberformat",
-      group(Mode.EXPORT, Mode.IMPORT),
-      group(Level.FIELD),
-      group(BasicType.NUMBER),
-      group(GroupType.values()),
-      false),
-  DATE_FORMAT(
-      "dateformat",
-      group(Mode.EXPORT, Mode.IMPORT),
-      group(Level.FIELD),
-      group(BasicType.DATE),
-      group(GroupType.values()),
-      false),
-  PATH_DELIMITER(
-      "path-delimiter",
-      group(Mode.EXPORT, Mode.IMPORT),
-      group(Level.FIELD),
-      group(BasicType.values()),
-      group(GroupType.values()),
-      false),
-  UNIQUE(
-      "unique",
-      group(Mode.IMPORT),
-      group(Level.FIELD),
-      group(BasicType.values()),
-      group(GroupType.SINGLE),
-      true),
-  MANDATORY(
-      "mandatory",
-      group(Mode.IMPORT),
-      group(Level.FIELD),
-      group(BasicType.values()),
-      group(GroupType.values()),
-      true),
-  IGNORE_NULL(
-      "ignorenull",
-      group(Mode.IMPORT),
-      group(Level.FIELD),
-      group(BasicType.COMPOSED),
-      group(GroupType.values()),
-      true),
-  MODE(
-      "mode",
-      group(Mode.IMPORT),
-      group(Level.FIELD),
-      group(BasicType.values()),
-      group(GroupType.COLLECTION, GroupType.MAP),
-      false),
-  VIRTUAL(
-      "virtual",
-      group(Mode.IMPORT),
-      group(Level.FIELD),
-      group(BasicType.values()),
-      group(GroupType.values()),
-      true),
-  DEFAULT(
-      "default",
-      group(Mode.EXPORT, Mode.IMPORT),
-      group(Level.FIELD),
-      group(BasicType.values()),
-      group(GroupType.values()),
-      false);
+/** Modifiers container. */
+public class Modifier {
 
-  Modifier(
-      String code,
-      Set<Mode> modes,
-      Set<Level> levels,
-      Set<BasicType> basicTypes,
-      Set<GroupType> groupTypes,
-      Boolean isBoolean) {
-    this.code = code;
-    this.modes = modes;
-    this.levels = levels;
-    this.basicTypes = basicTypes;
-    this.groupTypes = groupTypes;
-    this.isBoolean = isBoolean;
-  }
-
-  Modifier(String code, Set<Mode> modes, Set<Level> levels, Boolean isBoolean) {
-    this.code = code;
-    this.modes = modes;
-    this.levels = levels;
-    this.isBoolean = isBoolean;
-  }
-
-  Modifier(String code, Set<Mode> modes, Set<Level> levels, Class<?> clazz) {
-    this.code = code;
-    this.modes = modes;
-    this.levels = levels;
-    this.clazz = clazz;
-  }
-
-  Modifier(
-      String code,
-      Set<Mode> modes,
-      Set<Level> levels,
-      Set<BasicType> basicTypes,
-      Set<GroupType> groupTypes,
-      Class<?> clazz) {
-    this.code = code;
-    this.modes = modes;
-    this.levels = levels;
-    this.basicTypes = basicTypes;
-    this.groupTypes = groupTypes;
-    this.clazz = clazz;
-  }
-
+  public static final Set<String> BOOLEAN_VALUES =
+      Collections.unmodifiableSet(new HashSet<>(Arrays.asList("true", "false")));
   private final String code;
   private final Set<Mode> modes;
   private final Set<Level> levels;
-  private Set<BasicType> basicTypes;
-  private Set<GroupType> groupTypes;
-  private Class<?> clazz;
-  private boolean isBoolean;
+  private final Set<BasicType> basicTypes;
+  private final Set<GroupType> groupTypes;
+  private final Class<?> clazz;
+  private final Set<String> values;
+  private final String scope;
+
+  /**
+   * Default constructor.
+   *
+   * @see ModifierBuilder
+   */
+  Modifier(
+      String code,
+      Set<Mode> modes,
+      Set<Level> levels,
+      Set<BasicType> basicTypes,
+      Set<GroupType> groupTypes,
+      Class<?> clazz,
+      Set<String> values,
+      String scope) {
+    this.code = code;
+    this.modes = modes;
+    this.levels = levels;
+    this.basicTypes = basicTypes;
+    this.groupTypes = groupTypes;
+    this.clazz = clazz;
+    this.values = values;
+    this.scope = scope;
+  }
 
   public String getCode() {
     return code;
-  }
-
-  public boolean isBoolean() {
-    return isBoolean;
   }
 
   public Set<Mode> getModes() {
@@ -200,28 +82,20 @@ public enum Modifier {
     return levels;
   }
 
-  public boolean isAcceptCustomAttibute() {
+  public boolean isAcceptCustomAttribute() {
     return clazz != null;
   }
 
-  private static <T> Set<T> group(T... t) {
-    return new HashSet<>(Arrays.asList(t));
+  public Set<String> getValues() {
+    return values;
   }
 
-  /**
-   * Get enum value by code.
-   *
-   * @param code code
-   * @return enum value
-   * @throws IllegalArgumentException throw if no enum found by code
-   */
-  public static Modifier valueByCode(String code) {
-    Modifier[] modifiers = Modifier.values();
-    for (Modifier modifier: modifiers) {
-      if (modifier.getCode().equalsIgnoreCase(code)) {
-        return modifier;
-      }
-    }
-    throw new IllegalArgumentException("Modifier (" + code + ") not found");
+  public String getScope() {
+    return scope;
+  }
+
+  @Override
+  public String toString() {
+    return "Modifier{" + "code='" + code + '\'' + ", scope='" + scope + '\'' + '}';
   }
 }

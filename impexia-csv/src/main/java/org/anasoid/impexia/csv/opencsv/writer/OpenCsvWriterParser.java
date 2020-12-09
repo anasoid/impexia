@@ -68,13 +68,13 @@ public class OpenCsvWriterParser extends OpenCsvParser {
             ? testValue
             : testValue.replaceAll(// NOSONAR
                 Character.toString(getQuotechar()),
-                Character.toString(getQuotechar()) + Character.toString(getQuotechar()));
+                Character.toString(getQuotechar()) + getQuotechar());
     convertedString =
         !containsEscapeChar
             ? convertedString
             : convertedString.replace(// NOSONAR
                 Character.toString(getEscape()),
-                Character.toString(getEscape()) + Character.toString(getEscape()));
+                Character.toString(getEscape()) + getEscape());
     if (value != null) {
       if (surroundWithQuotes) {
         builder.append(getQuotechar());

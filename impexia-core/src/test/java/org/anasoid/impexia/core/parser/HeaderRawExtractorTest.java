@@ -84,7 +84,6 @@ class HeaderRawExtractorTest {
   void testSplitModifierError(String modifier) {
     try {
       List<String> resList = HeaderRawExtractor.splitModifier(modifier);
-      ;
       Assertions.fail(toString(resList));
     } catch (InvalidHeaderFormatException e) {
       // success
