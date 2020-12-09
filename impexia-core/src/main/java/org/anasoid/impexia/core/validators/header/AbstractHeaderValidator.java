@@ -26,6 +26,7 @@ import org.anasoid.impexia.meta.header.ImpexHeader;
 import org.anasoid.impexia.meta.header.ImpexModifier;
 import org.anasoid.impexia.meta.modifier.Level;
 import org.anasoid.impexia.meta.modifier.Modifier;
+import org.anasoid.impexia.meta.modifier.ModifierManager;
 
 /** Validate Impex header. */
 public abstract class AbstractHeaderValidator implements HeaderValidator {
@@ -89,6 +90,6 @@ public abstract class AbstractHeaderValidator implements HeaderValidator {
       throws ImpexHeaderException;
 
   protected Modifier getModifier(ImpexModifier modifier) {
-    return Modifier.valueByCode(modifier.getKey());
+    return ModifierManager.getInstance().getValueByCode(modifier.getKey());
   }
 }

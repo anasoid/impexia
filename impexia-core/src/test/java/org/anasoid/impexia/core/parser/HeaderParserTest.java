@@ -41,11 +41,13 @@ class HeaderParserTest {
     "insert_update product [batchmode=true]; code (id) [unique=true],"
         + " 'DefaultImpexHeader{type=''product'', action=INSERT_UPDATE,"
         + " modifier=[DefaultImpexModifier"
-        + "{key=''batchmode'', value=''true'', modifier=BATCHMODE}],"
+        + "{key=''batchmode'', value=''true'',"
+        + " modifier=Modifier{code=''batchmode'', scope=''GLOBAL''}}],"
         + " attributes=[DefaultImpexAttribute"
         + "{field=''code'', mappings=[DefaultImpexMapping{field=''id''}],"
         + " special=false, modifier="
-        + "[DefaultImpexModifier{key=''unique'', value=''true'', modifier=UNIQUE}]}]}'"
+        + "[DefaultImpexModifier{key=''unique'', value=''true'',"
+        + " modifier=Modifier{code=''unique'', scope=''GLOBAL''}}]}]}'"
   })
   void testParseHeaderSuccess(String header, String result) throws InvalidHeaderFormatException {
     String[] columns = header.split(";");
@@ -71,12 +73,15 @@ class HeaderParserTest {
 
   @ParameterizedTest
   @CsvSource({
-    "'[ unique = true ]','DefaultImpexModifier{key=''unique'', value=''true'', modifier=UNIQUE}'",
+    "'[ unique = true ]','DefaultImpexModifier{key=''unique'', value=''true'',"
+        + " modifier=Modifier{code=''unique'', scope=''GLOBAL''}}'",
     "'[unique=true][key=19]',"
-        + "'DefaultImpexModifier{key=''unique'', value=''true'', modifier=UNIQUE}|"
+        + "'DefaultImpexModifier{key=''unique'', value=''true'',"
+        + " modifier=Modifier{code=''unique'', scope=''GLOBAL''}}|"
         + "DefaultImpexModifier{key=''key'', value=''19''}'",
     "'[unique=true ] [ key =\" 1]9\"]',"
-        + "'DefaultImpexModifier{key=''unique'', value=''true'', modifier=UNIQUE}|"
+        + "'DefaultImpexModifier{key=''unique'', value=''true'',"
+        + " modifier=Modifier{code=''unique'', scope=''GLOBAL''}}|"
         + "DefaultImpexModifier{key=''key'', value=''1]9''}'",
     "'[ key = \"tr\"ue\" ]','DefaultImpexModifier{key=''key'', value=''tr\"ue''}'",
   })
