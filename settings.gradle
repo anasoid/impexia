@@ -20,6 +20,7 @@ include 'impexia-imp'
 include 'impexia-exp'
 include 'impexia-csv'
 include 'impexia-sql'
+include 'impexia-test-app'
 
 rootProject.name = 'impexia'
 
