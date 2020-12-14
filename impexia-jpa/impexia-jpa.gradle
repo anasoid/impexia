@@ -15,8 +15,12 @@ dependencies {
 
     implementation  project(":impexia-exp")
 	implementation  project(":impexia-imp")
-	
 
+    compileOnly("org.hibernate:hibernate-core:$hibernateVersion")
+
+    testImplementation project(":impexia-test-app")
+    testImplementation("org.hibernate:hibernate-core:$hibernateVersion")
+    testRuntimeOnly("org.hsqldb:hsqldb:2.5.1")
 
 	
 	

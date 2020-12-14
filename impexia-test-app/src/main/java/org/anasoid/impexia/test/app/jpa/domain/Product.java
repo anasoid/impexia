@@ -27,12 +27,15 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.Version;
 
 @Entity
 public class Product {
   @Id()
   @Column(unique = true)
   private String code;
+
+  @Version private long version;
 
   private String name;
   @ElementCollection private List<String> keywords = new ArrayList<>();
@@ -44,6 +47,10 @@ public class Product {
 
   public String getCode() {
     return code;
+  }
+
+  public long getVersion() {
+    return version;
   }
 
   public void setCode(String code) {

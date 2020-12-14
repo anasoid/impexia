@@ -19,6 +19,7 @@
 package org.anasoid.impexia.test.app.jpa.domain;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import javax.persistence.CascadeType;
@@ -27,6 +28,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Version;
 
 @Entity
 public class User {
@@ -36,8 +42,16 @@ public class User {
   @Column(unique = true, updatable = false)
   private UUID id;
 
+  @Version private long version;
+
   private String email;
   private Name name;
+
+  @Temporal(TemporalType.TIMESTAMP)
+  private Date createDate;
+
+  @Temporal(TemporalType.TIMESTAMP)
+  private Date modifyDate;
 
   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Phone> phones = new ArrayList<>();
@@ -46,8 +60,8 @@ public class User {
     return id;
   }
 
-  public void setId(UUID id) {
-    this.id = id;
+  public long getVersion() {
+    return version;
   }
 
   public String getEmail() {
@@ -72,5 +86,23 @@ public class User {
 
   public void setPhones(List<Phone> phones) {
     this.phones = phones;
+  }
+
+  public Date getCreateDate() {
+    return createDate;
+  }
+
+  public Date getModifyDate() {
+    return modifyDate;
+  }
+
+  @PrePersist
+  protected void onCreate() {
+    createDate = new Date();
+  }
+
+  @PreUpdate
+  protected void onUpdate() {
+    modifyDate = new Date();
   }
 }

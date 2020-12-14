@@ -26,6 +26,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Version;
 
 @Entity
 public class Category {
@@ -34,6 +35,8 @@ public class Category {
   @Column(unique = true)
   private String code;
 
+  @Version private long version;
+
   private String name;
 
   @ManyToOne() private Category superCategory;
@@ -41,11 +44,14 @@ public class Category {
   @OneToMany(mappedBy = "superCategory")
   private List<Category> subCategories;
 
-  @ManyToMany()
-  private List<Product> products = new ArrayList<>();
+  @ManyToMany() private List<Product> products = new ArrayList<>();
 
   public String getCode() {
     return code;
+  }
+
+  public long getVersion() {
+    return version;
   }
 
   public void setCode(String code) {
