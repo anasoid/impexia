@@ -41,7 +41,7 @@ public class Category {
   @OneToMany(mappedBy = "superCategory")
   private List<Category> subCategories;
 
-  @ManyToMany(mappedBy = "categories")
+  @ManyToMany()
   private List<Product> products = new ArrayList<>();
 
   public String getCode() {

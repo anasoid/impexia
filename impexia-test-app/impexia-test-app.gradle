@@ -16,7 +16,8 @@ dependencies {
 
     implementation("org.hibernate:hibernate-core:$hibernateVersion")
 
-	
+    testRuntimeOnly("org.hsqldb:hsqldb:2.5.1")
+
 	
 }
 
