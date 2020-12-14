@@ -18,9 +18,6 @@
 
 package org.anasoid.impexia.test.app.jpa.domain;
 
-import javax.persistence.Entity;
-
-@Entity
 public enum PhoneType {
   LAND_LINE,
   MOBILE;

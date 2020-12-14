@@ -23,6 +23,17 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class Name {
 
+  public Name() {}
+
+  /**
+   * Constructors.
+   */
+  public Name(String first, String middle, String last) {
+    this.first = first;
+    this.middle = middle;
+    this.last = last;
+  }
+
   private String first;
 
   private String middle;

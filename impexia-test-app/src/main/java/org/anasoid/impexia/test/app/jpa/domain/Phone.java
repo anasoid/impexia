@@ -19,6 +19,8 @@
 package org.anasoid.impexia.test.app.jpa.domain;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 @Entity
 public class Phone {
@@ -27,6 +29,8 @@ public class Phone {
   private String number;
   private PhoneType type;
 
+  @Id
+  @GeneratedValue
   public long getId() {
     return id;
   }

@@ -39,7 +39,7 @@ public class User {
   private String email;
   private Name name;
 
-  @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Phone> phones = new ArrayList<>();
 
   public UUID getId() {
