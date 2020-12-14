@@ -31,9 +31,11 @@ import javax.persistence.OneToMany;
 @Entity
 public class User {
 
-  @Id @GeneratedValue
-  @Column(unique = true,updatable = false)
+  @Id
+  @GeneratedValue
+  @Column(unique = true, updatable = false)
   private UUID id;
+
   private String email;
   private Name name;
 

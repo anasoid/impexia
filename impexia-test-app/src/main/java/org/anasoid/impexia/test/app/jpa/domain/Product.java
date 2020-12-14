@@ -26,9 +26,7 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Index;
 import javax.persistence.ManyToMany;
-import javax.persistence.Table;
 
 @Entity
 public class Product {
