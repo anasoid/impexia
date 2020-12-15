@@ -47,7 +47,23 @@ class HeaderParserTest {
         + "{field=''code'', mappings=[DefaultImpexMapping{field=''id''}],"
         + " special=false, modifier="
         + "[DefaultImpexModifier{key=''unique'', value=''true'',"
-        + " modifier=Modifier{code=''unique'', scope=''GLOBAL''}}]}]}'"
+        + " modifier=Modifier{code=''unique'', scope=''GLOBAL''}}]}]}'",
+    "insert_update product [batchmode=true]; code (id) [unique=true];catalogvesion (id);"
+        + " name;date [dateformat=\'yyyy-MM-dd\'],"
+        + "'DefaultImpexHeader{type=''product'', action=INSERT_UPDATE,"
+        + " modifier=[DefaultImpexModifier{key=''batchmode'', value=''true'', "
+        + "modifier=Modifier{code=''batchmode'', scope=''GLOBAL''}}],"
+        + " attributes=[DefaultImpexAttribute{field=''code'',"
+        + " mappings=[DefaultImpexMapping{field=''id''}],"
+        + " special=false, modifier=[DefaultImpexModifier{key=''unique'', value=''true'',"
+        + " modifier=Modifier{code=''unique'', scope=''GLOBAL''}}]},"
+        + " DefaultImpexAttribute{field=''catalogvesion'',"
+        + " mappings=[DefaultImpexMapping{field=''id''}],"
+        + " special=false}, DefaultImpexAttribute{field=''name'', special=false},"
+        + " DefaultImpexAttribute{field=''date'',"
+        + " special=false, modifier=[DefaultImpexModifier{key=''dateformat'', "
+        + "value=''''yyyy-MM-dd'''',"
+        + " modifier=Modifier{code=''dateformat'', scope=''GLOBAL''}}]}]}'"
   })
   void testParseHeaderSuccess(String header, String result) throws InvalidHeaderFormatException {
     String[] columns = header.split(";");
@@ -59,7 +75,8 @@ class HeaderParserTest {
   @ValueSource(
       strings = {
         "insert_update product [batchmode=true]",
-        "insert_update product [batchmode=true],insert_update product [batchmode=true]"
+        "insert_update product [batchmode=true];insert_update product [batchmode=true]",
+        "insert_update product [batchmode=true];code[unique=true](id)",
       })
   void testParseHeaderError(String header) {
     try {
@@ -145,9 +162,7 @@ class HeaderParserTest {
         "(catalog (id,type)x, version )",
         "( )",
         "(id11,  )",
-        "(id11, ,id12 )",
-        " ",
-        "\t"
+        "(id11, ,id12 )"
       })
   void testParseMappingError(String mapping) {
     try {

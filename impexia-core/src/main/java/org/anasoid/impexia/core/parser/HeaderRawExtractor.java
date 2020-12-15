@@ -82,14 +82,16 @@ final class HeaderRawExtractor {
     String mapping;
     if (candidate.indexOf('[') < 0) {
       mapping = candidate;
+    } else if (candidate.indexOf('[') == 0) {
+      return "";
     } else {
       mapping = candidate.substring(0, Math.min(candidate.indexOf('['), candidate.length()));
     }
     String mappingClean = mapping.trim();
-    if (!mappingClean.isEmpty()
-        && mappingClean.indexOf(']') < 0
-        && (mappingClean.charAt(0) == '(')
-        && (mappingClean.charAt(mappingClean.length() - 1) == ')')) {
+    if (mappingClean.isEmpty()
+        || (mappingClean.indexOf(']') < 0
+            && (mappingClean.charAt(0) == '(')
+            && (mappingClean.charAt(mappingClean.length() - 1) == ')'))) {
       return mapping;
     }
     throw new InvalidHeaderFormatException(
@@ -125,20 +127,16 @@ final class HeaderRawExtractor {
         field = candidate;
       }
     } else {
-      // attribute should have mapping start with ( before modifier
-      if (indexParentheses < 0) {
-        throw new InvalidHeaderFormatException(
-            MessageFormat.format(
-                "Header not valid (({0})), mapping not found on field ", candidate));
-      }
-      // attribute should have mapping start with ( before modifier
-      if (indexParentheses > indexBracket && indexBracket >= 0) {
-        throw new InvalidHeaderFormatException(
-            MessageFormat.format(
-                "Header not valid (({0})), incorrect position of '[' ", candidate));
-      }
 
-      field = candidate.substring(0, indexParentheses);
+      if (indexParentheses > 0
+          && (((indexParentheses < indexBracket) && indexBracket > 0) || indexBracket == -1)) {
+
+        field = candidate.substring(0, indexParentheses);
+      } else if (indexBracket > 0) {
+        field = candidate.substring(0, indexBracket);
+      } else {
+        field = candidate;
+      }
     }
     if (!HeaderParserUtils.validateField(field)) {
       throw new InvalidHeaderFormatException(
@@ -151,8 +149,10 @@ final class HeaderRawExtractor {
   protected static List<String> splitMapping(String rawMapping) // NOSONAR
       throws InvalidHeaderFormatException {
 
-    if (StringUtils.isBlank(rawMapping)
-        || (rawMapping.charAt(0) != PARENTHESES_START)
+    if (StringUtils.isBlank(rawMapping)) {
+      return new ArrayList<>();
+    }
+    if ((rawMapping.charAt(0) != PARENTHESES_START)
         || (rawMapping.charAt(rawMapping.length() - 1) != PARENTHESES_END)) {
       throw new InvalidHeaderFormatException(
           MessageFormat.format(InvalidHeaderFormatException.ERROR_INVALID_MAPPING, rawMapping));
@@ -220,9 +220,10 @@ final class HeaderRawExtractor {
   @SuppressWarnings("PMD.NPathComplexity")
   protected static List<String> splitModifier(String rawModifiers) // NOSONAR
       throws InvalidHeaderFormatException {
-
-    if (StringUtils.isBlank(rawModifiers)
-        || (rawModifiers.charAt(0) != BRACKET_START)
+    if (StringUtils.isBlank(rawModifiers)) {
+      return new ArrayList<>();
+    }
+    if ((rawModifiers.charAt(0) != BRACKET_START)
         || (rawModifiers.charAt(rawModifiers.length() - 1) != BRACKET_END)) {
       throw new InvalidHeaderFormatException(
           MessageFormat.format(InvalidHeaderFormatException.ERROR_INVALID_MODIFIER, rawModifiers));
