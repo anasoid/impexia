@@ -51,19 +51,25 @@ public final class HeaderParser {
     }
     DefaultImpexHeader impexHeader = null;
     for (int i = 0; i < columns.length; i++) {
-
-      if (i == 0) {
-        AttributeSplit split = HeaderRawExtractor.split(columns[i], true);
-        impexHeader = new DefaultImpexHeader(split.getField(), split.getAction());
-        if (StringUtils.isNotBlank(split.getModifiers())) {
-          impexHeader.addModifier(parseModifier(split.getModifiers()));
+      try {
+        if (i == 0) {
+          AttributeSplit split = HeaderRawExtractor.split(columns[i], true);
+          impexHeader = new DefaultImpexHeader(split.getField(), split.getAction());
+          if (StringUtils.isNotBlank(split.getModifiers())) {
+            impexHeader.addModifier(parseModifier(split.getModifiers()));
+          }
+        } else {
+          AttributeSplit split = HeaderRawExtractor.split(columns[i], false);
+          DefaultImpexAttribute attribute =
+              new DefaultImpexAttribute(split.getField(), parseMapping(split.getMappings()));
+          attribute.addModifier(parseModifier(split.getModifiers()));
+          impexHeader.addAttribute(attribute);
         }
-      } else {
-        AttributeSplit split = HeaderRawExtractor.split(columns[i], false);
-        DefaultImpexAttribute attribute =
-            new DefaultImpexAttribute(split.getField(), parseMapping(split.getMappings()));
-        attribute.addModifier(parseModifier(split.getModifiers()));
-        impexHeader.addAttribute(attribute);
+      } catch (Exception e) { // NOPMD
+        throw new InvalidHeaderFormatException(
+            MessageFormat.format(
+                InvalidHeaderFormatException.ERROR_INVALID_AT, Arrays.asList(columns), columns[i]),
+            e);
       }
     }
 

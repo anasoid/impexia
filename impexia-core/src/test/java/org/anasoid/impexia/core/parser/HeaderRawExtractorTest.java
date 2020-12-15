@@ -94,6 +94,11 @@ class HeaderRawExtractorTest {
   @CsvSource({
     "  code (id) [unique = true] , code,  (id),   [unique = true]",
     "  code (id), code,  (id),   ''",
+    "  name , name,  '',   ''",
+    "  date [dateformat = \'yyyy-MM-dd\'] , date,  '',   [dateformat = \'yyyy-MM-dd\']",
+    "  date [dateformat = \'yyyy-MM-(dd)\'] , date,  '',   [dateformat = \'yyyy-MM-(dd)\']",
+    "  date [dateformat = \'yyyy-MM-dd)\'] , date,  '',   [dateformat = \'yyyy-MM-dd)\']",
+    "  date [dateformat = \'yyyy-MM-(dd\'] , date,  '',   [dateformat = \'yyyy-MM-(dd\']",
     "  'code (id,catalog(id))[unique = true][unique = true]',"
         + " code,  '(id,catalog(id))',   [unique = true][unique = true]"
   })
@@ -114,7 +119,6 @@ class HeaderRawExtractorTest {
         " code) (id) [unique = true] ",
         " code) [unique = true] ",
         " code [unique = true] (id)",
-        " code [unique = true]",
         " code(id) [unique = true",
         " code(id [unique = true]"
       })
@@ -155,9 +159,7 @@ class HeaderRawExtractorTest {
         "(catalog (id,type)x, version )",
         "( )",
         "(id11,  )",
-        "(id11, ,id12 )",
-        " ",
-        "\t",
+        "(id11, ,id12 )"
       })
   void testSplitMappingError(String mapping) {
     try {
