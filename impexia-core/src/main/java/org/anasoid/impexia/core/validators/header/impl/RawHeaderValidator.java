@@ -16,10 +16,10 @@
  * Date :   03-Nov-2020
  */
 
-package org.anasoid.impexia.core.validators.header;
+package org.anasoid.impexia.core.validators.header.impl;
 
 import java.text.MessageFormat;
-import java.util.List;
+import org.anasoid.impexia.core.validators.header.AbstractHeaderValidator;
 import org.anasoid.impexia.meta.Mode;
 import org.anasoid.impexia.meta.exceptions.header.ActionException;
 import org.anasoid.impexia.meta.exceptions.header.AttributeModifierException;
@@ -56,9 +56,9 @@ public class RawHeaderValidator extends AbstractHeaderValidator {
     } catch (java.lang.IllegalArgumentException e) {
       // nothing
     }
-    validateCustomModifier(impexHeader, impexAttribute, impexModifier, modifier, level);
+
     if (modifier != null) {
-      validateModifierValues(impexModifier, modifier);
+
       validateModifierLevel(modifier, level);
       validateModifierMode(modifier, mode);
     }
@@ -69,54 +69,6 @@ public class RawHeaderValidator extends AbstractHeaderValidator {
   protected boolean validateHeader(ImpexHeader header, Mode mode) throws ImpexHeaderException {
     validateAction(header);
     return true;
-  }
-
-  @SuppressWarnings({"PMD.EmptyCatchBlock"})
-  protected void validateCustomModifier(
-      ImpexHeader header,
-      ImpexAttribute attribute,
-      ImpexModifier impexModifier,
-      Modifier modifier,
-      Level level)
-      throws ImpexHeaderException {
-    if (modifier == null) {
-      List<ImpexModifier> modifiers = null;
-      if (Level.FIELD.equals(level)) {
-        modifiers = attribute.getModifiers();
-      } else if (Level.TYPE.equals(level)) {
-        modifiers = header.getModifiers();
-      }
-      boolean acceptCustom = false;
-      for (ImpexModifier otherModifier : modifiers) {
-        try {
-          Modifier modifierEnum = getModifier(otherModifier);
-          if (modifierEnum.isAcceptCustomAttribute()) {
-            acceptCustom = true;
-            break;
-          }
-        } catch (java.lang.IllegalArgumentException e) {
-          // nothing
-        }
-      }
-
-      if (!acceptCustom) {
-        throw new AttributeModifierException(
-            MessageFormat.format(
-                "Field ({0}) is unknown,"
-                    + " custom attribute accepted only when Class modifier is used",
-                impexModifier.getKey()));
-      }
-    }
-  }
-
-  protected void validateModifierValues(ImpexModifier impexModifier, Modifier modifierEnum)
-      throws ImpexHeaderException {
-
-    if (modifierEnum.getValues() != null
-        && !modifierEnum.getValues().contains(impexModifier.getValue())) {
-      throw new AttributeModifierException(
-          MessageFormat.format("Field ({0}) should be boolean ", impexModifier.getKey()));
-    }
   }
 
   protected void validateModifierLevel(Modifier modifier, Level level) throws ImpexHeaderException {
