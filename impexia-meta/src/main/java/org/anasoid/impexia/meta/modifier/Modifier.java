@@ -36,6 +36,7 @@ public class Modifier {
   private final Set<GroupType> groupTypes;
   private final Class<?> clazz;
   private final Set<String> values;
+  private final boolean needMapping;
   private final String scope;
 
   /**
@@ -51,6 +52,7 @@ public class Modifier {
       Set<GroupType> groupTypes,
       Class<?> clazz,
       Set<String> values,
+      boolean needMapping,
       String scope) {
     this.code = code;
     this.modes = modes;
@@ -59,6 +61,7 @@ public class Modifier {
     this.groupTypes = groupTypes;
     this.clazz = clazz;
     this.values = values;
+    this.needMapping = needMapping;
     this.scope = scope;
   }
 
@@ -92,6 +95,10 @@ public class Modifier {
 
   public String getScope() {
     return scope;
+  }
+
+  public boolean isNeedMapping() {
+    return needMapping;
   }
 
   @Override
