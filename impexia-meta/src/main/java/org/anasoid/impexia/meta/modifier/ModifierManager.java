@@ -138,6 +138,7 @@ public final class ModifierManager {
         new ModifierBuilder(ModifierEnum.UNIQUE.toString().toLowerCase(Locale.ROOT), DEFAULT_SCOPE)
             .setLevels(Level.FIELD)
             .setValues(Modifier.BOOLEAN_VALUES)
+            .setNeedMapping(true)
             .build());
 
     // mandatory

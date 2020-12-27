@@ -20,6 +20,7 @@ public class ModifierBuilder {
   private Class<?> clazz;
   private Set<String> values;
   private final String scope;
+  private boolean needMapping;
 
   public ModifierBuilder(String code, String scope) {
     this.code = code;
@@ -28,6 +29,11 @@ public class ModifierBuilder {
 
   public ModifierBuilder setModes(Mode... modes) {
     this.modes = new HashSet<>(Arrays.asList(modes));
+    return this;
+  }
+
+  public ModifierBuilder setNeedMapping(boolean needMapping) {
+    this.needMapping = needMapping;
     return this;
   }
 
@@ -62,6 +68,7 @@ public class ModifierBuilder {
   }
 
   public Modifier build() {
-    return new Modifier(code, modes, levels, basicTypes, groupTypes, clazz, values, scope);
+    return new Modifier(
+        code, modes, levels, basicTypes, groupTypes, clazz, values, needMapping, scope);
   }
 }
