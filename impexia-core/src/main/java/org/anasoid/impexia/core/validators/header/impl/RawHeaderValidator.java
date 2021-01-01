@@ -35,19 +35,13 @@ import org.anasoid.impexia.meta.modifier.Modifier;
 public class RawHeaderValidator extends AbstractHeaderValidator {
 
   @Override
-  protected boolean validateAttribute(
-      ImpexHeader header, ImpexAttribute attribute, Mode mode, Level level) {
+  protected boolean validateAttribute(ImpexAttribute attribute, Mode mode) {
     return false;
   }
 
   @SuppressWarnings({"PMD.EmptyCatchBlock"})
   @Override
-  protected boolean validateModifier(
-      ImpexHeader impexHeader,
-      ImpexAttribute impexAttribute,
-      ImpexModifier impexModifier,
-      Mode mode,
-      Level level)
+  protected boolean validateModifier(ImpexModifier impexModifier, Mode mode)
       throws ImpexHeaderException {
 
     Modifier modifier = null;
@@ -59,7 +53,7 @@ public class RawHeaderValidator extends AbstractHeaderValidator {
 
     if (modifier != null) {
 
-      validateModifierLevel(modifier, level);
+      validateModifierLevel(modifier, impexModifier);
       validateModifierMode(modifier, mode);
     }
     return true;
@@ -71,7 +65,17 @@ public class RawHeaderValidator extends AbstractHeaderValidator {
     return true;
   }
 
-  protected void validateModifierLevel(Modifier modifier, Level level) throws ImpexHeaderException {
+  protected void validateModifierLevel(Modifier modifier, ImpexModifier impexModifier)
+      throws ImpexHeaderException {
+    Level level;
+    if (impexModifier.getAttribute() != null) {
+      level = Level.FIELD;
+    } else if (impexModifier.getHeader() != null) {
+      level = Level.TYPE;
+    } else {
+      throw new IllegalStateException("ImpexModifier has null level : " + impexModifier);
+    }
+
     if (!modifier.getLevels().contains(level)) {
       throw new AttributeModifierException(
           MessageFormat.format(

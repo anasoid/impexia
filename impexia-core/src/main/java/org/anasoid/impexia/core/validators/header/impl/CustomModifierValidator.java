@@ -24,10 +24,7 @@ import org.anasoid.impexia.core.validators.header.ModifierValidator;
 import org.anasoid.impexia.meta.Mode;
 import org.anasoid.impexia.meta.exceptions.header.AttributeModifierException;
 import org.anasoid.impexia.meta.exceptions.header.ImpexHeaderException;
-import org.anasoid.impexia.meta.header.ImpexAttribute;
-import org.anasoid.impexia.meta.header.ImpexHeader;
 import org.anasoid.impexia.meta.header.ImpexModifier;
-import org.anasoid.impexia.meta.modifier.Level;
 import org.anasoid.impexia.meta.modifier.Modifier;
 import org.anasoid.impexia.meta.modifier.ModifierManager;
 
@@ -36,13 +33,7 @@ public class CustomModifierValidator implements ModifierValidator {
 
   @Override
   @SuppressWarnings({"PMD.EmptyCatchBlock"})
-  public boolean validate(
-      ImpexHeader header,
-      ImpexAttribute attribute,
-      ImpexModifier impexModifier,
-      Mode mode,
-      Level level)
-      throws ImpexHeaderException {
+  public boolean validate(ImpexModifier impexModifier, Mode mode) throws ImpexHeaderException {
 
     Modifier modifier = null;
     try {
@@ -50,24 +41,22 @@ public class CustomModifierValidator implements ModifierValidator {
     } catch (java.lang.IllegalArgumentException e) {
       // nothing
     }
-    validateCustomModifier(header, attribute, impexModifier, modifier, level);
+    validateCustomModifier(impexModifier, modifier);
     return false;
   }
 
   @SuppressWarnings({"PMD.EmptyCatchBlock"})
-  protected void validateCustomModifier(
-      ImpexHeader header,
-      ImpexAttribute attribute,
-      ImpexModifier impexModifier,
-      Modifier modifier,
-      Level level)
+  protected void validateCustomModifier(ImpexModifier impexModifier, Modifier modifier)
       throws ImpexHeaderException {
     if (modifier == null) {
-      List<ImpexModifier> modifiers = null;
-      if (Level.FIELD.equals(level)) {
-        modifiers = attribute.getModifiers();
-      } else if (Level.TYPE.equals(level)) {
-        modifiers = header.getModifiers();
+      List<ImpexModifier> modifiers;
+
+      if (impexModifier.getAttribute() != null) {
+        modifiers = impexModifier.getAttribute().getModifiers();
+      } else if (impexModifier.getHeader() != null) {
+        modifiers = impexModifier.getHeader().getModifiers();
+      } else {
+        throw new IllegalStateException("ImpexModifier has null level : " + impexModifier);
       }
       boolean acceptCustom = false;
       for (ImpexModifier other : modifiers) {

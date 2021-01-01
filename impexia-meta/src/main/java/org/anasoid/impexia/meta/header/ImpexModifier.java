@@ -27,6 +27,8 @@ public abstract class ImpexModifier {
   protected String key;
   protected String value;
   protected Modifier modifier;
+  protected ImpexAttribute attribute;
+  protected ImpexHeader header;
 
   public String getKey() {
     return key;
@@ -38,5 +40,13 @@ public abstract class ImpexModifier {
 
   public Modifier getModifier() {
     return modifier;
+  }
+
+  public ImpexAttribute getAttribute() {
+    return attribute;
+  }
+
+  public ImpexHeader getHeader() {
+    return header;
   }
 }

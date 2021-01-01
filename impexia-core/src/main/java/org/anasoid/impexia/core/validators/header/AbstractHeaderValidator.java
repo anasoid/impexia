@@ -24,7 +24,6 @@ import org.anasoid.impexia.meta.exceptions.header.ImpexHeaderException;
 import org.anasoid.impexia.meta.header.ImpexAttribute;
 import org.anasoid.impexia.meta.header.ImpexHeader;
 import org.anasoid.impexia.meta.header.ImpexModifier;
-import org.anasoid.impexia.meta.modifier.Level;
 import org.anasoid.impexia.meta.modifier.Modifier;
 import org.anasoid.impexia.meta.modifier.ModifierManager;
 
@@ -37,14 +36,14 @@ public abstract class AbstractHeaderValidator implements HeaderValidator {
     validateHeader(header, mode);
     List<ImpexModifier> headerModifiers = header.getModifiers();
     for (ImpexModifier modifier : headerModifiers) {
-      validateModifier(header, null, modifier, mode, Level.TYPE);
+      validateModifier(modifier, mode);
     }
 
     List<ImpexAttribute> attributes = header.getAttributes();
     for (ImpexAttribute attribute : attributes) {
-      validateAttribute(header, attribute, mode, Level.FIELD);
+      validateAttribute(attribute, mode);
       for (ImpexModifier modifier : attribute.getModifiers()) {
-        validateModifier(header, attribute, modifier, mode, Level.FIELD);
+        validateModifier(modifier, mode);
       }
     }
   }
@@ -52,30 +51,23 @@ public abstract class AbstractHeaderValidator implements HeaderValidator {
   /**
    * Validate attribute.
    *
-   * @param header header
    * @param attribute attribute
    * @param mode mode
-   * @param level level
    * @return true, function do a check or not.
    * @throws ImpexHeaderException throw exception if header not valid.
    */
-  protected abstract boolean validateAttribute(
-      ImpexHeader header, ImpexAttribute attribute, Mode mode, Level level)
+  protected abstract boolean validateAttribute(ImpexAttribute attribute, Mode mode)
       throws ImpexHeaderException;
 
   /**
    * Validate Modifier.
    *
-   * @param header header
-   * @param attribute attribute
    * @param modifier modifier
    * @param mode mode
-   * @param level level
    * @return true, function do a check or not.
    * @throws ImpexHeaderException throw exception if header not valid.
    */
-  protected abstract boolean validateModifier(
-      ImpexHeader header, ImpexAttribute attribute, ImpexModifier modifier, Mode mode, Level level)
+  protected abstract boolean validateModifier(ImpexModifier modifier, Mode mode)
       throws ImpexHeaderException;
 
   /**

@@ -26,6 +26,7 @@ import java.util.List;
 public class ImpexMapping {
 
   protected String field;
+  protected ImpexAttribute parent;
   protected List<ImpexMapping> mappings = new ArrayList<>();
 
   public String getField() {
@@ -34,5 +35,9 @@ public class ImpexMapping {
 
   public List<ImpexMapping> getMappings() {
     return mappings;
+  }
+
+  public ImpexAttribute getParent() {
+    return parent;
   }
 }

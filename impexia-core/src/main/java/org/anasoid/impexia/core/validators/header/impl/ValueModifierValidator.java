@@ -23,10 +23,7 @@ import org.anasoid.impexia.core.validators.header.ModifierValidator;
 import org.anasoid.impexia.meta.Mode;
 import org.anasoid.impexia.meta.exceptions.header.AttributeModifierException;
 import org.anasoid.impexia.meta.exceptions.header.ImpexHeaderException;
-import org.anasoid.impexia.meta.header.ImpexAttribute;
-import org.anasoid.impexia.meta.header.ImpexHeader;
 import org.anasoid.impexia.meta.header.ImpexModifier;
-import org.anasoid.impexia.meta.modifier.Level;
 import org.anasoid.impexia.meta.modifier.Modifier;
 import org.anasoid.impexia.meta.modifier.ModifierManager;
 
@@ -35,13 +32,7 @@ public class ValueModifierValidator implements ModifierValidator {
 
   @Override
   @SuppressWarnings({"PMD.EmptyCatchBlock"})
-  public boolean validate(
-      ImpexHeader header,
-      ImpexAttribute attribute,
-      ImpexModifier impexModifier,
-      Mode mode,
-      Level level)
-      throws ImpexHeaderException {
+  public boolean validate(ImpexModifier impexModifier, Mode mode) throws ImpexHeaderException {
 
     Modifier modifier = null;
     try {

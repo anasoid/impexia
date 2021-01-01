@@ -24,15 +24,12 @@ import org.anasoid.impexia.meta.Mode;
 import org.anasoid.impexia.meta.exceptions.header.AttributeModifierException;
 import org.anasoid.impexia.meta.exceptions.header.ImpexHeaderException;
 import org.anasoid.impexia.meta.header.ImpexAttribute;
-import org.anasoid.impexia.meta.header.ImpexHeader;
-import org.anasoid.impexia.meta.modifier.Level;
 
 /** Default header Validator. */
 public class MappingAttribueValidator implements AttributeValidator {
 
   @Override
-  public boolean validate(ImpexHeader header, ImpexAttribute attribute, Mode mode, Level level)
-      throws ImpexHeaderException {
+  public boolean validate(ImpexAttribute attribute, Mode mode) throws ImpexHeaderException {
     boolean needMapping =
         attribute.getModifiers().stream()
             .anyMatch(m -> m.getModifier() != null && m.getModifier().isNeedMapping());

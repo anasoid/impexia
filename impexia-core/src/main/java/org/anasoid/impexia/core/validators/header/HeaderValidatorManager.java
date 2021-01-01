@@ -72,19 +72,19 @@ public class HeaderValidatorManager implements HeaderValidator {
     List<ImpexModifier> headerModifiers = header.getModifiers();
     for (ImpexModifier modifier : headerModifiers) {
       for (ModifierValidator modifierValidator : modifierHeaderValidators.values()) {
-        modifierValidator.validate(header, null, modifier, mode, Level.TYPE);
+        modifierValidator.validate(modifier, mode);
       }
     }
 
     List<ImpexAttribute> attributes = header.getAttributes();
     for (ImpexAttribute attribute : attributes) {
       for (AttributeValidator attributeValidator : attributeValidators.values()) {
-        attributeValidator.validate(header, attribute, mode, Level.FIELD);
+        attributeValidator.validate(attribute, mode);
       }
 
       for (ImpexModifier modifier : attribute.getModifiers()) {
         for (ModifierValidator modifierValidator : modifierAttributeValidators.values()) {
-          modifierValidator.validate(header, attribute, modifier, mode, Level.FIELD);
+          modifierValidator.validate(modifier, mode);
         }
       }
     }

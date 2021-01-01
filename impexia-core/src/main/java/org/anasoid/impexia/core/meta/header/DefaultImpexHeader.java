@@ -26,23 +26,50 @@ import org.anasoid.impexia.meta.header.ImpexModifier;
 
 public class DefaultImpexHeader extends ImpexHeader {
 
+  /**
+   * Constructors.
+   *
+   * @param type target type.
+   * @param action Impex action.
+   */
   public DefaultImpexHeader(String type, ImpexAction action) {
     this.type = type;
     this.action = action;
   }
 
+  /**
+   * Add modifier.
+   *
+   * @param modifier header modifier's.
+   * @return this.
+   */
   public DefaultImpexHeader addModifier(ImpexModifier modifier) {
     this.modifiers.add(modifier);
+    ((DefaultImpexModifier) modifier).setHeader(this);
     return this;
   }
 
+  /**
+   * Add modifiers.
+   *
+   * @param modifiers header modifier's.
+   * @return this.
+   */
   public DefaultImpexHeader addModifier(Collection<ImpexModifier> modifiers) {
     this.modifiers.addAll(modifiers);
+    modifiers.stream().forEach(m -> ((DefaultImpexModifier) m).setHeader(this));
     return this;
   }
 
+  /**
+   * Add attribute.
+   *
+   * @param attribute header header's.
+   * @return this.
+   */
   public DefaultImpexHeader addAttribute(ImpexAttribute attribute) {
     this.attributes.add(attribute);
+    ((DefaultImpexAttribute) attribute).setParent(this);
     return this;
   }
 
