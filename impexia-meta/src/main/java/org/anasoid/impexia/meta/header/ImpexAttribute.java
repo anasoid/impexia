@@ -26,6 +26,7 @@ import java.util.List;
 public abstract class ImpexAttribute {
 
   protected String field;
+  protected ImpexHeader parent;
   protected List<ImpexMapping> mappings = new ArrayList<>();
   protected boolean special;
 

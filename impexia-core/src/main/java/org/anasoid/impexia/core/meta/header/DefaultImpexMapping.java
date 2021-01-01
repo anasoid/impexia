@@ -19,6 +19,7 @@
 package org.anasoid.impexia.core.meta.header;
 
 import java.util.Collection;
+import org.anasoid.impexia.meta.header.ImpexAttribute;
 import org.anasoid.impexia.meta.header.ImpexMapping;
 
 public class DefaultImpexMapping extends ImpexMapping {
@@ -35,6 +36,10 @@ public class DefaultImpexMapping extends ImpexMapping {
   public DefaultImpexMapping addAllMapping(Collection<ImpexMapping> impexMappings) {
     this.getMappings().addAll(impexMappings);
     return this;
+  }
+
+  protected void setParent(ImpexAttribute parent) {
+    this.parent = parent;
   }
 
   @Override
