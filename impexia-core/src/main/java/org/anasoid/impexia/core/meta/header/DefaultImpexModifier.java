@@ -18,6 +18,8 @@
 
 package org.anasoid.impexia.core.meta.header;
 
+import org.anasoid.impexia.meta.header.ImpexAttribute;
+import org.anasoid.impexia.meta.header.ImpexHeader;
 import org.anasoid.impexia.meta.header.ImpexModifier;
 import org.anasoid.impexia.meta.modifier.Modifier;
 
@@ -46,6 +48,14 @@ public class DefaultImpexModifier extends ImpexModifier {
     this.key = key;
     this.value = value;
     this.modifier = modifier;
+  }
+
+  protected void setAttribute(ImpexAttribute attribute) {
+    this.attribute = attribute;
+  }
+
+  protected void setHeader(ImpexHeader header) {
+    this.header = header;
   }
 
   @Override

@@ -21,8 +21,6 @@ package org.anasoid.impexia.core.validators.header;
 import org.anasoid.impexia.meta.Mode;
 import org.anasoid.impexia.meta.exceptions.header.ImpexHeaderException;
 import org.anasoid.impexia.meta.header.ImpexAttribute;
-import org.anasoid.impexia.meta.header.ImpexHeader;
-import org.anasoid.impexia.meta.modifier.Level;
 
 /** Header validator interface. */
 public interface AttributeValidator {
@@ -30,14 +28,10 @@ public interface AttributeValidator {
   /**
    * Validate attribute.
    *
-   * @param header header
    * @param attribute attribute
    * @param mode mode
-   * @param level level
    * @return true, function do a check or not.
    * @throws ImpexHeaderException throw exception if header not valid.
    */
-  boolean validate(
-      ImpexHeader header, ImpexAttribute attribute, Mode mode, Level level)
-      throws ImpexHeaderException;
+  boolean validate(ImpexAttribute attribute, Mode mode) throws ImpexHeaderException;
 }
