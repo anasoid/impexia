@@ -191,7 +191,9 @@ class HeaderValidatorManagerTest {
     DefaultImpexHeader impexHeader =
         new DefaultImpexHeader("product", ImpexAction.INSERT)
             .addModifier(new DefaultImpexModifier(ModifierEnum.UNIQUE.toString(), "true"))
-            .addAttribute(new DefaultImpexAttribute("code", new ArrayList<>()));
+            .addAttribute(
+                new DefaultImpexAttribute("code", new ArrayList<>())
+                    .addModifier(new DefaultImpexModifier(ModifierEnum.UNIQUE.toString(), "true")));
 
     try {
       headerValidator.validate(impexHeader, Mode.IMPORT);
