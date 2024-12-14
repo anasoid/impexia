@@ -4,6 +4,9 @@ import com.opencsv.CSVReader;
 import com.opencsv.ICSVParser;
 import org.anasoid.impexia.csv.CsvReaderNullFieldIndicator;
 
+/**
+ * Config Csv Reader Builder.
+ */
 @SuppressWarnings("PMD.TooManyMethods")
 public class ConfigCsvReaderBuilder {
 

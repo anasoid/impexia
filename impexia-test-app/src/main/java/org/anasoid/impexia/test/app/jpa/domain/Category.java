@@ -28,6 +28,9 @@ import jakarta.persistence.Version;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * only for test.
+ */
 @Entity
 public class Category {
 

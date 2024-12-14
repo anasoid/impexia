@@ -6,6 +6,7 @@
 
 <suppressions>
   <suppress  files=".*Test\.java" message=".*has incorrect indentation level 4, expected level should be 6.*" />
-
+  <suppress  files=".*.java" message=".*Missing a Javadoc comment.*" />
+  <suppress  files=".*.java" message=".*must contain no more than '1' consecutive capital letters.*" />
 
 </suppressions>

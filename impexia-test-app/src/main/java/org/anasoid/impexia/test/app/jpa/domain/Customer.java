@@ -27,6 +27,9 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * only for test.
+ */
 @Entity
 public class Customer extends User {
 

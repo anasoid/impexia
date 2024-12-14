@@ -18,6 +18,9 @@
 
 package org.anasoid.impexia.csv.writer;
 
+/**
+ * Config Csv Writer.
+ */
 public class ConfigCsvWriter {
 
   private final char separatorChar;
@@ -46,22 +49,30 @@ public class ConfigCsvWriter {
     this.lineEnd = lineEnd;
   }
 
-  /** The delimiter to use for separating entries. */
+  /**
+   * The delimiter to use for separating entries.
+   */
   public char getSeparatorChar() {
     return separatorChar;
   }
 
-  /** The character to use for quoted elements. default (") */
+  /**
+   * The character to use for quoted elements. default (")
+   */
   public char getQuoteChar() {
     return quoteChar;
   }
 
-  /** The character to use for escaping a separator or quote default (\\). */
+  /**
+   * The character to use for escaping a separator or quote default (\\).
+   */
   public char getEscapeChar() {
     return escapeChar;
   }
 
-  /** lineEnd String to append at end of data (either "\n" or "\r\n"). */
+  /**
+   * lineEnd String to append at end of data (either "\n" or "\r\n").
+   */
   public String getLineEnd() {
     return lineEnd;
   }

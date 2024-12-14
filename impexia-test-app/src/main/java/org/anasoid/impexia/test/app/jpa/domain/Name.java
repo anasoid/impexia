@@ -20,6 +20,9 @@ package org.anasoid.impexia.test.app.jpa.domain;
 
 import jakarta.persistence.Embeddable;
 
+/**
+ * only for test.
+ */
 @Embeddable
 public class Name {
 
