@@ -20,6 +20,7 @@ activemq-data/
 classes/
 /build
 buildSrc/build
+buildUtils/*/build
 /impexia-*/build
 /src/asciidoc/build
 target/
