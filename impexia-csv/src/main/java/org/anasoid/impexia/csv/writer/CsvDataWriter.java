@@ -25,6 +25,9 @@ import java.io.Writer;
 import org.anasoid.impexia.core.data.IDataWriter;
 import org.anasoid.impexia.csv.opencsv.writer.OpenCsvWriterParserBuilder;
 
+/**
+ * Csv Data Writer.
+ */
 public class CsvDataWriter implements IDataWriter {
 
   private final ICSVWriter csvWriter;

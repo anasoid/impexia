@@ -37,8 +37,6 @@ public final class EntityManagerUtil {
 
   /**
    * get (test-app-jpa) EntityManager.
-   *
-   * @return
    */
   @SuppressWarnings("PMD.CloseResource")
   public static EntityManager getEntityManager() {

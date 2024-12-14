@@ -24,14 +24,16 @@ import java.util.Locale;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * Custom CSVParser to correct bug : 1- Writing null can be only writed as null or "", need to have
+ * Custom CSVParser to correct bug : 1- Writing null can be only writed as null or "", need to have.
  * empty separator Code from openCSV 5.3
  *
  * @see CSVParser
  */
 public class OpenCsvWriterParser extends OpenCsvParser {
 
-  /** Constructor. */
+  /**
+   * Constructor.
+   */
   public OpenCsvWriterParser(
       char separator,
       char quotechar,

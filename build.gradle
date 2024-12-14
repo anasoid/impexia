@@ -66,13 +66,14 @@ subprojects {
     checkstyle {
 
         configFile = rootProject.file('config/checkstyle/google_checks.xml')
-        toolVersion "8.35"
+        toolVersion "10.21.0"
         ignoreFailures = false
         maxErrors = 0
         maxWarnings = 0
 
     }
     pmd {
+        toolVersion = "7.8.0"
         consoleOutput = true
         sourceSets = [sourceSets.main]
         ruleSetFiles = files("${rootProject.projectDir}/config/pmd/pmd.xml")

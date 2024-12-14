@@ -29,6 +29,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+/**
+ * only for test.
+ */
 @Entity
 public class Order {
 

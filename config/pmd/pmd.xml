@@ -28,11 +28,9 @@
   <rule ref="category/java/security.xml"/>
 
   <rule ref="category/java/errorprone.xml">
-    <exclude name="DataflowAnomalyAnalysis"/>
     <exclude name="UseLocaleWithCaseConversions"/>
 
-    <!-- Duplicate from sonar -->
-    <exclude name="ReturnEmptyArrayRatherThanNull"/>
+
   </rule>
 
 </ruleset>

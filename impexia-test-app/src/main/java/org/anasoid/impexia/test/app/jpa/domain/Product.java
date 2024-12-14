@@ -29,6 +29,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * only for test.
+ */
 @Entity
 public class Product {
 

@@ -31,7 +31,7 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * Copy of {@link CSVParser} to be overridableenable as constructor was protected from openCSV 5.3
+ * Copy of {@link CSVParser} to be overridableenable as constructor was protected from openCSV 5.3.
  *
  * @see CSVParser
  */
@@ -39,19 +39,29 @@ import org.apache.commons.lang3.StringUtils;
 public abstract class OpenCsvParser extends AbstractCSVParser {
 
   private static final int BEGINNING_OF_LINE = 3;
-  /** This is the character that the CSVParser will treat as the escape character. */
+  /**
+   * This is the character that the CSVParser will treat as the escape character.
+   */
   private final char escape;
-  /** Determines if the field is between quotes (true) or between separators (false). */
+  /**
+   * Determines if the field is between quotes (true) or between separators (false).
+   */
   private final boolean strictQuotes;
-  /** Ignore any leading white space at the start of the field. */
+  /**
+   * Ignore any leading white space at the start of the field.
+   */
   private final boolean ignoreLeadingWhiteSpace;
-  /** Skip over quotation characters when parsing. */
+  /**
+   * Skip over quotation characters when parsing.
+   */
   private final boolean ignoreQuotations;
 
   private int tokensOnLastCompleteLine = -1;
   private boolean inField = false;
 
-  /** Locale for all translations. */
+  /**
+   * Locale for all translations.
+   */
   private Locale errorLocale;
 
   /**
@@ -60,15 +70,15 @@ public abstract class OpenCsvParser extends AbstractCSVParser {
    * <p>This constructor sets all necessary parameters for CSVParser, and intentionally has package
    * access so only the builder can use it.
    *
-   * @param separator The delimiter to use for separating entries
-   * @param quotechar The character to use for quoted elements
-   * @param escape The character to use for escaping a separator or quote
-   * @param strictQuotes If true, characters outside the quotes are ignored
+   * @param separator               The delimiter to use for separating entries
+   * @param quotechar               The character to use for quoted elements
+   * @param escape                  The character to use for escaping a separator or quote
+   * @param strictQuotes            If true, characters outside the quotes are ignored
    * @param ignoreLeadingWhiteSpace If true, white space in front of a quote in a field is ignored
-   * @param ignoreQuotations If true, treat quotations like any other character.
-   * @param nullFieldIndicator Which field content will be returned as null: EMPTY_SEPARATORS,
-   *     EMPTY_QUOTES, BOTH, NEITHER (default)
-   * @param errorLocale Locale for error messages.
+   * @param ignoreQuotations        If true, treat quotations like any other character.
+   * @param nullFieldIndicator      Which field content will be returned as null: EMPTY_SEPARATORS,
+   *                                EMPTY_QUOTES, BOTH, NEITHER (default)
+   * @param errorLocale             Locale for error messages.
    */
   protected OpenCsvParser(// NOSONAR
       char separator,
@@ -97,22 +107,30 @@ public abstract class OpenCsvParser extends AbstractCSVParser {
     this.ignoreQuotations = ignoreQuotations;
   }
 
-  /** The default escape character for this parser. */
+  /**
+   * The default escape character for this parser.
+   */
   public char getEscape() {
     return escape;
   }
 
-  /** The default strictQuotes setting for this parser. */
+  /**
+   * The default strictQuotes setting for this parser.
+   */
   public boolean isStrictQuotes() {
     return strictQuotes;
   }
 
-  /** The default ignoreLeadingWhiteSpace setting for this parser. */
+  /**
+   * The default ignoreLeadingWhiteSpace setting for this parser.
+   */
   public boolean isIgnoreLeadingWhiteSpace() {
     return ignoreLeadingWhiteSpace;
   }
 
-  /** The default ignoreQuotation setting for this parser. */
+  /**
+   * The default ignoreQuotation setting for this parser.
+   */
   public boolean isIgnoreQuotations() {
     return ignoreQuotations;
   }
@@ -123,7 +141,7 @@ public abstract class OpenCsvParser extends AbstractCSVParser {
    *
    * @param separator The defined separator character
    * @param quotechar The defined quotation cahracter
-   * @param escape The defined escape character
+   * @param escape    The defined escape character
    * @return True if any two of the three are the same.
    */
   private boolean anyCharactersAreTheSame(char separator, char quotechar, char escape) {
@@ -194,7 +212,7 @@ public abstract class OpenCsvParser extends AbstractCSVParser {
       if (pending != null) {
         String s = pending;
         pending = null;
-        return new String[] {s};
+        return new String[]{s};
       }
       return null; // NOSONAR
     }
@@ -243,27 +261,27 @@ public abstract class OpenCsvParser extends AbstractCSVParser {
       }
     }
     // line is done - check status
-    line_done: // NOSONAR
-    {
-      if (inQuotes && !ignoreQuotations) {
-        if (multi) {
-          // continuing a quoted section, re-append newline
-          sfc.append('\n');
-          pending = sfc.peekOutput();
-          break line_done; // this partial content is not to be added to field list yet
-        } else {
-          throw new IOException(
-              String.format(
-                  ResourceBundle.getBundle(DEFAULT_BUNDLE_NAME, errorLocale)
-                      .getString("unterminated.quote"),
-                  sfc.peekOutput()));
-        }
-      } else {
-        inField = false;
-      }
+    line_done:
+    // NOSONAR
 
-      tokensOnThisLine.add(convertEmptyToNullIfNeeded(sfc.takeOutput(), fromQuotedField));
+    if (inQuotes && !ignoreQuotations) {
+      if (multi) {
+        // continuing a quoted section, re-append newline
+        sfc.append('\n');
+        pending = sfc.peekOutput();
+        break line_done; // this partial content is not to be added to field list yet
+      } else {
+        throw new IOException(
+            String.format(
+                ResourceBundle.getBundle(DEFAULT_BUNDLE_NAME, errorLocale)
+                    .getString("unterminated.quote"),
+                sfc.peekOutput()));
+      }
+    } else {
+      inField = false;
     }
+
+    tokensOnThisLine.add(convertEmptyToNullIfNeeded(sfc.takeOutput(), fromQuotedField));
 
     tokensOnLastCompleteLine = tokensOnThisLine.size();
     return tokensOnThisLine.toArray(ArrayUtils.EMPTY_STRING_ARRAY);
@@ -335,7 +353,7 @@ public abstract class OpenCsvParser extends AbstractCSVParser {
    *
    * @param nextLine The current line
    * @param inQuotes True if the current context is quoted
-   * @param i Current index in line
+   * @param i        Current index in line
    * @return True if the following character is a quote
    */
   private boolean isNextCharacterEscapedQuote(String nextLine, boolean inQuotes, int i) {
@@ -397,7 +415,7 @@ public abstract class OpenCsvParser extends AbstractCSVParser {
    *
    * @param nextLine The current line
    * @param inQuotes True if the current context is quoted
-   * @param i Current index in line
+   * @param i        Current index in line
    * @return True if the following character is a quote
    */
   protected boolean isNextCharacterEscapable(String nextLine, boolean inQuotes, int i) {
@@ -416,6 +434,7 @@ public abstract class OpenCsvParser extends AbstractCSVParser {
    * inner loop of opencsv.
    */
   private static class StringFragmentCopier {
+
     private final String input;
     // Index of the next character in input to consume
     private int index = 0;

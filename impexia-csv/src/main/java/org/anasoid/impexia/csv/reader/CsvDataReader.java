@@ -36,6 +36,9 @@ import org.anasoid.impexia.meta.header.ImpexAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Csv Data Reader.
+ */
 public class CsvDataReader implements IDataReader {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(CsvDataReader.class);

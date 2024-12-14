@@ -1,5 +1,8 @@
 package org.anasoid.impexia.core.data;
 
+/**
+ * Data Line Builder.
+ */
 public class DataLineBuilder {
 
   private String[] record;

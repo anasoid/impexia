@@ -1,8 +1,9 @@
 package org.anasoid.impexia.meta.modifier;
 
 import java.util.Arrays;
-import java.util.HashSet;
+import java.util.EnumSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 import org.anasoid.impexia.meta.Mode;
 
 /**
@@ -13,10 +14,10 @@ import org.anasoid.impexia.meta.Mode;
 public class ModifierBuilder {
 
   private final String code;
-  private Set<Mode> modes = new HashSet<>(Arrays.asList(Mode.values()));
+  private Set<Mode> modes = EnumSet.allOf(Mode.class);
   private Set<Level> levels;
-  private Set<BasicType> basicTypes = new HashSet<>(Arrays.asList(BasicType.values()));
-  private Set<GroupType> groupTypes = new HashSet<>(Arrays.asList(GroupType.values()));
+  private Set<BasicType> basicTypes = EnumSet.allOf(BasicType.class);
+  private Set<GroupType> groupTypes = EnumSet.allOf(GroupType.class);
   private Class<?> clazz;
   private Set<String> values;
   private final String scope;
@@ -28,7 +29,7 @@ public class ModifierBuilder {
   }
 
   public ModifierBuilder setModes(Mode... modes) {
-    this.modes = new HashSet<>(Arrays.asList(modes));
+    this.modes = Arrays.asList(modes).stream().collect(Collectors.toSet());
     return this;
   }
 
@@ -38,17 +39,18 @@ public class ModifierBuilder {
   }
 
   public ModifierBuilder setLevels(Level... levels) {
-    this.levels = new HashSet<>(Arrays.asList(levels));
+    this.levels = Arrays.asList(levels).stream().collect(Collectors.toSet());
     return this;
   }
 
   public ModifierBuilder setBasicTypes(BasicType... basicTypes) {
-    this.basicTypes = new HashSet<>(Arrays.asList(basicTypes));
+    this.basicTypes = Arrays.asList(basicTypes).stream().collect(Collectors.toSet());
     return this;
   }
 
   public ModifierBuilder setGroupTypes(GroupType... groupTypes) {
-    this.groupTypes = new HashSet<>(Arrays.asList(groupTypes));
+    this.groupTypes = Arrays.asList(groupTypes).stream().collect(Collectors.toSet());
+    ;
     return this;
   }
 
@@ -58,7 +60,7 @@ public class ModifierBuilder {
   }
 
   public ModifierBuilder setValues(String... values) {
-    this.values = new HashSet<>(Arrays.asList(values));
+    this.values = Arrays.asList(values).stream().collect(Collectors.toSet());
     return this;
   }
 

@@ -22,6 +22,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
+/**
+ * only for test.
+ */
 @Entity
 public class Phone {
 

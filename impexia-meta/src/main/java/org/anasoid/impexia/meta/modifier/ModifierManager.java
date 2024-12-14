@@ -46,7 +46,7 @@ public final class ModifierManager {
     init();
   }
 
-  private static class LazyHolder {
+  private static final class LazyHolder {
 
     static final ModifierManager INSTANCE = new ModifierManager(); // NOPMD
   }
