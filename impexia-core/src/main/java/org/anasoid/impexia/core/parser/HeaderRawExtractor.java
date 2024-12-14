@@ -34,13 +34,16 @@ import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/** First level of parsing header. Extract raw field, mapping, modifiers as String. */
-@SuppressWarnings("PMD.GodClass")
+/**
+ * First level of parsing header. Extract raw field, mapping, modifiers as String.
+ */
+@SuppressWarnings({"PMD.CognitiveComplexity", "PMD.GodClass"})
 final class HeaderRawExtractor {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(HeaderRawExtractor.class);
 
-  private HeaderRawExtractor() {}
+  private HeaderRawExtractor() {
+  }
 
   protected static AttributeSplit split(String candidate, boolean header)
       throws InvalidHeaderFormatException {
@@ -90,8 +93,8 @@ final class HeaderRawExtractor {
     String mappingClean = mapping.trim();
     if (mappingClean.isEmpty()
         || (mappingClean.indexOf(']') < 0
-            && (mappingClean.charAt(0) == '(')
-            && (mappingClean.charAt(mappingClean.length() - 1) == ')'))) {
+        && (mappingClean.charAt(0) == '(')
+        && (mappingClean.charAt(mappingClean.length() - 1) == ')'))) {
       return mapping;
     }
     throw new InvalidHeaderFormatException(
@@ -102,7 +105,7 @@ final class HeaderRawExtractor {
     String candidateClean = candidate.trim();
     if (candidateClean.isEmpty()
         || ((candidateClean.charAt(0) == '[')
-            && (candidateClean.charAt(candidateClean.length() - 1) == ']'))) {
+        && (candidateClean.charAt(candidateClean.length() - 1) == ']'))) {
       return candidate;
     }
     throw new InvalidHeaderFormatException(

@@ -38,32 +38,32 @@ class HeaderParserTest {
 
   @ParameterizedTest
   @CsvSource({
-    "insert_update product [batchmode=true]; code (id) [unique=true],"
-        + " 'DefaultImpexHeader{type=''product'', action=INSERT_UPDATE,"
-        + " modifier=[DefaultImpexModifier"
-        + "{key=''batchmode'', value=''true'',"
-        + " modifier=Modifier{code=''batchmode'', scope=''GLOBAL''}}],"
-        + " attributes=[DefaultImpexAttribute"
-        + "{field=''code'', mappings=[DefaultImpexMapping{field=''id''}],"
-        + " special=false, modifier="
-        + "[DefaultImpexModifier{key=''unique'', value=''true'',"
-        + " modifier=Modifier{code=''unique'', scope=''GLOBAL''}}]}]}'",
-    "insert_update product [batchmode=true]; code (id) [unique=true];catalogvesion (id);"
-        + " name;date [dateformat=\'yyyy-MM-dd\'],"
-        + "'DefaultImpexHeader{type=''product'', action=INSERT_UPDATE,"
-        + " modifier=[DefaultImpexModifier{key=''batchmode'', value=''true'', "
-        + "modifier=Modifier{code=''batchmode'', scope=''GLOBAL''}}],"
-        + " attributes=[DefaultImpexAttribute{field=''code'',"
-        + " mappings=[DefaultImpexMapping{field=''id''}],"
-        + " special=false, modifier=[DefaultImpexModifier{key=''unique'', value=''true'',"
-        + " modifier=Modifier{code=''unique'', scope=''GLOBAL''}}]},"
-        + " DefaultImpexAttribute{field=''catalogvesion'',"
-        + " mappings=[DefaultImpexMapping{field=''id''}],"
-        + " special=false}, DefaultImpexAttribute{field=''name'', special=false},"
-        + " DefaultImpexAttribute{field=''date'',"
-        + " special=false, modifier=[DefaultImpexModifier{key=''dateformat'', "
-        + "value=''''yyyy-MM-dd'''',"
-        + " modifier=Modifier{code=''dateformat'', scope=''GLOBAL''}}]}]}'"
+      "insert_update product [batchmode=true]; code (id) [unique=true],"
+          + " 'DefaultImpexHeader{type=''product'', action=INSERT_UPDATE,"
+          + " modifier=[DefaultImpexModifier"
+          + "{key=''batchmode'', value=''true'',"
+          + " modifier=Modifier{code=''batchmode'', scope=''GLOBAL''}}],"
+          + " attributes=[DefaultImpexAttribute"
+          + "{field=''code'', mappings=[DefaultImpexMapping{field=''id''}],"
+          + " special=false, modifier="
+          + "[DefaultImpexModifier{key=''unique'', value=''true'',"
+          + " modifier=Modifier{code=''unique'', scope=''GLOBAL''}}]}]}'",
+      "insert_update product [batchmode=true]; code (id) [unique=true];catalogvesion (id);"
+          + " name;date [dateformat=\'yyyy-MM-dd\'],"
+          + "'DefaultImpexHeader{type=''product'', action=INSERT_UPDATE,"
+          + " modifier=[DefaultImpexModifier{key=''batchmode'', value=''true'', "
+          + "modifier=Modifier{code=''batchmode'', scope=''GLOBAL''}}],"
+          + " attributes=[DefaultImpexAttribute{field=''code'',"
+          + " mappings=[DefaultImpexMapping{field=''id''}],"
+          + " special=false, modifier=[DefaultImpexModifier{key=''unique'', value=''true'',"
+          + " modifier=Modifier{code=''unique'', scope=''GLOBAL''}}]},"
+          + " DefaultImpexAttribute{field=''catalogvesion'',"
+          + " mappings=[DefaultImpexMapping{field=''id''}],"
+          + " special=false}, DefaultImpexAttribute{field=''name'', special=false},"
+          + " DefaultImpexAttribute{field=''date'',"
+          + " special=false, modifier=[DefaultImpexModifier{key=''dateformat'', "
+          + "value=''''yyyy-MM-dd'''',"
+          + " modifier=Modifier{code=''dateformat'', scope=''GLOBAL''}}]}]}'"
   })
   void testParseHeaderSuccess(String header, String result) throws InvalidHeaderFormatException {
     String[] columns = header.split(";");
@@ -74,9 +74,9 @@ class HeaderParserTest {
   @ParameterizedTest
   @ValueSource(
       strings = {
-        "insert_update product [batchmode=true]",
-        "insert_update product [batchmode=true];insert_update product [batchmode=true]",
-        "insert_update product [batchmode=true];code[unique=true](id)",
+          "insert_update product [batchmode=true]",
+          "insert_update product [batchmode=true];insert_update product [batchmode=true]",
+          "insert_update product [batchmode=true];code[unique=true](id)",
       })
   void testParseHeaderError(String header) {
     try {
@@ -90,17 +90,17 @@ class HeaderParserTest {
 
   @ParameterizedTest
   @CsvSource({
-    "'[ unique = true ]','DefaultImpexModifier{key=''unique'', value=''true'',"
-        + " modifier=Modifier{code=''unique'', scope=''GLOBAL''}}'",
-    "'[unique=true][key=19]',"
-        + "'DefaultImpexModifier{key=''unique'', value=''true'',"
-        + " modifier=Modifier{code=''unique'', scope=''GLOBAL''}}|"
-        + "DefaultImpexModifier{key=''key'', value=''19''}'",
-    "'[unique=true ] [ key =\" 1]9\"]',"
-        + "'DefaultImpexModifier{key=''unique'', value=''true'',"
-        + " modifier=Modifier{code=''unique'', scope=''GLOBAL''}}|"
-        + "DefaultImpexModifier{key=''key'', value=''1]9''}'",
-    "'[ key = \"tr\"ue\" ]','DefaultImpexModifier{key=''key'', value=''tr\"ue''}'",
+      "'[ unique = true ]','DefaultImpexModifier{key=''unique'', value=''true'',"
+          + " modifier=Modifier{code=''unique'', scope=''GLOBAL''}}'",
+      "'[unique=true][key=19]',"
+          + "'DefaultImpexModifier{key=''unique'', value=''true'',"
+          + " modifier=Modifier{code=''unique'', scope=''GLOBAL''}}|"
+          + "DefaultImpexModifier{key=''key'', value=''19''}'",
+      "'[unique=true ] [ key =\" 1]9\"]',"
+          + "'DefaultImpexModifier{key=''unique'', value=''true'',"
+          + " modifier=Modifier{code=''unique'', scope=''GLOBAL''}}|"
+          + "DefaultImpexModifier{key=''key'', value=''1]9''}'",
+      "'[ key = \"tr\"ue\" ]','DefaultImpexModifier{key=''key'', value=''tr\"ue''}'",
   })
   void testParseModifierSuccess(String mapping, String result) throws InvalidHeaderFormatException {
 
@@ -121,20 +121,21 @@ class HeaderParserTest {
 
   @ParameterizedTest
   @CsvSource({
-    "'(id ,name )','DefaultImpexMapping{field=''id''}|DefaultImpexMapping{field=''name''}'",
-    "'(catalog (id,type) , version )',"
-        + "'DefaultImpexMapping{field=''catalog'', mappings=[DefaultImpexMapping{field=''id''},"
-        + " DefaultImpexMapping{field=''type''}]}|DefaultImpexMapping{field=''version''}'",
-    "'( catalog ( id ,type ), version,domaine (id, subid(id1,id2)) )',"
-        + "'DefaultImpexMapping{field=''catalog'', mappings=[DefaultImpexMapping{field=''id''}, "
-        + "DefaultImpexMapping{field=''type''}]}|"
-        + "DefaultImpexMapping{field=''version''}|"
-        + "DefaultImpexMapping{field=''domaine'', mappings=[DefaultImpexMapping{field=''id''},"
-        + " DefaultImpexMapping{field=''subid'',"
-        + " mappings=[DefaultImpexMapping{field=''id1''}, DefaultImpexMapping{field=''id2''}]}]}'",
-    "'(id1(id11(id111)))','DefaultImpexMapping{field=''id1'',"
-        + " mappings=[DefaultImpexMapping{field=''id11'',"
-        + " mappings=[DefaultImpexMapping{field=''id111''}]}]}'"
+      "'(id ,name )','DefaultImpexMapping{field=''id''}|DefaultImpexMapping{field=''name''}'",
+      "'(catalog (id,type) , version )',"
+          + "'DefaultImpexMapping{field=''catalog'', mappings=[DefaultImpexMapping{field=''id''},"
+          + " DefaultImpexMapping{field=''type''}]}|DefaultImpexMapping{field=''version''}'",
+      "'( catalog ( id ,type ), version,domaine (id, subid(id1,id2)) )',"
+          + "'DefaultImpexMapping{field=''catalog'', mappings=[DefaultImpexMapping{field=''id''}, "
+          + "DefaultImpexMapping{field=''type''}]}|"
+          + "DefaultImpexMapping{field=''version''}|"
+          + "DefaultImpexMapping{field=''domaine'', mappings=[DefaultImpexMapping{field=''id''},"
+          + " DefaultImpexMapping{field=''subid'',"
+          + " mappings=[DefaultImpexMapping{field=''id1''}, "
+          + "DefaultImpexMapping{field=''id2''}]}]}'",
+      "'(id1(id11(id111)))','DefaultImpexMapping{field=''id1'',"
+          + " mappings=[DefaultImpexMapping{field=''id11'',"
+          + " mappings=[DefaultImpexMapping{field=''id111''}]}]}'"
   })
   void testParseMappingSuccess(String mapping, String result) throws InvalidHeaderFormatException {
 
@@ -145,24 +146,24 @@ class HeaderParserTest {
   @ParameterizedTest
   @ValueSource(
       strings = {
-        "(id,name",
-        "id,name)",
-        "((id,name)",
-        "(id,name))",
-        "(id,name),",
-        "(id1,id2(id21,)),",
-        "(id1,id 2(id21))",
-        "(id1,id[g(id21))",
-        "(id1,((id21)))",
-        "((id1))",
-        "(id1",
-        "(id1,(id21,id22)),",
-        "(id1,(id21,id22)",
-        "(id1,id2((id21,id22))),",
-        "(catalog (id,type)x, version )",
-        "( )",
-        "(id11,  )",
-        "(id11, ,id12 )"
+          "(id,name",
+          "id,name)",
+          "((id,name)",
+          "(id,name))",
+          "(id,name),",
+          "(id1,id2(id21,)),",
+          "(id1,id 2(id21))",
+          "(id1,id[g(id21))",
+          "(id1,((id21)))",
+          "((id1))",
+          "(id1",
+          "(id1,(id21,id22)),",
+          "(id1,(id21,id22)",
+          "(id1,id2((id21,id22))),",
+          "(catalog (id,type)x, version )",
+          "( )",
+          "(id11,  )",
+          "(id11, ,id12 )"
       })
   void testParseMappingError(String mapping) {
     try {

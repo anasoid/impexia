@@ -55,7 +55,7 @@ public class CsvDataReader implements IDataReader {
   /**
    * default constructor.
    *
-   * @param file csv file
+   * @param file      csv file
    * @param configCsv config csv
    * @throws IOException if there is any problem to read file
    */
@@ -91,7 +91,7 @@ public class CsvDataReader implements IDataReader {
     }
   }
 
-  @SuppressWarnings({"PMD.CloseResource", "PMD.AvoidFileStream"})
+  @SuppressWarnings({"PMD.CloseResource", "PMD.AvoidFileStream", "PMD.UseTryWithResources"})
   private CSVReader getCsvReader() throws IOException {
     Reader reader = new InputStreamReader(new FileInputStream(file), configCsv.getCharsetName());
     CSVReader internalCsvReader = null;
@@ -123,6 +123,7 @@ public class CsvDataReader implements IDataReader {
     return internalCsvReader;
   }
 
+  @SuppressWarnings("PMD.CognitiveComplexity")
   private void initializeHeader() throws IOException { // NOSONAR
 
     if (configCsv.isContainHeader()) {
@@ -160,6 +161,7 @@ public class CsvDataReader implements IDataReader {
     return csvReader.readNextSilently();
   }
 
+  @SuppressWarnings("PMD.ReturnEmptyCollectionRatherThanNull")
   private String[] readRecord(boolean isHeader) throws IOException {
     String[] line;
     while (hasNext) {
