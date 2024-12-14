@@ -6,7 +6,7 @@ commonsIo = "2.18.0"
 opencsv = "5.9"
 commonsLang = "3.17.0"
 hibernate = "6.6.3.Final"
-persistenceApi = "3.1.0"
+persistenceApi = "3.2.0"
 hsqldb="2.5.1"
 
 spring-dependency = "1.1.6"
