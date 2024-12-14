@@ -11,4 +11,5 @@ dependencies {
     //Test
     testRuntimeOnly(libs.hibernate.core)
     testRuntimeOnly(libs.hsqldb)
+
 }
