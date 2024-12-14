@@ -4,6 +4,7 @@ import com.opencsv.CSVReader;
 import com.opencsv.ICSVParser;
 import org.anasoid.impexia.csv.CsvReaderNullFieldIndicator;
 
+@SuppressWarnings("PMD.TooManyMethods")
 public class ConfigCsvReaderBuilder {
 
   private String charsetName = "UTF-8";
