@@ -18,30 +18,33 @@
 
 package org.anasoid.impexia.test.app.jpa.domain;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 
 @Entity
 public class Order {
+
   @Id
   @Column(unique = true)
   @GeneratedValue()
   private UUID id;
 
-  @ElementCollection() private Map<Product, Long> orderEntries = new HashMap<>(); // NOPMD
+  @ElementCollection()
+  private Map<Product, Long> orderEntries = new HashMap<>(); // NOPMD
 
   @OneToOne(orphanRemoval = true, optional = false)
   private Address deliveryAddress;
 
-  @ManyToOne private Customer customer;
+  @ManyToOne
+  private Customer customer;
 
   public UUID getId() {
     return id;

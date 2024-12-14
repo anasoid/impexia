@@ -18,24 +18,29 @@
 
 package org.anasoid.impexia.test.app.jpa;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 
-/** Entity Manager Util Only for Test. */
+/**
+ * Entity Manager Util Only for Test.
+ */
 public final class EntityManagerUtil {
+
   // USE THE SAME NAME IN persistence.xml!
   public static final String PERSISTENCE_UNIT_NAME = "test-app-jpa";
 
   private static EntityManager entityManager;
 
-  private EntityManagerUtil() {}
+  private EntityManagerUtil() {
+  }
 
   /**
    * get (test-app-jpa) EntityManager.
    *
    * @return
    */
+  @SuppressWarnings("PMD.CloseResource")
   public static EntityManager getEntityManager() {
     if (entityManager == null) {
       // the same in persistence.xml

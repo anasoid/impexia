@@ -18,15 +18,15 @@
 
 package org.anasoid.impexia.test.app.jpa.domain;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Version;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Version;
 
 @Entity
 public class Category {
@@ -35,16 +35,19 @@ public class Category {
   @Column(unique = true)
   private String code;
 
-  @Version private long version;
+  @Version
+  private long version;
 
   private String name;
 
-  @ManyToOne() private Category superCategory;
+  @ManyToOne()
+  private Category superCategory;
 
   @OneToMany(mappedBy = "superCategory")
   private List<Category> subCategories;
 
-  @ManyToMany() private List<Product> products = new ArrayList<>();
+  @ManyToMany()
+  private List<Product> products = new ArrayList<>();
 
   public String getCode() {
     return code;

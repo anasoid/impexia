@@ -14,8 +14,8 @@ apply plugin: "java-library"
 dependencies {
 
 
-    implementation("org.hibernate:hibernate-core:$hibernateVersion")
-
+    implementation("jakarta.persistence:jakarta.persistence-api:$jakartaPersistenceVersion")
+    testRuntimeOnly("org.hibernate:hibernate-core:$hibernateVersion")
     testRuntimeOnly("org.hsqldb:hsqldb:2.5.1")
 
 	

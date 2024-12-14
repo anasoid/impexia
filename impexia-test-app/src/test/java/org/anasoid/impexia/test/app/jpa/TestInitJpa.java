@@ -18,14 +18,15 @@
 
 package org.anasoid.impexia.test.app.jpa;
 
+import jakarta.persistence.EntityManager;
 import java.util.Objects;
-import javax.persistence.EntityManager;
 import org.anasoid.impexia.test.app.jpa.domain.Name;
 import org.anasoid.impexia.test.app.jpa.domain.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class TestInitJpa {
+
   @Test
   void testSaveUser() {
 
