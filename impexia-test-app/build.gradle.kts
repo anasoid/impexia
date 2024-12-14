@@ -10,5 +10,5 @@ dependencies {
     implementation(libs.jakarta.persistence.api)
     //Test
     testRuntimeOnly(libs.hibernate.core)
-    testRuntimeOnly("org.hsqldb:hsqldb:2.5.1")
+    testRuntimeOnly(libs.hsqldb)
 }
