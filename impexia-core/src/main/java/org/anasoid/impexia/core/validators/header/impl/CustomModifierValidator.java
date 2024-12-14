@@ -28,7 +28,9 @@ import org.anasoid.impexia.meta.header.ImpexModifier;
 import org.anasoid.impexia.meta.modifier.Modifier;
 import org.anasoid.impexia.meta.modifier.ModifierManager;
 
-/** Default header Validator. */
+/**
+ * Default header Validator.
+ */
 public class CustomModifierValidator implements ModifierValidator {
 
   @Override
@@ -45,7 +47,7 @@ public class CustomModifierValidator implements ModifierValidator {
     return false;
   }
 
-  @SuppressWarnings({"PMD.EmptyCatchBlock"})
+  @SuppressWarnings({"PMD.EmptyCatchBlock", "PMD.CognitiveComplexity"})
   protected void validateCustomModifier(ImpexModifier impexModifier, Modifier modifier)
       throws ImpexHeaderException {
     if (modifier == null) {
