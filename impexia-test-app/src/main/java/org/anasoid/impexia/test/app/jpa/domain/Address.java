@@ -18,14 +18,17 @@
 
 package org.anasoid.impexia.test.app.jpa.domain;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import java.util.UUID;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 
 @Entity
 public class Address {
-  @Id @GeneratedValue private UUID id;
+
+  @Id
+  @GeneratedValue
+  private UUID id;
   private String line1;
   private String line2;
   private String city;

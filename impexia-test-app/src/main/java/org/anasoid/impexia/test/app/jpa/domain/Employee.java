@@ -18,7 +18,7 @@
 
 package org.anasoid.impexia.test.app.jpa.domain;
 
-import javax.persistence.Entity;
+import jakarta.persistence.Entity;
 
 @Entity
 public class Employee extends User {

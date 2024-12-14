@@ -18,32 +18,36 @@
 
 package org.anasoid.impexia.test.app.jpa.domain;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Version;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.Version;
 
 @Entity
 public class Product {
+
   @Id()
   @Column(unique = true)
   private String code;
 
-  @Version private long version;
+  @Version
+  private long version;
 
   private String name;
-  @ElementCollection private List<String> keywords = new ArrayList<>();
+  @ElementCollection
+  private List<String> keywords = new ArrayList<>();
 
   @ManyToMany(mappedBy = "products")
   private List<Category> categories = new ArrayList<>();
 
-  @ElementCollection() private Map<String, Long> prices = new HashMap<>(); // NOPMD
+  @ElementCollection()
+  private Map<String, Long> prices = new HashMap<>(); // NOPMD
 
   public String getCode() {
     return code;
