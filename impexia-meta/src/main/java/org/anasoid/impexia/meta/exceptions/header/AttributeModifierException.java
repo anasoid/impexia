@@ -18,7 +18,7 @@
 
 package org.anasoid.impexia.meta.exceptions.header;
 
-/** Exception to be throw when validation of modifier. */
+/** Exception to be thrown when validation of modifier. */
 public class AttributeModifierException extends ImpexHeaderException {
   static final long serialVersionUID = -3387516993124229948L;
 

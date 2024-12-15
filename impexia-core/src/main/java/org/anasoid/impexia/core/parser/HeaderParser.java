@@ -25,11 +25,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.anasoid.impexia.core.exceptions.InvalidHeaderFormatException;
-import org.anasoid.impexia.core.meta.header.DefaultImpexAttribute;
-import org.anasoid.impexia.core.meta.header.DefaultImpexHeader;
-import org.anasoid.impexia.core.meta.header.DefaultImpexMapping;
-import org.anasoid.impexia.core.meta.header.DefaultImpexModifier;
+import org.anasoid.impexia.meta.header.ImpexAttribute;
+import org.anasoid.impexia.meta.header.ImpexHeader;
 import org.anasoid.impexia.meta.header.ImpexMapping;
+import org.anasoid.impexia.meta.header.ImpexMapping.ImpexMappingBuilder;
 import org.anasoid.impexia.meta.header.ImpexModifier;
 import org.anasoid.impexia.meta.modifier.Modifier;
 import org.anasoid.impexia.meta.modifier.ModifierManager;
@@ -42,28 +41,31 @@ public final class HeaderParser {
   private HeaderParser() {}
 
   @SuppressWarnings({"PMD.AvoidInstantiatingObjectsInLoops", "PMD.AvoidLiteralsInIfCondition"})
-  protected static DefaultImpexHeader parseHeaderRow(String... columns)
+  protected static ImpexHeader parseHeaderRow(String... columns)
       throws InvalidHeaderFormatException {
 
     if (columns.length < 2) {
       throw new InvalidHeaderFormatException(
           MessageFormat.format(InvalidHeaderFormatException.ERROR_INVALID, Arrays.asList(columns)));
     }
-    DefaultImpexHeader impexHeader = null;
+    ImpexHeader.ImpexHeaderBuilder impexHeaderBuild = null;
     for (int i = 0; i < columns.length; i++) {
       try {
         if (i == 0) {
           AttributeSplit split = HeaderRawExtractor.split(columns[i], true);
-          impexHeader = new DefaultImpexHeader(split.getField(), split.getAction());
+          impexHeaderBuild = ImpexHeader.builder().type(split.getField()).action(split.getAction());
           if (StringUtils.isNotBlank(split.getModifiers())) {
-            impexHeader.addModifier(parseModifier(split.getModifiers()));
+            impexHeaderBuild.modifiers(parseModifier(split.getModifiers()));
           }
         } else {
           AttributeSplit split = HeaderRawExtractor.split(columns[i], false);
-          DefaultImpexAttribute attribute =
-              new DefaultImpexAttribute(split.getField(), parseMapping(split.getMappings()));
-          attribute.addModifier(parseModifier(split.getModifiers()));
-          impexHeader.addAttribute(attribute);
+          ImpexAttribute attribute =
+              ImpexAttribute.builder()
+                  .field(split.getField())
+                  .mappings(parseMapping(split.getMappings()))
+                  .modifiers(parseModifier(split.getModifiers()))
+                  .build();
+          impexHeaderBuild.attribute(attribute);
         }
       } catch (Exception e) { // NOPMD
         throw new InvalidHeaderFormatException(
@@ -73,7 +75,7 @@ public final class HeaderParser {
       }
     }
 
-    return impexHeader;
+    return impexHeaderBuild != null ? impexHeaderBuild.build() : null;
   }
 
   @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
@@ -90,8 +92,8 @@ public final class HeaderParser {
       } catch (IllegalArgumentException e) { // NOPMD
         // nothing
       }
-      DefaultImpexModifier impexModifier =
-          new DefaultImpexModifier(key, extract.get(1), modifier); // NOPMD
+      ImpexModifier impexModifier =
+          ImpexModifier.builder().key(key).value(extract.get(1)).modifier(modifier).build();
       result.add(impexModifier);
     }
     return result;
@@ -101,17 +103,21 @@ public final class HeaderParser {
   protected static List<ImpexMapping> parseMapping(String rawMapping)
       throws InvalidHeaderFormatException {
     List<ImpexMapping> result = new ArrayList<>();
-    DefaultImpexMapping impexMapping;
+
     List<String> mappingList = HeaderRawExtractor.splitMapping(rawMapping);
     for (String mapping : mappingList) {
       List<String> extract = extractFieldFromMapping(mapping);
+      ImpexMappingBuilder impexMappingBuilder;
       if (extract.get(1) != null) {
-        impexMapping = new DefaultImpexMapping(extract.get(0).trim());
-        impexMapping.addAllMapping(parseMapping(extract.get(1)));
+        impexMappingBuilder =
+            ImpexMapping.builder()
+                .field(extract.get(0).trim())
+                .mappings(parseMapping(extract.get(1)));
+
       } else {
-        impexMapping = new DefaultImpexMapping(extract.get(0).trim());
+        impexMappingBuilder = ImpexMapping.builder().field(extract.get(0).trim());
       }
-      result.add(impexMapping);
+      result.add(impexMappingBuilder.build());
     }
 
     return result;

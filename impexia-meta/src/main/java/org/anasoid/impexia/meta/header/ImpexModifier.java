@@ -18,35 +18,29 @@
 
 package org.anasoid.impexia.meta.header;
 
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 import org.anasoid.impexia.meta.modifier.Modifier;
 
 /** Impex Modifier description container. */
-@SuppressWarnings({"PMD.AbstractClassWithoutAbstractMethod"})
-public abstract class ImpexModifier {
+@SuperBuilder
+@ToString
+public class ImpexModifier {
 
-  protected String key;
-  protected String value;
-  protected Modifier modifier;
+  @Getter protected String key;
+  @Getter protected String value;
+  @Getter protected Modifier modifier;
+
+  @Setter(AccessLevel.PROTECTED)
+  @Getter
+  @ToString.Exclude
   protected ImpexAttribute attribute;
+
+  @Setter(AccessLevel.PROTECTED)
+  @Getter
+  @ToString.Exclude
   protected ImpexHeader header;
-
-  public String getKey() {
-    return key;
-  }
-
-  public String getValue() {
-    return value;
-  }
-
-  public Modifier getModifier() {
-    return modifier;
-  }
-
-  public ImpexAttribute getAttribute() {
-    return attribute;
-  }
-
-  public ImpexHeader getHeader() {
-    return header;
-  }
 }

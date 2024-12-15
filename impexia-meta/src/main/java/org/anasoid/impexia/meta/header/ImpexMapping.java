@@ -18,26 +18,26 @@
 
 package org.anasoid.impexia.meta.header;
 
-import java.util.ArrayList;
 import java.util.List;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.Singular;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 /** Impex mapping description container. */
 @SuppressWarnings({"PMD.AbstractClassWithoutAbstractMethod"})
+@SuperBuilder
+@Getter
+@ToString
 public class ImpexMapping {
 
   protected String field;
+
+  @Setter(AccessLevel.PROTECTED)
+  @ToString.Exclude
   protected ImpexAttribute parent;
-  protected List<ImpexMapping> mappings = new ArrayList<>();
 
-  public String getField() {
-    return field;
-  }
-
-  public List<ImpexMapping> getMappings() {
-    return mappings;
-  }
-
-  public ImpexAttribute getParent() {
-    return parent;
-  }
+  @Singular protected List<ImpexMapping> mappings;
 }
