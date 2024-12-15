@@ -18,31 +18,31 @@
 
 package org.anasoid.impexia.meta.header;
 
-import java.util.ArrayList;
 import java.util.List;
+import lombok.Getter;
+import lombok.Singular;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 /** Impex Header description container. */
-@SuppressWarnings({"PMD.AbstractClassWithoutAbstractMethod"})
-public abstract class ImpexHeader {
+@SuperBuilder
+@Getter
+@ToString
+public class ImpexHeader {
 
   protected String type;
   protected ImpexAction action;
-  protected List<ImpexModifier> modifiers = new ArrayList<>();
-  protected List<ImpexAttribute> attributes = new ArrayList<>();
+  @Singular protected List<ImpexModifier> modifiers;
+  @Singular protected List<ImpexAttribute> attributes;
 
-  public String getType() {
-    return type;
-  }
+  private static final class ImpexHeaderBuilderImpl
+      extends ImpexHeaderBuilder<ImpexHeader, ImpexHeaderBuilderImpl> {
 
-  public ImpexAction getAction() {
-    return action;
-  }
-
-  public List<ImpexModifier> getModifiers() {
-    return modifiers;
-  }
-
-  public List<ImpexAttribute> getAttributes() {
-    return attributes;
+    public ImpexHeader build() {
+      ImpexHeader resul = new ImpexHeader(this);
+      resul.getModifiers().stream().forEach(m -> m.setHeader(resul));
+      resul.getAttributes().stream().forEach(m -> m.setParent(resul));
+      return resul;
+    }
   }
 }

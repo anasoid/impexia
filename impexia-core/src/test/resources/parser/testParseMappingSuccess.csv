@@ -1,0 +1,4 @@
+"(id ,name )","ImpexMapping(field=id, mappings=[])|ImpexMapping(field=name, mappings=[])"
+"(catalog (id,type) , version )","ImpexMapping(field=catalog, mappings=[ImpexMapping(field=id, mappings=[]), ImpexMapping(field=type, mappings=[])])|ImpexMapping(field=version, mappings=[])"
+"( catalog ( id ,type ), version,domaine (id, subid(id1,id2)) )","ImpexMapping(field=catalog, mappings=[ImpexMapping(field=id, mappings=[]), ImpexMapping(field=type, mappings=[])])|ImpexMapping(field=version, mappings=[])|ImpexMapping(field=domaine, mappings=[ImpexMapping(field=id, mappings=[]), ImpexMapping(field=subid, mappings=[ImpexMapping(field=id1, mappings=[]), ImpexMapping(field=id2, mappings=[])])])"
+"(id1(id11(id111)))","ImpexMapping(field=id1, mappings=[ImpexMapping(field=id11, mappings=[ImpexMapping(field=id111, mappings=[])])])"

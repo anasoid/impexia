@@ -18,33 +18,37 @@
 
 package org.anasoid.impexia.meta.header;
 
-import java.util.ArrayList;
 import java.util.List;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.Singular;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 /** Impex attribute description container. */
-@SuppressWarnings({"PMD.AbstractClassWithoutAbstractMethod"})
-public abstract class ImpexAttribute {
+@SuperBuilder
+@Getter
+@ToString
+public class ImpexAttribute {
 
   protected String field;
-  protected ImpexHeader parent;
-  protected List<ImpexMapping> mappings = new ArrayList<>();
+  @Singular protected List<ImpexMapping> mappings;
   protected boolean special;
+  @Singular protected List<ImpexModifier> modifiers;
 
-  protected List<ImpexModifier> modifiers = new ArrayList<>();
+  @Setter(AccessLevel.PROTECTED)
+  @ToString.Exclude
+  protected ImpexHeader parent;
 
-  public String getField() {
-    return field;
-  }
+  private static final class ImpexAttributeBuilderImpl
+      extends ImpexAttributeBuilder<ImpexAttribute, ImpexAttributeBuilderImpl> {
 
-  public List<ImpexMapping> getMappings() {
-    return mappings;
-  }
-
-  public boolean isSpecial() {
-    return special;
-  }
-
-  public List<ImpexModifier> getModifiers() {
-    return modifiers;
+    public ImpexAttribute build() {
+      ImpexAttribute result = new ImpexAttribute(this);
+      result.getMappings().stream().forEach(m -> m.setParent(result));
+      result.getModifiers().stream().forEach(m -> m.setAttribute(result));
+      return result;
+    }
   }
 }

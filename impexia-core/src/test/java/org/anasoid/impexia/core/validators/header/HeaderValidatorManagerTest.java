@@ -1,14 +1,14 @@
 package org.anasoid.impexia.core.validators.header;
 
-import java.util.ArrayList;
-import org.anasoid.impexia.core.meta.header.DefaultImpexAttribute;
-import org.anasoid.impexia.core.meta.header.DefaultImpexHeader;
-import org.anasoid.impexia.core.meta.header.DefaultImpexModifier;
+import java.util.List;
 import org.anasoid.impexia.meta.Mode;
 import org.anasoid.impexia.meta.exceptions.header.ActionException;
 import org.anasoid.impexia.meta.exceptions.header.AttributeModifierException;
 import org.anasoid.impexia.meta.exceptions.header.ImpexHeaderException;
 import org.anasoid.impexia.meta.header.ImpexAction;
+import org.anasoid.impexia.meta.header.ImpexAttribute;
+import org.anasoid.impexia.meta.header.ImpexHeader;
+import org.anasoid.impexia.meta.header.ImpexModifier;
 import org.anasoid.impexia.meta.modifier.ModifierEnum;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -20,13 +20,12 @@ import org.junit.jupiter.api.Test;
 
 class HeaderValidatorManagerTest {
 
-  private static HeaderValidatorManager headerValidator;
   private static final String INVALID_MODIFIER_MESSAGE =
       "custom attribute accepted only when Class modifier is used";
-
   private static final String INVALID_MODIFIER_MODE_MESSAGE = "is not acceptable by Mode";
   private static final String INVALID_MODIFIER_LEVEL_MESSAGE = "is not acceptable by Level";
   private static final String INVALID_MODIFIER_BOOLEAN_MESSAGE = "should be boolean";
+  private static HeaderValidatorManager headerValidator;
 
   @BeforeAll
   static void init() {
@@ -35,12 +34,17 @@ class HeaderValidatorManagerTest {
 
   @Test
   void failInvalidModifierHeader() throws ImpexHeaderException {
-    DefaultImpexHeader impexHeader = new DefaultImpexHeader("product", ImpexAction.INSERT);
-    impexHeader
-        .addModifier(new DefaultImpexModifier("uniq", "tr"))
-        .addAttribute(
-            new DefaultImpexAttribute("code", new ArrayList<>())
-                .addModifier(new DefaultImpexModifier("unique", "true")));
+    ImpexHeader impexHeader =
+        ImpexHeader.builder()
+            .type("product")
+            .action(ImpexAction.INSERT)
+            .modifier(ImpexModifier.builder().key("uniq").value("tr").build())
+            .attribute(
+                ImpexAttribute.builder()
+                    .field("code")
+                    .modifier(ImpexModifier.builder().key("unique").value("true").build())
+                    .build())
+            .build();
 
     try {
       headerValidator.validate(impexHeader, Mode.IMPORT);
@@ -58,12 +62,17 @@ class HeaderValidatorManagerTest {
 
   @Test
   void failInvalidModifierAttribute() throws ImpexHeaderException {
-    DefaultImpexHeader impexHeader = new DefaultImpexHeader("product", ImpexAction.INSERT);
-    impexHeader
-        .addAttribute(
-            new DefaultImpexAttribute("code", new ArrayList<>())
-                .addModifier(new DefaultImpexModifier("unique", "true")))
-        .addModifier(new DefaultImpexModifier("uniq", "tr"));
+    ImpexHeader impexHeader =
+        ImpexHeader.builder()
+            .type("product")
+            .action(ImpexAction.INSERT)
+            .modifier(ImpexModifier.builder().key("uniq").value("tr").build())
+            .attribute(
+                ImpexAttribute.builder()
+                    .field("code")
+                    .modifier(ImpexModifier.builder().key("unique").value("true").build())
+                    .build())
+            .build();
 
     try {
       headerValidator.validate(impexHeader, Mode.IMPORT);
@@ -81,11 +90,23 @@ class HeaderValidatorManagerTest {
 
   @Test
   void failInvalidModifierAttributeMulti() throws ImpexHeaderException {
-    DefaultImpexHeader impexHeader = new DefaultImpexHeader("product", ImpexAction.INSERT);
-    impexHeader.addAttribute(
-        new DefaultImpexAttribute("code", new ArrayList<>())
-            .addModifier(new DefaultImpexModifier("uniq", "tr"))
-            .addModifier(new DefaultImpexModifier(ModifierEnum.UNIQUE.toString(), "true")));
+
+    ImpexHeader impexHeader =
+        ImpexHeader.builder()
+            .type("product")
+            .action(ImpexAction.INSERT)
+            .attribute(
+                ImpexAttribute.builder()
+                    .field("code")
+                    .modifiers(
+                        List.of(
+                            ImpexModifier.builder().key("uniq").value("tr").build(),
+                            ImpexModifier.builder()
+                                .key(ModifierEnum.UNIQUE.toString())
+                                .value("true")
+                                .build()))
+                    .build())
+            .build();
 
     try {
       headerValidator.validate(impexHeader, Mode.IMPORT);
@@ -103,63 +124,125 @@ class HeaderValidatorManagerTest {
 
   @Test
   void validCustomModifierAttribute() throws ImpexHeaderException {
-    DefaultImpexHeader impexHeader = new DefaultImpexHeader("product", ImpexAction.INSERT);
-    impexHeader.addAttribute(
-        new DefaultImpexAttribute("code", new ArrayList<>())
-            .addModifier(new DefaultImpexModifier("uniq", "tr"))
-            .addModifier(new DefaultImpexModifier("unique", "true"))
-            .addModifier(new DefaultImpexModifier(ModifierEnum.TRANSLATOR.toString(), "tr")));
+    ImpexHeader impexHeader =
+        ImpexHeader.builder()
+            .type("product")
+            .action(ImpexAction.INSERT)
+            .attribute(
+                ImpexAttribute.builder()
+                    .field("code")
+                    .modifiers(
+                        List.of(
+                            ImpexModifier.builder().key("uniq").value("tr").build(),
+                            ImpexModifier.builder().key("unique").value("true").build(),
+                            ImpexModifier.builder()
+                                .key(ModifierEnum.TRANSLATOR.toString())
+                                .value("tr")
+                                .build()))
+                    .build())
+            .build();
 
     headerValidator.validate(impexHeader, Mode.IMPORT);
   }
 
   @Test
   void validCustomModifierHeader() throws ImpexHeaderException {
-    DefaultImpexHeader impexHeader =
-        new DefaultImpexHeader("product", ImpexAction.INSERT)
-            .addModifier(new DefaultImpexModifier(ModifierEnum.ERRORHANDLER.toString(), "tr"))
-            .addModifier(new DefaultImpexModifier("uniq", "tr"))
-            .addAttribute(
-                new DefaultImpexAttribute("code", new ArrayList<>())
-                    .addModifier(new DefaultImpexModifier("unique", "true")));
+    ImpexHeader impexHeader =
+        ImpexHeader.builder()
+            .type("product")
+            .action(ImpexAction.INSERT)
+            .modifiers(
+                List.of(
+                    ImpexModifier.builder()
+                        .key(ModifierEnum.ERRORHANDLER.toString())
+                        .value("tr")
+                        .build(),
+                    ImpexModifier.builder().key("uniq").value("tr").build()))
+            .attribute(
+                ImpexAttribute.builder()
+                    .field("code")
+                    .modifier(ImpexModifier.builder().key("unique").value("true").build())
+                    .build())
+            .build();
 
     headerValidator.validate(impexHeader, Mode.IMPORT);
   }
 
   @Test
   void validateModifierLevelAttribute() throws ImpexHeaderException {
-    DefaultImpexHeader impexHeader = new DefaultImpexHeader("product", ImpexAction.INSERT);
-    impexHeader.addAttribute(
-        new DefaultImpexAttribute("code", new ArrayList<>())
-            .addModifier(new DefaultImpexModifier("unique", "true"))
-            .addModifier(new DefaultImpexModifier("pathDelimiter", ":")));
+
+    ImpexHeader impexHeader =
+        ImpexHeader.builder()
+            .type("product")
+            .action(ImpexAction.INSERT)
+            .attribute(
+                ImpexAttribute.builder()
+                    .field("code")
+                    .modifier(
+                        ImpexModifier.builder()
+                            .key(ModifierEnum.UNIQUE.toString())
+                            .value("true")
+                            .build())
+                    .modifier(ImpexModifier.builder().key("pathDelimiter").value(":").build())
+                    .build())
+            .build();
 
     headerValidator.validate(impexHeader, Mode.IMPORT);
   }
 
   @Test
   void validateModifierBoolean() throws ImpexHeaderException {
-    DefaultImpexHeader impexHeader = new DefaultImpexHeader("product", ImpexAction.INSERT);
-    impexHeader.addAttribute(
-        new DefaultImpexAttribute("code", new ArrayList<>())
-            .addModifier(new DefaultImpexModifier(ModifierEnum.UNIQUE.toString(), "true")));
+    ImpexHeader impexHeader =
+        ImpexHeader.builder()
+            .type("product")
+            .action(ImpexAction.INSERT)
+            .attribute(
+                ImpexAttribute.builder()
+                    .field("code")
+                    .modifier(
+                        ImpexModifier.builder()
+                            .key(ModifierEnum.UNIQUE.toString())
+                            .value("true")
+                            .build())
+                    .build())
+            .build();
 
     headerValidator.validate(impexHeader, Mode.IMPORT);
 
-    impexHeader = new DefaultImpexHeader("product", ImpexAction.INSERT);
-    impexHeader.addAttribute(
-        new DefaultImpexAttribute("code", new ArrayList<>())
-            .addModifier(new DefaultImpexModifier(ModifierEnum.UNIQUE.toString(), "true")));
+    impexHeader =
+        ImpexHeader.builder()
+            .type("product")
+            .action(ImpexAction.INSERT)
+            .attribute(
+                ImpexAttribute.builder()
+                    .field("code")
+                    .modifier(
+                        ImpexModifier.builder()
+                            .key(ModifierEnum.UNIQUE.toString())
+                            .value("false")
+                            .build())
+                    .build())
+            .build();
 
     headerValidator.validate(impexHeader, Mode.IMPORT);
   }
 
   @Test
   void validateModifierBooleanFail() throws ImpexHeaderException {
-    DefaultImpexHeader impexHeader = new DefaultImpexHeader("product", ImpexAction.INSERT);
-    impexHeader.addAttribute(
-        new DefaultImpexAttribute("code", new ArrayList<>())
-            .addModifier(new DefaultImpexModifier(ModifierEnum.UNIQUE.toString(), "tr")));
+    ImpexHeader impexHeader =
+        ImpexHeader.builder()
+            .type("product")
+            .action(ImpexAction.INSERT)
+            .attribute(
+                ImpexAttribute.builder()
+                    .field("code")
+                    .modifier(
+                        ImpexModifier.builder()
+                            .key(ModifierEnum.UNIQUE.toString())
+                            .value("tr")
+                            .build())
+                    .build())
+            .build();
 
     try {
       headerValidator.validate(impexHeader, Mode.IMPORT);
@@ -172,10 +255,20 @@ class HeaderValidatorManagerTest {
 
   @Test
   void validateModifierMode() throws ImpexHeaderException {
-    DefaultImpexHeader impexHeader = new DefaultImpexHeader("product", ImpexAction.INSERT);
-    impexHeader.addAttribute(
-        new DefaultImpexAttribute("code", new ArrayList<>())
-            .addModifier(new DefaultImpexModifier(ModifierEnum.MANDATORY.toString(), "true")));
+    ImpexHeader impexHeader =
+        ImpexHeader.builder()
+            .type("product")
+            .action(ImpexAction.INSERT)
+            .attribute(
+                ImpexAttribute.builder()
+                    .field("code")
+                    .modifier(
+                        ImpexModifier.builder()
+                            .key(ModifierEnum.MANDATORY.toString())
+                            .value("true")
+                            .build())
+                    .build())
+            .build();
 
     try {
       headerValidator.validate(impexHeader, Mode.EXPORT);
@@ -187,12 +280,22 @@ class HeaderValidatorManagerTest {
 
   @Test
   void validateModifierLevel() throws ImpexHeaderException {
-    DefaultImpexHeader impexHeader =
-        new DefaultImpexHeader("product", ImpexAction.INSERT)
-            .addModifier(new DefaultImpexModifier(ModifierEnum.UNIQUE.toString(), "true"))
-            .addAttribute(
-                new DefaultImpexAttribute("code", new ArrayList<>())
-                    .addModifier(new DefaultImpexModifier(ModifierEnum.UNIQUE.toString(), "true")));
+    ImpexHeader impexHeader =
+        ImpexHeader.builder()
+            .type("product")
+            .action(ImpexAction.INSERT)
+            .modifier(
+                ImpexModifier.builder().key(ModifierEnum.UNIQUE.toString()).value("true").build())
+            .attribute(
+                ImpexAttribute.builder()
+                    .field("code")
+                    .modifier(
+                        ImpexModifier.builder()
+                            .key(ModifierEnum.UNIQUE.toString())
+                            .value("true")
+                            .build())
+                    .build())
+            .build();
 
     try {
       headerValidator.validate(impexHeader, Mode.IMPORT);
@@ -205,11 +308,20 @@ class HeaderValidatorManagerTest {
 
   @Test
   void validateModifierAction() throws ImpexHeaderException {
-    DefaultImpexHeader impexHeader =
-        new DefaultImpexHeader("product", null)
-            .addAttribute(
-                new DefaultImpexAttribute("code", new ArrayList<>())
-                    .addModifier(new DefaultImpexModifier(ModifierEnum.UNIQUE.toString(), "true")));
+    ImpexHeader impexHeader =
+        ImpexHeader.builder()
+            .type("product")
+            .action(null)
+            .attribute(
+                ImpexAttribute.builder()
+                    .field("code")
+                    .modifier(
+                        ImpexModifier.builder()
+                            .key(ModifierEnum.UNIQUE.toString())
+                            .value("true")
+                            .build())
+                    .build())
+            .build();
 
     try {
       headerValidator.validate(impexHeader, Mode.IMPORT);
