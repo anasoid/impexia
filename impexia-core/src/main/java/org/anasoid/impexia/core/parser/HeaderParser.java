@@ -75,7 +75,7 @@ public final class HeaderParser {
       }
     }
 
-    return impexHeaderBuild.build();
+    return impexHeaderBuild != null ? impexHeaderBuild.build() : null;
   }
 
   @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
