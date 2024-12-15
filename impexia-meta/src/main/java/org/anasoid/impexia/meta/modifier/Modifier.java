@@ -22,22 +22,28 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import lombok.Getter;
+import lombok.Singular;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 import org.anasoid.impexia.meta.Mode;
 
 /** Modifiers container. */
+@SuperBuilder
+@ToString(onlyExplicitlyIncluded = true)
 public class Modifier {
 
   public static final Set<String> BOOLEAN_VALUES =
       Collections.unmodifiableSet(new HashSet<>(Arrays.asList("true", "false")));
-  private final String code;
-  private final Set<Mode> modes;
-  private final Set<Level> levels;
-  private final Set<BasicType> basicTypes;
-  private final Set<GroupType> groupTypes;
+  @Getter @ToString.Include private final String code;
+  @Getter @Singular private final Set<Mode> modes;
+  @Getter @Singular private final Set<Level> levels;
+  @Getter @Singular private final Set<BasicType> basicTypes;
+  @Getter @Singular private final Set<GroupType> groupTypes;
   private final Class<?> clazz;
-  private final Set<String> values;
-  private final boolean needMapping;
-  private final String scope;
+  @Getter @Singular private final Set<String> values;
+  @Getter private final boolean needMapping;
+  @Getter @ToString.Include private final String scope;
 
   /**
    * Default constructor.
@@ -65,44 +71,7 @@ public class Modifier {
     this.scope = scope;
   }
 
-  public String getCode() {
-    return code;
-  }
-
-  public Set<Mode> getModes() {
-    return modes;
-  }
-
-  public Set<GroupType> getGroupTypes() {
-    return groupTypes;
-  }
-
-  public Set<BasicType> getBasicTypes() {
-    return basicTypes;
-  }
-
-  public Set<Level> getLevels() {
-    return levels;
-  }
-
   public boolean isAcceptCustomAttribute() {
     return clazz != null;
-  }
-
-  public Set<String> getValues() {
-    return values;
-  }
-
-  public String getScope() {
-    return scope;
-  }
-
-  public boolean isNeedMapping() {
-    return needMapping;
-  }
-
-  @Override
-  public String toString() {
-    return "Modifier{" + "code='" + code + '\'' + ", scope='" + scope + '\'' + '}';
   }
 }

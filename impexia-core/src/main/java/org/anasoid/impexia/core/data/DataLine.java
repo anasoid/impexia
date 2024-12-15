@@ -19,16 +19,23 @@
 package org.anasoid.impexia.core.data;
 
 import java.io.Serializable;
+import lombok.Getter;
 
 /** DTO for line. */
 public class DataLine implements Serializable {
 
   static final long serialVersionUID = -338751699312454948L;
 
-  private final String[] record;
-  private final long lineNumber;
-  private final long recordNumber;
-  private final long recordCount;
+  @Getter private final String[] record;
+
+  /** -- GETTER -- get line number. */
+  @Getter private final long lineNumber;
+
+  /** -- GETTER -- record number. */
+  @Getter private final long recordNumber;
+
+  /** -- GETTER -- is first line. */
+  @Getter private final long recordCount;
 
   /**
    * default constructor.
@@ -44,30 +51,5 @@ public class DataLine implements Serializable {
     this.lineNumber = lineNumber;
     this.recordNumber = recordNumber;
     this.recordCount = recordCount;
-  }
-
-  /**
-   * get row Data.
-   *
-   * @return row as array.
-   */
-  @SuppressWarnings("PMD.MethodReturnsInternalArray")
-  public String[] getRecord() {
-    return record;
-  }
-
-  /** get line number. */
-  public long getLineNumber() {
-    return lineNumber;
-  }
-
-  /** record number. */
-  public long getRecordNumber() {
-    return recordNumber;
-  }
-
-  /** is first line. */
-  public long getRecordCount() {
-    return recordCount;
   }
 }
