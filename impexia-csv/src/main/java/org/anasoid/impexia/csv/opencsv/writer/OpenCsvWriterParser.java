@@ -31,9 +31,7 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class OpenCsvWriterParser extends OpenCsvParser {
 
-  /**
-   * Constructor.
-   */
+  /** Constructor. */
   public OpenCsvWriterParser(
       char separator,
       char quotechar,
@@ -68,15 +66,14 @@ public class OpenCsvWriterParser extends OpenCsvParser {
     String convertedString = // NOSONAR
         !containsQuoteChar
             ? testValue
-            : testValue.replaceAll(// NOSONAR
+            : testValue.replaceAll(
                 Character.toString(getQuotechar()),
                 Character.toString(getQuotechar()) + getQuotechar());
     convertedString =
         !containsEscapeChar
             ? convertedString
-            : convertedString.replace(// NOSONAR
-                Character.toString(getEscape()),
-                Character.toString(getEscape()) + getEscape());
+            : convertedString.replace(
+                Character.toString(getEscape()), Character.toString(getEscape()) + getEscape());
     if (value != null) {
       if (surroundWithQuotes) {
         builder.append(getQuotechar());

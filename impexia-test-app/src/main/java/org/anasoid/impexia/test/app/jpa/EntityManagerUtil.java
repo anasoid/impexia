@@ -22,9 +22,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
-/**
- * Entity Manager Util Only for Test.
- */
+/** Entity Manager Util Only for Test. */
 public final class EntityManagerUtil {
 
   // USE THE SAME NAME IN persistence.xml!
@@ -32,12 +30,9 @@ public final class EntityManagerUtil {
 
   private static EntityManager entityManager;
 
-  private EntityManagerUtil() {
-  }
+  private EntityManagerUtil() {}
 
-  /**
-   * get (test-app-jpa) EntityManager.
-   */
+  /** get (test-app-jpa) EntityManager. */
   @SuppressWarnings("PMD.CloseResource")
   public static EntityManager getEntityManager() {
     if (entityManager == null) {

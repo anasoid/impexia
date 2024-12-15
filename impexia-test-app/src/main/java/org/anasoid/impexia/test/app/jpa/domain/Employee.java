@@ -20,11 +20,6 @@ package org.anasoid.impexia.test.app.jpa.domain;
 
 import jakarta.persistence.Entity;
 
-/**
- * only for test.
- */
+/** only for test. */
 @Entity
-public class Employee extends User {
-
-
-}
+public class Employee extends User {}

@@ -36,10 +36,10 @@ class HeaderRawExtractorTest {
 
   @ParameterizedTest
   @CsvSource({
-      " INSERT_UPDATE  Product  [unique= true] ,    INSERT_UPDATE,    Product,    [unique= true]",
-      " INSERT_UPDATE  Product   ,INSERT_UPDATE , Product,  ''",
-      " INSERT_UPDATE  Product  [unique= true] [batchmode=\"false\"] ,"
-          + " INSERT_UPDATE , Product , [unique= true] [batchmode=\"false\"]"
+    " INSERT_UPDATE  Product  [unique= true] ,    INSERT_UPDATE,    Product,    [unique= true]",
+    " INSERT_UPDATE  Product   ,INSERT_UPDATE , Product,  ''",
+    " INSERT_UPDATE  Product  [unique= true] [batchmode=\"false\"] ,"
+        + " INSERT_UPDATE , Product , [unique= true] [batchmode=\"false\"]"
   })
   void testSuccessHeader(String condidate, String action, String field, String modifiers)
       throws InvalidHeaderFormatException {
@@ -53,10 +53,10 @@ class HeaderRawExtractorTest {
   @ParameterizedTest
   @ValueSource(
       strings = {
-          " INSERT_UPDATE  Product()  [unique= true] [batchmode=\"false\"] ",
-          " INSERT_UPDATE  Product df  [unique= true] [batchmode=\"false\"] ",
-          " INSERT_UPDATE  Product]  [unique= true] [batchmode=\"false\"] ",
-          " INSERT_UPDAT  Product "
+        " INSERT_UPDATE  Product()  [unique= true] [batchmode=\"false\"] ",
+        " INSERT_UPDATE  Product df  [unique= true] [batchmode=\"false\"] ",
+        " INSERT_UPDATE  Product]  [unique= true] [batchmode=\"false\"] ",
+        " INSERT_UPDAT  Product "
       })
   void testHeaderError(String condidate) {
     try {
@@ -69,9 +69,9 @@ class HeaderRawExtractorTest {
 
   @ParameterizedTest
   @CsvSource({
-      "'[ unique = true ]','unique = true'",
-      "'[unique=true][key=19]','unique=true|key=19'",
-      "'[unique=true][ key =\" 1]9]','unique=true|key =\" 1]9'",
+    "'[ unique = true ]','unique = true'",
+    "'[unique=true][key=19]','unique=true|key=19'",
+    "'[unique=true][ key =\" 1]9]','unique=true|key =\" 1]9'",
   })
   void testSplitModifierSuccess(String mapping, String result) throws InvalidHeaderFormatException {
 
@@ -92,15 +92,15 @@ class HeaderRawExtractorTest {
 
   @ParameterizedTest
   @CsvSource({
-      "  code (id) [unique = true] , code,  (id),   [unique = true]",
-      "  code (id), code,  (id),   ''",
-      "  name , name,  '',   ''",
-      "  date [dateformat = \'yyyy-MM-dd\'] , date,  '',   [dateformat = \'yyyy-MM-dd\']",
-      "  date [dateformat = \'yyyy-MM-(dd)\'] , date,  '',   [dateformat = \'yyyy-MM-(dd)\']",
-      "  date [dateformat = \'yyyy-MM-dd)\'] , date,  '',   [dateformat = \'yyyy-MM-dd)\']",
-      "  date [dateformat = \'yyyy-MM-(dd\'] , date,  '',   [dateformat = \'yyyy-MM-(dd\']",
-      "  'code (id,catalog(id))[unique = true][unique = true]',"
-          + " code,  '(id,catalog(id))',   [unique = true][unique = true]"
+    "  code (id) [unique = true] , code,  (id),   [unique = true]",
+    "  code (id), code,  (id),   ''",
+    "  name , name,  '',   ''",
+    "  date [dateformat = \'yyyy-MM-dd\'] , date,  '',   [dateformat = \'yyyy-MM-dd\']",
+    "  date [dateformat = \'yyyy-MM-(dd)\'] , date,  '',   [dateformat = \'yyyy-MM-(dd)\']",
+    "  date [dateformat = \'yyyy-MM-dd)\'] , date,  '',   [dateformat = \'yyyy-MM-dd)\']",
+    "  date [dateformat = \'yyyy-MM-(dd\'] , date,  '',   [dateformat = \'yyyy-MM-(dd\']",
+    "  'code (id,catalog(id))[unique = true][unique = true]',"
+        + " code,  '(id,catalog(id))',   [unique = true][unique = true]"
   })
   void testSuccessAttribute(String candidate, String field, String mapping, String modifiers)
       throws InvalidHeaderFormatException {
@@ -114,13 +114,13 @@ class HeaderRawExtractorTest {
   @ParameterizedTest
   @ValueSource(
       strings = {
-          " code name (id) [unique = true] ",
-          " code] (id) [unique = true] ",
-          " code) (id) [unique = true] ",
-          " code) [unique = true] ",
-          " code [unique = true] (id)",
-          " code(id) [unique = true",
-          " code(id [unique = true]"
+        " code name (id) [unique = true] ",
+        " code] (id) [unique = true] ",
+        " code) (id) [unique = true] ",
+        " code) [unique = true] ",
+        " code [unique = true] (id)",
+        " code(id) [unique = true",
+        " code(id [unique = true]"
       })
   void testAttributeError(String condidate) {
     try {
@@ -133,11 +133,11 @@ class HeaderRawExtractorTest {
 
   @ParameterizedTest
   @CsvSource({
-      "'(id,name)','id|name'",
-      "'(catalog (id,type) , version )','catalog (id,type)|version'",
-      "'(catalog (id,type), version,domaine (id,subid(id1,id2)) )',"
-          + "'catalog (id,type)|version|domaine (id,subid(id1,id2))'",
-      "'(id1(id11(id111)))','id1(id11(id111))'"
+    "'(id,name)','id|name'",
+    "'(catalog (id,type) , version )','catalog (id,type)|version'",
+    "'(catalog (id,type), version,domaine (id,subid(id1,id2)) )',"
+        + "'catalog (id,type)|version|domaine (id,subid(id1,id2))'",
+    "'(id1(id11(id111)))','id1(id11(id111))'"
   })
   void testSplitMappingSuccess(String mapping, String result) throws InvalidHeaderFormatException {
 
@@ -148,18 +148,18 @@ class HeaderRawExtractorTest {
   @ParameterizedTest
   @ValueSource(
       strings = {
-          "(id,name",
-          "id,name)",
-          "((id,name)",
-          "(id,name))",
-          "(id,name),",
-          "(id1,id2(id21,)),",
-          "(id1,(id21,id22)),",
-          "(id1,id2((id21,id22))),",
-          "(catalog (id,type)x, version )",
-          "( )",
-          "(id11,  )",
-          "(id11, ,id12 )"
+        "(id,name",
+        "id,name)",
+        "((id,name)",
+        "(id,name))",
+        "(id,name),",
+        "(id1,id2(id21,)),",
+        "(id1,(id21,id22)),",
+        "(id1,id2((id21,id22))),",
+        "(catalog (id,type)x, version )",
+        "( )",
+        "(id11,  )",
+        "(id11, ,id12 )"
       })
   void testSplitMappingError(String mapping) {
     try {

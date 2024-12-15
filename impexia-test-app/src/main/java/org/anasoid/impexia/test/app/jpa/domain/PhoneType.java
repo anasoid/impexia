@@ -18,9 +18,7 @@
 
 package org.anasoid.impexia.test.app.jpa.domain;
 
-/**
- * only for test.
- */
+/** only for test. */
 public enum PhoneType {
   LAND_LINE,
   MOBILE;

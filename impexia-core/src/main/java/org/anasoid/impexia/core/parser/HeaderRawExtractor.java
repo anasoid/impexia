@@ -27,28 +27,25 @@ import static org.anasoid.impexia.core.ParserConstants.PARENTHESES_START;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import org.anasoid.impexia.core.exceptions.InvalidHeaderFormatException;
 import org.anasoid.impexia.meta.header.ImpexAction;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * First level of parsing header. Extract raw field, mapping, modifiers as String.
- */
+/** First level of parsing header. Extract raw field, mapping, modifiers as String. */
 @SuppressWarnings({"PMD.CognitiveComplexity", "PMD.GodClass"})
 final class HeaderRawExtractor {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(HeaderRawExtractor.class);
 
-  private HeaderRawExtractor() {
-  }
+  private HeaderRawExtractor() {}
 
   protected static AttributeSplit split(String candidate, boolean header)
       throws InvalidHeaderFormatException {
     AttributeSplit split = new AttributeSplit();
-    Validate.notNull(candidate);
+    Objects.requireNonNull(candidate);
     String candidateTrim = candidate.trim();
     // check header
     if (header) {
@@ -93,8 +90,8 @@ final class HeaderRawExtractor {
     String mappingClean = mapping.trim();
     if (mappingClean.isEmpty()
         || (mappingClean.indexOf(']') < 0
-        && (mappingClean.charAt(0) == '(')
-        && (mappingClean.charAt(mappingClean.length() - 1) == ')'))) {
+            && (mappingClean.charAt(0) == '(')
+            && (mappingClean.charAt(mappingClean.length() - 1) == ')'))) {
       return mapping;
     }
     throw new InvalidHeaderFormatException(
@@ -105,7 +102,7 @@ final class HeaderRawExtractor {
     String candidateClean = candidate.trim();
     if (candidateClean.isEmpty()
         || ((candidateClean.charAt(0) == '[')
-        && (candidateClean.charAt(candidateClean.length() - 1) == ']'))) {
+            && (candidateClean.charAt(candidateClean.length() - 1) == ']'))) {
       return candidate;
     }
     throw new InvalidHeaderFormatException(

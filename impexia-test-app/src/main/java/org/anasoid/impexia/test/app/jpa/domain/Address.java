@@ -23,15 +23,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import java.util.UUID;
 
-/**
- * only for test.
- */
+/** only for test. */
 @Entity
 public class Address {
 
-  @Id
-  @GeneratedValue
-  private UUID id;
+  @Id @GeneratedValue private UUID id;
   private String line1;
   private String line2;
   private String city;

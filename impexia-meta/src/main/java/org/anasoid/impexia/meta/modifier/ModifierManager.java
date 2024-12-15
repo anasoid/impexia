@@ -65,7 +65,7 @@ public final class ModifierManager {
     // batchmode
     register(
         new ModifierBuilder(
-            ModifierEnum.BATCHMODE.toString().toLowerCase(Locale.ROOT), DEFAULT_SCOPE)
+                ModifierEnum.BATCHMODE.toString().toLowerCase(Locale.ROOT), DEFAULT_SCOPE)
             .setModes(Mode.IMPORT)
             .setLevels(Level.TYPE)
             .setValues(Modifier.BOOLEAN_VALUES)
@@ -80,7 +80,7 @@ public final class ModifierManager {
     // errorHandler
     register(
         new ModifierBuilder(
-            ModifierEnum.ERRORHANDLER.toString().toLowerCase(Locale.ROOT), DEFAULT_SCOPE)
+                ModifierEnum.ERRORHANDLER.toString().toLowerCase(Locale.ROOT), DEFAULT_SCOPE)
             .setModes(Mode.IMPORT)
             .setLevels(Level.TYPE)
             .setClazz(ErrorHandler.class)
@@ -88,49 +88,49 @@ public final class ModifierManager {
     // cellDecorator
     register(
         new ModifierBuilder(
-            ModifierEnum.CELLDECORATOR.toString().toLowerCase(Locale.ROOT), DEFAULT_SCOPE)
+                ModifierEnum.CELLDECORATOR.toString().toLowerCase(Locale.ROOT), DEFAULT_SCOPE)
             .setLevels(Level.FIELD)
             .setClazz(Decorator.class)
             .build());
     // translator
     register(
         new ModifierBuilder(
-            ModifierEnum.TRANSLATOR.toString().toLowerCase(Locale.ROOT), DEFAULT_SCOPE)
+                ModifierEnum.TRANSLATOR.toString().toLowerCase(Locale.ROOT), DEFAULT_SCOPE)
             .setLevels(Level.FIELD)
             .setClazz(Translator.class)
             .build());
     // collection-delimiter
     register(
         new ModifierBuilder(
-            ModifierEnum.COLLECTIONDELIMITER.toString().toLowerCase(Locale.ROOT), DEFAULT_SCOPE)
+                ModifierEnum.COLLECTIONDELIMITER.toString().toLowerCase(Locale.ROOT), DEFAULT_SCOPE)
             .setLevels(Level.FIELD)
             .setGroupTypes(GroupType.COLLECTION, GroupType.MAP)
             .build());
     // key2value-delimiter
     register(
         new ModifierBuilder(
-            ModifierEnum.KEY2VALUEDELIMITER.toString().toLowerCase(Locale.ROOT), DEFAULT_SCOPE)
+                ModifierEnum.KEY2VALUEDELIMITER.toString().toLowerCase(Locale.ROOT), DEFAULT_SCOPE)
             .setLevels(Level.FIELD)
             .setGroupTypes(GroupType.COLLECTION, GroupType.MAP)
             .build());
     // numberformat
     register(
         new ModifierBuilder(
-            ModifierEnum.NUMBERFORMAT.toString().toLowerCase(Locale.ROOT), DEFAULT_SCOPE)
+                ModifierEnum.NUMBERFORMAT.toString().toLowerCase(Locale.ROOT), DEFAULT_SCOPE)
             .setLevels(Level.FIELD)
             .setBasicTypes(BasicType.NUMBER)
             .build());
     // dateformat
     register(
         new ModifierBuilder(
-            ModifierEnum.DATEFORMAT.toString().toLowerCase(Locale.ROOT), DEFAULT_SCOPE)
+                ModifierEnum.DATEFORMAT.toString().toLowerCase(Locale.ROOT), DEFAULT_SCOPE)
             .setLevels(Level.FIELD)
             .setBasicTypes(BasicType.DATE)
             .build());
     // path-delimiter
     register(
         new ModifierBuilder(
-            ModifierEnum.PATHDELIMITER.toString().toLowerCase(Locale.ROOT), DEFAULT_SCOPE)
+                ModifierEnum.PATHDELIMITER.toString().toLowerCase(Locale.ROOT), DEFAULT_SCOPE)
             .setLevels(Level.FIELD)
             .build());
     // unique
@@ -144,7 +144,7 @@ public final class ModifierManager {
     // mandatory
     register(
         new ModifierBuilder(
-            ModifierEnum.MANDATORY.toString().toLowerCase(Locale.ROOT), DEFAULT_SCOPE)
+                ModifierEnum.MANDATORY.toString().toLowerCase(Locale.ROOT), DEFAULT_SCOPE)
             .setModes(Mode.IMPORT)
             .setLevels(Level.FIELD)
             .setValues(Modifier.BOOLEAN_VALUES)
@@ -152,7 +152,7 @@ public final class ModifierManager {
     // ignorenull
     register(
         new ModifierBuilder(
-            ModifierEnum.IGNORE_NULL.toString().toLowerCase(Locale.ROOT), DEFAULT_SCOPE)
+                ModifierEnum.IGNORE_NULL.toString().toLowerCase(Locale.ROOT), DEFAULT_SCOPE)
             .setModes(Mode.IMPORT)
             .setLevels(Level.FIELD)
             .setValues(Modifier.BOOLEAN_VALUES)

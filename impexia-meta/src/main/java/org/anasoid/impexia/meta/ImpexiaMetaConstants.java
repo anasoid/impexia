@@ -18,8 +18,4 @@
 
 package org.anasoid.impexia.meta;
 
-public interface ImpexiaMetaConstants {
-
-
-
-}
+public interface ImpexiaMetaConstants {}

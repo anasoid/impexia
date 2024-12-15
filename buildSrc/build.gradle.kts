@@ -14,4 +14,5 @@ repositories {
 
 dependencies {
     implementation(libs.plugin.lombok)
+    implementation(libs.plugin.spotless)
 }

@@ -20,18 +20,13 @@ package org.anasoid.impexia.test.app.jpa.domain;
 
 import jakarta.persistence.Embeddable;
 
-/**
- * only for test.
- */
+/** only for test. */
 @Embeddable
 public class Name {
 
-  public Name() {
-  }
+  public Name() {}
 
-  /**
-   * Constructors.
-   */
+  /** Constructors. */
   public Name(String first, String middle, String last) {
     this.first = first;
     this.middle = middle;

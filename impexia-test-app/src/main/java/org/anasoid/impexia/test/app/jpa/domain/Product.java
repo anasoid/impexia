@@ -29,9 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * only for test.
- */
+/** only for test. */
 @Entity
 public class Product {
 
@@ -39,18 +37,15 @@ public class Product {
   @Column(unique = true)
   private String code;
 
-  @Version
-  private long version;
+  @Version private long version;
 
   private String name;
-  @ElementCollection
-  private List<String> keywords = new ArrayList<>();
+  @ElementCollection private List<String> keywords = new ArrayList<>();
 
   @ManyToMany(mappedBy = "products")
   private List<Category> categories = new ArrayList<>();
 
-  @ElementCollection()
-  private Map<String, Long> prices = new HashMap<>(); // NOPMD
+  @ElementCollection() private Map<String, Long> prices = new HashMap<>(); // NOPMD
 
   public String getCode() {
     return code;
