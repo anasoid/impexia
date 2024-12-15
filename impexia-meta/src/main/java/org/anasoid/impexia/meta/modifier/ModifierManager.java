@@ -25,11 +25,11 @@ import java.util.Map;
 import org.anasoid.impexia.meta.Mode;
 import org.anasoid.impexia.meta.transformer.Decorator;
 import org.anasoid.impexia.meta.transformer.ErrorHandler;
-import org.anasoid.impexia.meta.transformer.Listner;
+import org.anasoid.impexia.meta.transformer.Listener;
 import org.anasoid.impexia.meta.transformer.Translator;
 
 /**
- * Modifier Manager Register Known list of modifier, moifier also can have scope, GLOBAL for global
+ * Modifier Manager Register Known list of modifier, modifier also can have scope, GLOBAL for global
  * modifier , same modifier can be restricted to scope like JPA, SQL ...
  */
 public final class ModifierManager {
@@ -64,121 +64,108 @@ public final class ModifierManager {
   private static void init() {
     // batchmode
     register(
-        new ModifierBuilder(
-                ModifierEnum.BATCHMODE.toString().toLowerCase(Locale.ROOT), DEFAULT_SCOPE)
-            .setModes(Mode.IMPORT)
-            .setLevels(Level.TYPE)
-            .setValues(Modifier.BOOLEAN_VALUES)
-            .build());
+        Modifier.builder(ModifierEnum.BATCHMODE, DEFAULT_SCOPE)
+            .mode(Mode.IMPORT)
+            .level(Level.TYPE)
+            .values(Modifier.BOOLEAN_VALUES));
     // listner
     register(
-        new ModifierBuilder(ModifierEnum.LISTNER.toString().toLowerCase(Locale.ROOT), DEFAULT_SCOPE)
-            .setModes(Mode.IMPORT)
-            .setLevels(Level.TYPE)
-            .setClazz(Listner.class)
-            .build());
+        Modifier.builder(ModifierEnum.LISTNER, DEFAULT_SCOPE)
+            .mode(Mode.IMPORT)
+            .level(Level.TYPE)
+            .clazz(Listener.class));
+
     // errorHandler
     register(
-        new ModifierBuilder(
-                ModifierEnum.ERRORHANDLER.toString().toLowerCase(Locale.ROOT), DEFAULT_SCOPE)
-            .setModes(Mode.IMPORT)
-            .setLevels(Level.TYPE)
-            .setClazz(ErrorHandler.class)
-            .build());
+        Modifier.builder(ModifierEnum.ERRORHANDLER, DEFAULT_SCOPE)
+            .mode(Mode.IMPORT)
+            .level(Level.TYPE)
+            .clazz(ErrorHandler.class));
     // cellDecorator
     register(
-        new ModifierBuilder(
-                ModifierEnum.CELLDECORATOR.toString().toLowerCase(Locale.ROOT), DEFAULT_SCOPE)
-            .setLevels(Level.FIELD)
-            .setClazz(Decorator.class)
-            .build());
+        Modifier.builder(ModifierEnum.CELLDECORATOR, DEFAULT_SCOPE)
+            .level(Level.FIELD)
+            .clazz(Decorator.class));
+
     // translator
     register(
-        new ModifierBuilder(
-                ModifierEnum.TRANSLATOR.toString().toLowerCase(Locale.ROOT), DEFAULT_SCOPE)
-            .setLevels(Level.FIELD)
-            .setClazz(Translator.class)
-            .build());
+        Modifier.builder(ModifierEnum.TRANSLATOR, DEFAULT_SCOPE)
+            .level(Level.FIELD)
+            .clazz(Translator.class));
     // collection-delimiter
     register(
-        new ModifierBuilder(
-                ModifierEnum.COLLECTIONDELIMITER.toString().toLowerCase(Locale.ROOT), DEFAULT_SCOPE)
-            .setLevels(Level.FIELD)
-            .setGroupTypes(GroupType.COLLECTION, GroupType.MAP)
-            .build());
+        Modifier.builder(ModifierEnum.COLLECTIONDELIMITER, DEFAULT_SCOPE)
+            .level(Level.FIELD)
+            .groupType(GroupType.COLLECTION)
+            .groupType(GroupType.MAP));
+
     // key2value-delimiter
     register(
-        new ModifierBuilder(
-                ModifierEnum.KEY2VALUEDELIMITER.toString().toLowerCase(Locale.ROOT), DEFAULT_SCOPE)
-            .setLevels(Level.FIELD)
-            .setGroupTypes(GroupType.COLLECTION, GroupType.MAP)
-            .build());
+        Modifier.builder(ModifierEnum.KEY2VALUEDELIMITER, DEFAULT_SCOPE)
+            .level(Level.FIELD)
+            .groupType(GroupType.COLLECTION)
+            .groupType(GroupType.MAP));
+
     // numberformat
     register(
-        new ModifierBuilder(
-                ModifierEnum.NUMBERFORMAT.toString().toLowerCase(Locale.ROOT), DEFAULT_SCOPE)
-            .setLevels(Level.FIELD)
-            .setBasicTypes(BasicType.NUMBER)
-            .build());
+        Modifier.builder(ModifierEnum.NUMBERFORMAT, DEFAULT_SCOPE)
+            .level(Level.FIELD)
+            .basicType(BasicType.NUMBER));
+
     // dateformat
     register(
-        new ModifierBuilder(
-                ModifierEnum.DATEFORMAT.toString().toLowerCase(Locale.ROOT), DEFAULT_SCOPE)
-            .setLevels(Level.FIELD)
-            .setBasicTypes(BasicType.DATE)
-            .build());
+        Modifier.builder(ModifierEnum.DATEFORMAT, DEFAULT_SCOPE)
+            .level(Level.FIELD)
+            .basicType(BasicType.DATE));
+
     // path-delimiter
-    register(
-        new ModifierBuilder(
-                ModifierEnum.PATHDELIMITER.toString().toLowerCase(Locale.ROOT), DEFAULT_SCOPE)
-            .setLevels(Level.FIELD)
-            .build());
+    register(Modifier.builder(ModifierEnum.PATHDELIMITER, DEFAULT_SCOPE).level(Level.FIELD));
+
     // unique
     register(
-        new ModifierBuilder(ModifierEnum.UNIQUE.toString().toLowerCase(Locale.ROOT), DEFAULT_SCOPE)
-            .setLevels(Level.FIELD)
-            .setValues(Modifier.BOOLEAN_VALUES)
-            .setNeedMapping(true)
-            .build());
+        Modifier.builder(ModifierEnum.UNIQUE, DEFAULT_SCOPE)
+            .level(Level.FIELD)
+            .values(Modifier.BOOLEAN_VALUES)
+            .needMapping(true));
 
     // mandatory
     register(
-        new ModifierBuilder(
-                ModifierEnum.MANDATORY.toString().toLowerCase(Locale.ROOT), DEFAULT_SCOPE)
-            .setModes(Mode.IMPORT)
-            .setLevels(Level.FIELD)
-            .setValues(Modifier.BOOLEAN_VALUES)
-            .build());
+        Modifier.builder(ModifierEnum.MANDATORY, DEFAULT_SCOPE)
+            .mode(Mode.IMPORT)
+            .level(Level.FIELD)
+            .values(Modifier.BOOLEAN_VALUES));
+
     // ignorenull
     register(
-        new ModifierBuilder(
-                ModifierEnum.IGNORE_NULL.toString().toLowerCase(Locale.ROOT), DEFAULT_SCOPE)
-            .setModes(Mode.IMPORT)
-            .setLevels(Level.FIELD)
-            .setValues(Modifier.BOOLEAN_VALUES)
-            .build());
+        Modifier.builder(ModifierEnum.IGNORE_NULL, DEFAULT_SCOPE)
+            .mode(Mode.IMPORT)
+            .level(Level.FIELD)
+            .values(Modifier.BOOLEAN_VALUES));
+
     // mode
     register(
-        new ModifierBuilder(ModifierEnum.MODE.toString().toLowerCase(Locale.ROOT), DEFAULT_SCOPE)
-            .setModes(Mode.IMPORT)
-            .setLevels(Level.FIELD)
-            .setGroupTypes(GroupType.COLLECTION, GroupType.MAP)
-            .setValues("append", "remove")
-            .build());
+        Modifier.builder(ModifierEnum.MODE, DEFAULT_SCOPE)
+            .mode(Mode.IMPORT)
+            .level(Level.FIELD)
+            .groupType(GroupType.COLLECTION)
+            .groupType(GroupType.MAP)
+            .value("append")
+            .value("remove"));
+
     // virtual
     register(
-        new ModifierBuilder(ModifierEnum.VIRTUAL.toString().toLowerCase(Locale.ROOT), DEFAULT_SCOPE)
-            .setModes(Mode.IMPORT)
-            .setLevels(Level.FIELD)
-            .setValues(Modifier.BOOLEAN_VALUES)
-            .build());
+        Modifier.builder(ModifierEnum.VIRTUAL, DEFAULT_SCOPE)
+            .mode(Mode.IMPORT)
+            .level(Level.FIELD)
+            .values(Modifier.BOOLEAN_VALUES));
 
     // default
     register(
-        new ModifierBuilder(ModifierEnum.DEFAULT.toString().toLowerCase(Locale.ROOT), DEFAULT_SCOPE)
-            .setModes(Mode.IMPORT)
-            .setLevels(Level.FIELD)
-            .build());
+        Modifier.builder(ModifierEnum.DEFAULT, DEFAULT_SCOPE).mode(Mode.IMPORT).level(Level.FIELD));
+  }
+
+  private static void register(Modifier.ModifierBuilder builder) {
+    register(builder.build());
   }
 
   private static void register(Modifier modifier) {

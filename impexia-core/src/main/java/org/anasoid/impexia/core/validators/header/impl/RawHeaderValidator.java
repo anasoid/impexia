@@ -84,7 +84,7 @@ public class RawHeaderValidator extends AbstractHeaderValidator {
   }
 
   protected void validateModifierMode(Modifier modifier, Mode mode) throws ImpexHeaderException {
-    if (!modifier.getModes().contains(mode)) {
+    if (!modifier.getModes().isEmpty() && !modifier.getModes().contains(mode)) {
       throw new AttributeModifierException(
           MessageFormat.format(
               "Field ({0}) is not acceptable by Mode : {1}", modifier.getCode(), mode));

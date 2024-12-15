@@ -21,6 +21,7 @@ package org.anasoid.impexia.meta.modifier;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 import lombok.Getter;
 import lombok.Singular;
@@ -35,43 +36,44 @@ public class Modifier {
 
   public static final Set<String> BOOLEAN_VALUES =
       Collections.unmodifiableSet(new HashSet<>(Arrays.asList("true", "false")));
-  @Getter @ToString.Include private final String code;
-  @Getter @Singular private final Set<Mode> modes;
-  @Getter @Singular private final Set<Level> levels;
-  @Getter @Singular private final Set<BasicType> basicTypes;
-  @Getter @Singular private final Set<GroupType> groupTypes;
+  @Getter @ToString.Include private String code;
+  @Getter @Singular private Set<Mode> modes;
+  @Getter @Singular private Set<Level> levels;
+  @Getter @Singular private Set<BasicType> basicTypes;
+  @Getter @Singular private Set<GroupType> groupTypes;
   private final Class<?> clazz;
-  @Getter @Singular private final Set<String> values;
+  @Getter @Singular private Set<String> values;
   @Getter private final boolean needMapping;
-  @Getter @ToString.Include private final String scope;
 
   /**
-   * Default constructor.
-   *
-   * @see ModifierBuilder
+   * Modifier Manager Register Known list of modifier, modifier also can have scope, GLOBAL for
+   * global same modifier can be restricted to scope like JPA, SQL.
    */
-  Modifier(
-      String code,
-      Set<Mode> modes,
-      Set<Level> levels,
-      Set<BasicType> basicTypes,
-      Set<GroupType> groupTypes,
-      Class<?> clazz,
-      Set<String> values,
-      boolean needMapping,
-      String scope) {
-    this.code = code;
-    this.modes = modes;
-    this.levels = levels;
-    this.basicTypes = basicTypes;
-    this.groupTypes = groupTypes;
-    this.clazz = clazz;
-    this.values = values;
-    this.needMapping = needMapping;
-    this.scope = scope;
-  }
+  @Getter @ToString.Include private final String scope;
 
   public boolean isAcceptCustomAttribute() {
     return clazz != null;
+  }
+
+  public static Modifier.ModifierBuilder builder(ModifierEnum code) {
+    return new Modifier.ModifierBuilderImpl().code(code);
+  }
+
+  public static Modifier.ModifierBuilder builder(ModifierEnum code, String scope) {
+    return builder(code).scope(scope);
+  }
+
+  @SuppressWarnings("PMD.AbstractClassWithoutAbstractMethod")
+  public abstract static class ModifierBuilder<
+      C extends Modifier, B extends ModifierBuilder<C, B>> {
+
+    public B code(String code) {
+      this.code = code;
+      return self();
+    }
+
+    public B code(ModifierEnum code) {
+      return code(code.toString().toLowerCase(Locale.ROOT));
+    }
   }
 }
