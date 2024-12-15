@@ -11,14 +11,19 @@ hsqldb="2.7.4"
 
 spring-dependency = "1.1.6"
 sonar = "6.0.1.5171"
+plugin-lombok-version ="8.11"
 
 [libraries]
+plugin-lombok={ group = "io.freefair.lombok", name = "io.freefair.lombok.gradle.plugin", version.ref = "plugin-lombok-version" }
 opencsv = { group = "com.opencsv", name = "opencsv", version.ref = "opencsv" }
 hibernate-core = { group = "org.hibernate", name = "hibernate-core", version.ref = "hibernate" }
 jakarta-persistence-api = { group = "jakarta.persistence", name = "jakarta.persistence-api", version.ref = "persistenceApi" }
 hsqldb = { group = "org.hsqldb", name = "hsqldb", version.ref = "hsqldb" }
 commons-lang = { group = "org.apache.commons", name = "commons-lang3", version.ref = "commonsLang" }
 commons-io = { group = "commons-io", name = "commons-io", version.ref = "commonsIo" }
+
+
+
 [plugins]
 sonar = { id = "org.sonarqube", version.ref = "sonar" }
 spring-dependency = { id = "io.spring.dependency-management", version.ref = "spring-dependency" }
