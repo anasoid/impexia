@@ -23,13 +23,9 @@ dependencies {
     }
 
     // SLF4J as a facade over Log4j2 required dependencies
-    implementation("org.apache.logging.log4j:log4j-api:2.24.3")
-    implementation("org.apache.logging.log4j:log4j-core:2.24.3")
     implementation("org.apache.logging.log4j:log4j-slf4j-impl:2.24.3")
     // Bridges from other logging implementations to SLF4J. Be careful not to bridge SLF4J itself to
-    implementation("org.slf4j:jul-to-slf4j:2.0.16")
-    implementation("org.slf4j:jcl-over-slf4j:2.0.16")
-    implementation("org.slf4j:log4j-over-slf4j:2.0.16")
+    implementation("org.slf4j:slf4j-api:2.0.16")
 
     //Apache common
 
@@ -38,7 +34,6 @@ dependencies {
 
     // Use JUnit Jupiter for testing.
     testImplementation("org.junit.jupiter:junit-jupiter:5.11.3")
-
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
