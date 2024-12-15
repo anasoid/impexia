@@ -7,8 +7,8 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":impexia-exp"))
-    implementation(project(":impexia-imp"))
+    implementation(project(":impexia-exporting"))
+    implementation(project(":impexia-importing"))
     implementation(libs.opencsv)
     compileOnly(libs.hibernate.core)
     compileOnly(libs.jakarta.persistence.api)
