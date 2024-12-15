@@ -7,6 +7,6 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":impexia-exp"))
-    implementation(project(":impexia-imp"))
+    implementation(project(":impexia-exporting"))
+    implementation(project(":impexia-importing"))
 }

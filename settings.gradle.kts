@@ -11,5 +11,5 @@ plugins {
 }
 
 rootProject.name = "impexia"
-include("impexia-core", "impexia-jpa", "impexia-meta", "impexia-imp", "impexia-exp", "impexia-csv", "impexia-sql", "impexia-test-app")
+include("impexia-core", "impexia-jpa", "impexia-meta", "impexia-importing", "impexia-exporting", "impexia-csv", "impexia-sql", "impexia-test-app")
 include("buildUtils:code-coverage-report")
