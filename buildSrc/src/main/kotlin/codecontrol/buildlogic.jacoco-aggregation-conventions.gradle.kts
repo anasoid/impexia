@@ -1,3 +1,9 @@
+package codecontrol
+
+import gradle.kotlin.dsl.accessors._5b87717b970be038396a119c635d37b5.check
+import gradle.kotlin.dsl.accessors._5b87717b970be038396a119c635d37b5.reporting
+import org.gradle.kotlin.dsl.*
+
 plugins {
     base
     id("jacoco-report-aggregation")

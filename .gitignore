@@ -42,3 +42,4 @@ atlassian-ide-plugin.xml
 
 .checkstyle
 /impexia-*/.checkstyle
+.kotlin

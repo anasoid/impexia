@@ -18,9 +18,7 @@
 
 package org.anasoid.impexia.meta;
 
-/**
- * Two mode for impex, Import and export.
- */
+/** Two mode for impex, Import and export. */
 public enum Mode {
   IMPORT,
   EXPORT

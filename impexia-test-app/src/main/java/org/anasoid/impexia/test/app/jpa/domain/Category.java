@@ -28,9 +28,7 @@ import jakarta.persistence.Version;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * only for test.
- */
+/** only for test. */
 @Entity
 public class Category {
 
@@ -38,19 +36,16 @@ public class Category {
   @Column(unique = true)
   private String code;
 
-  @Version
-  private long version;
+  @Version private long version;
 
   private String name;
 
-  @ManyToOne()
-  private Category superCategory;
+  @ManyToOne() private Category superCategory;
 
   @OneToMany(mappedBy = "superCategory")
   private List<Category> subCategories;
 
-  @ManyToMany()
-  private List<Product> products = new ArrayList<>();
+  @ManyToMany() private List<Product> products = new ArrayList<>();
 
   public String getCode() {
     return code;

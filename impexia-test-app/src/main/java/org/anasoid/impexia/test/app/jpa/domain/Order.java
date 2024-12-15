@@ -29,9 +29,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-/**
- * only for test.
- */
+/** only for test. */
 @Entity
 public class Order {
 
@@ -40,14 +38,12 @@ public class Order {
   @GeneratedValue()
   private UUID id;
 
-  @ElementCollection()
-  private Map<Product, Long> orderEntries = new HashMap<>(); // NOPMD
+  @ElementCollection() private Map<Product, Long> orderEntries = new HashMap<>(); // NOPMD
 
   @OneToOne(orphanRemoval = true, optional = false)
   private Address deliveryAddress;
 
-  @ManyToOne
-  private Customer customer;
+  @ManyToOne private Customer customer;
 
   public UUID getId() {
     return id;

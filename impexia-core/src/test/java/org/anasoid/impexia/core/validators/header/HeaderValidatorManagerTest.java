@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import org.anasoid.impexia.core.meta.header.DefaultImpexAttribute;
 import org.anasoid.impexia.core.meta.header.DefaultImpexHeader;
 import org.anasoid.impexia.core.meta.header.DefaultImpexModifier;
-import org.anasoid.impexia.core.validators.header.impl.RawHeaderValidator;
 import org.anasoid.impexia.meta.Mode;
 import org.anasoid.impexia.meta.exceptions.header.ActionException;
 import org.anasoid.impexia.meta.exceptions.header.AttributeModifierException;

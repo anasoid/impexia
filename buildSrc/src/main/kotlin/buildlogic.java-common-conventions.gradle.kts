@@ -6,9 +6,10 @@ plugins {
     // Apply the java Plugin to add support for Java.
     java
     id("io.freefair.lombok")
-    id("buildlogic.jacoco-conventions")
-    id("buildlogic.pmd-conventions")
-    id("buildlogic.checkstyle-conventions")
+    id("codecontrol.buildlogic.jacoco-conventions")
+    id("codecontrol.buildlogic.pmd-conventions")
+    id("codecontrol.buildlogic.spotless-conventions")
+    id("codecontrol.buildlogic.checkstyle-conventions")
 }
 
 repositories {

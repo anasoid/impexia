@@ -1,4 +1,3 @@
-
 /*
  * Copyright 2020-2020 the original author or authors.
  *
@@ -19,6 +18,4 @@
 
 package org.anasoid.impexia.meta.transformer;
 
-public interface ErrorHandler {
-
-}
+public interface ErrorHandler {}

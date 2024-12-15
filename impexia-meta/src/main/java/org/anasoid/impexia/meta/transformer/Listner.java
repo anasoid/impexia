@@ -18,6 +18,4 @@
 
 package org.anasoid.impexia.meta.transformer;
 
-public interface Listner {
-
-}
+public interface Listner {}

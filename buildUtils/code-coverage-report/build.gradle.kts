@@ -1,5 +1,5 @@
 plugins {
-    id("buildlogic.jacoco-aggregation-conventions")
+    id("codecontrol.buildlogic.jacoco-aggregation-conventions")
 }
 
 

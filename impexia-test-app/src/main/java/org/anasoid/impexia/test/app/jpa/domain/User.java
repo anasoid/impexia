@@ -34,9 +34,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-/**
- * only for test.
- */
+/** only for test. */
 @Entity
 public class User {
 
@@ -45,8 +43,7 @@ public class User {
   @Column(unique = true, updatable = false)
   private UUID id;
 
-  @Version
-  private long version;
+  @Version private long version;
 
   private String email;
   private Name name;
