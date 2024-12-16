@@ -35,7 +35,7 @@ class CsvDataReaderTest {
             .getClassLoader()
             .getResource("org/anasoid/impexia/csv/reader/standard.impex");
     CsvDataReader dateReader =
-        new CsvDataReader(new File(url.getFile()), new ConfigCsvReaderBuilder().build());
+        new CsvDataReader(new File(url.getFile()), ConfigCsvReader.builder().build());
     Assertions.assertEquals(4, dateReader.getHeader().length);
     // header
     Assertions.assertEquals("INSERT_UPDATE product", dateReader.getHeader()[0]);
@@ -75,7 +75,7 @@ class CsvDataReaderTest {
             .getResource("org/anasoid/impexia/csv/reader/standard.impex");
     CsvDataReader dateReader =
         new CsvDataReader(
-            new File(url.getFile()), new ConfigCsvReaderBuilder().setNeedTotal(true).build());
+            new File(url.getFile()), ConfigCsvReader.builder().needTotal(true).build());
     Assertions.assertEquals(4, dateReader.getHeader().length);
     // header
     Assertions.assertEquals("INSERT_UPDATE product", dateReader.getHeader()[0]);
@@ -100,7 +100,7 @@ class CsvDataReaderTest {
             .getResource("org/anasoid/impexia/csv/reader/standard_header_error.impex");
     try {
 
-      new CsvDataReader(new File(url.getFile()), new ConfigCsvReaderBuilder().build());
+      new CsvDataReader(new File(url.getFile()), ConfigCsvReader.builder().build());
       Assertions.fail("Header invalid should faild");
     } catch (InvalidCsvFormatException e) {
       // success
@@ -112,7 +112,7 @@ class CsvDataReaderTest {
 
     try {
 
-      new CsvDataReader(new File("./notfound.impex"), new ConfigCsvReaderBuilder().build());
+      new CsvDataReader(new File("./notfound.impex"), ConfigCsvReader.builder().build());
       Assertions.fail("File nout found");
     } catch (java.io.FileNotFoundException e) {
       // success
@@ -129,7 +129,7 @@ class CsvDataReaderTest {
     CsvDataReader dateReader =
         new CsvDataReader(
             new File(url.getFile()),
-            new ConfigCsvReaderBuilder().setContainHeader(false).setNeedTotal(true).build());
+            ConfigCsvReader.builder().containHeader(false).needTotal(true).build());
     Assertions.assertNull(dateReader.getHeader());
     // header
     DataLine line = dateReader.nextRecord();
@@ -149,7 +149,7 @@ class CsvDataReaderTest {
 
       new CsvDataReader(
           new File(url.getFile()),
-          new ConfigCsvReaderBuilder().setNeedTotal(true).setSkipLines(100).build());
+          ConfigCsvReader.builder().needTotal(true).skipLines(100).build());
       Assertions.fail("Header not found");
     } catch (InvalidCsvFormatException e) {
       // success
@@ -165,7 +165,7 @@ class CsvDataReaderTest {
 
     try {
 
-      new CsvDataReader(new File(url.getFile()), new ConfigCsvReaderBuilder().build());
+      new CsvDataReader(new File(url.getFile()), ConfigCsvReader.builder().build());
       Assertions.fail("Header not found");
     } catch (InvalidCsvFormatException e) {
       // success
@@ -180,8 +180,7 @@ class CsvDataReaderTest {
             .getResource("org/anasoid/impexia/csv/reader/standard_header_error.impex");
     try {
 
-      new CsvDataReader(
-          new File(url.getFile()), new ConfigCsvReaderBuilder().setNeedTotal(true).build());
+      new CsvDataReader(new File(url.getFile()), ConfigCsvReader.builder().needTotal(true).build());
       Assertions.fail("Header invalid should faild");
     } catch (InvalidCsvFormatException e) {
       // success
@@ -195,7 +194,7 @@ class CsvDataReaderTest {
             .getClassLoader()
             .getResource("org/anasoid/impexia/csv/reader/standard.impex");
     CsvDataReader dateReader =
-        new CsvDataReader(new File(url.getFile()), new ConfigCsvReaderBuilder().build());
+        new CsvDataReader(new File(url.getFile()), ConfigCsvReader.builder().build());
     Assertions.assertEquals(4, dateReader.getHeader().length);
     // header
     Assertions.assertEquals("INSERT_UPDATE product", dateReader.getHeader()[0]);
@@ -253,7 +252,7 @@ class CsvDataReaderTest {
             .getClassLoader()
             .getResource("org/anasoid/impexia/csv/reader/standard_comment.impex");
     CsvDataReader dateReader =
-        new CsvDataReader(new File(url.getFile()), new ConfigCsvReaderBuilder().build());
+        new CsvDataReader(new File(url.getFile()), ConfigCsvReader.builder().build());
     Assertions.assertEquals(4, dateReader.getHeader().length);
     // first line
     DataLine line = dateReader.nextRecord();
@@ -272,12 +271,12 @@ class CsvDataReaderTest {
     CsvDataReader dateReader =
         new CsvDataReader(
             new File(url.getFile()),
-            new ConfigCsvReaderBuilder()
-                .setNeedTotal(true)
-                .setCommentChar('|')
-                .setSkipLines(1)
-                .setSeparatorChar(',')
-                .setQuoteChar('\'')
+            ConfigCsvReader.builder()
+                .needTotal(true)
+                .commentChar('|')
+                .skipLines(1)
+                .separatorChar(',')
+                .quoteChar('\'')
                 .build());
     Assertions.assertEquals(4, dateReader.getHeader().length);
     // header
