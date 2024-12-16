@@ -29,16 +29,13 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.text.MessageFormat;
 import org.anasoid.impexia.core.data.DataLine;
-import org.anasoid.impexia.core.data.DataLineBuilder;
 import org.anasoid.impexia.core.data.IDataReader;
 import org.anasoid.impexia.csv.exceptions.InvalidCsvFormatException;
 import org.anasoid.impexia.meta.header.ImpexAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * Csv Data Reader.
- */
+/** Csv Data Reader. */
 public class CsvDataReader implements IDataReader {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(CsvDataReader.class);
@@ -58,7 +55,7 @@ public class CsvDataReader implements IDataReader {
   /**
    * default constructor.
    *
-   * @param file      csv file
+   * @param file csv file
    * @param configCsv config csv
    * @throws IOException if there is any problem to read file
    */
@@ -217,11 +214,11 @@ public class CsvDataReader implements IDataReader {
     if (record == null) {
       return null;
     }
-    return new DataLineBuilder()
-        .setRecord(record)
-        .setRecordCount(getRecordCount())
-        .setRecordNumber(recordNumber)
-        .setLineNumber(lineNumber)
+    return DataLine.builder()
+        .record(record)
+        .recordCount(getRecordCount())
+        .recordNumber(recordNumber)
+        .lineNumber(lineNumber)
         .build();
   }
 

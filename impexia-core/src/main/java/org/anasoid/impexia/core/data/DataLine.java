@@ -20,36 +20,23 @@ package org.anasoid.impexia.core.data;
 
 import java.io.Serializable;
 import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 
 /** DTO for line. */
+@SuperBuilder
+@Getter
 public class DataLine implements Serializable {
 
   static final long serialVersionUID = -338751699312454948L;
 
-  @Getter private final String[] record;
+  /** get line number. */
+  private final long lineNumber;
 
-  /** -- GETTER -- get line number. */
-  @Getter private final long lineNumber;
+  /** record number. */
+  private final long recordNumber;
 
-  /** -- GETTER -- record number. */
-  @Getter private final long recordNumber;
+  /** is first line. */
+  private final long recordCount;
 
-  /** -- GETTER -- is first line. */
-  @Getter private final long recordCount;
-
-  /**
-   * default constructor.
-   *
-   * @param record Data record.
-   * @param lineNumber line number in file
-   * @param recordNumber recordNumber
-   * @param recordCount Total of records, -1 if not calculated.
-   */
-  @SuppressWarnings("PMD.ArrayIsStoredDirectly")
-  DataLine(String[] record, long lineNumber, long recordNumber, long recordCount) {
-    this.record = record;
-    this.lineNumber = lineNumber;
-    this.recordNumber = recordNumber;
-    this.recordCount = recordCount;
-  }
+  private final String[] record;
 }
