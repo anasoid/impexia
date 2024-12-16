@@ -21,88 +21,59 @@ package org.anasoid.impexia.meta.modifier;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
+import lombok.Getter;
+import lombok.Singular;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 import org.anasoid.impexia.meta.Mode;
 
 /** Modifiers container. */
+@SuperBuilder
+@ToString(onlyExplicitlyIncluded = true)
 public class Modifier {
 
   public static final Set<String> BOOLEAN_VALUES =
       Collections.unmodifiableSet(new HashSet<>(Arrays.asList("true", "false")));
-  private final String code;
-  private final Set<Mode> modes;
-  private final Set<Level> levels;
-  private final Set<BasicType> basicTypes;
-  private final Set<GroupType> groupTypes;
+  @Getter @ToString.Include private String code;
+  @Getter @Singular private Set<Mode> modes;
+  @Getter @Singular private Set<Level> levels;
+  @Getter @Singular private Set<BasicType> basicTypes;
+  @Getter @Singular private Set<GroupType> groupTypes;
   private final Class<?> clazz;
-  private final Set<String> values;
-  private final boolean needMapping;
-  private final String scope;
+  @Getter @Singular private Set<String> values;
+  @Getter private final boolean needMapping;
 
   /**
-   * Default constructor.
-   *
-   * @see ModifierBuilder
+   * Modifier Manager Register Known list of modifier, modifier also can have scope, GLOBAL for
+   * global same modifier can be restricted to scope like JPA, SQL.
    */
-  Modifier(
-      String code,
-      Set<Mode> modes,
-      Set<Level> levels,
-      Set<BasicType> basicTypes,
-      Set<GroupType> groupTypes,
-      Class<?> clazz,
-      Set<String> values,
-      boolean needMapping,
-      String scope) {
-    this.code = code;
-    this.modes = modes;
-    this.levels = levels;
-    this.basicTypes = basicTypes;
-    this.groupTypes = groupTypes;
-    this.clazz = clazz;
-    this.values = values;
-    this.needMapping = needMapping;
-    this.scope = scope;
-  }
-
-  public String getCode() {
-    return code;
-  }
-
-  public Set<Mode> getModes() {
-    return modes;
-  }
-
-  public Set<GroupType> getGroupTypes() {
-    return groupTypes;
-  }
-
-  public Set<BasicType> getBasicTypes() {
-    return basicTypes;
-  }
-
-  public Set<Level> getLevels() {
-    return levels;
-  }
+  @Getter @ToString.Include private final String scope;
 
   public boolean isAcceptCustomAttribute() {
     return clazz != null;
   }
 
-  public Set<String> getValues() {
-    return values;
+  public static Modifier.ModifierBuilder builder(ModifierEnum code) {
+    return new Modifier.ModifierBuilderImpl().code(code);
   }
 
-  public String getScope() {
-    return scope;
+  public static Modifier.ModifierBuilder builder(ModifierEnum code, String scope) {
+    return builder(code).scope(scope);
   }
 
-  public boolean isNeedMapping() {
-    return needMapping;
-  }
+  @SuppressWarnings("PMD.AbstractClassWithoutAbstractMethod")
+  public abstract static class ModifierBuilder<
+      C extends Modifier, B extends ModifierBuilder<C, B>> {
 
-  @Override
-  public String toString() {
-    return "Modifier{" + "code='" + code + '\'' + ", scope='" + scope + '\'' + '}';
+    public B code(String code) {
+      this.code = code;
+      return self();
+    }
+
+    public B code(ModifierEnum code) {
+      return code(code.toString().toLowerCase(Locale.ROOT));
+    }
   }
 }

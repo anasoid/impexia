@@ -50,7 +50,7 @@ public class ValueModifierValidator implements ModifierValidator {
   protected void validateModifierValues(ImpexModifier impexModifier, Modifier modifierEnum)
       throws ImpexHeaderException {
 
-    if (modifierEnum.getValues() != null
+    if (!modifierEnum.getValues().isEmpty()
         && !modifierEnum.getValues().contains(impexModifier.getValue())) {
       throw new AttributeModifierException(
           MessageFormat.format("Field ({0}) should be boolean ", impexModifier.getKey()));
