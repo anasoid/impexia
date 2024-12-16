@@ -53,15 +53,14 @@ public final class HeaderParser {
       try {
         if (i == 0) {
           AttributeSplit split = HeaderRawExtractor.split(columns[i], true);
-          impexHeaderBuild = ImpexHeader.builder().type(split.getField()).action(split.getAction());
+          impexHeaderBuild = ImpexHeader.builder(split.getField(), split.getAction());
           if (StringUtils.isNotBlank(split.getModifiers())) {
             impexHeaderBuild.modifiers(parseModifier(split.getModifiers()));
           }
         } else {
           AttributeSplit split = HeaderRawExtractor.split(columns[i], false);
           ImpexAttribute attribute =
-              ImpexAttribute.builder()
-                  .field(split.getField())
+              ImpexAttribute.builder(split.getField())
                   .mappings(parseMapping(split.getMappings()))
                   .modifiers(parseModifier(split.getModifiers()))
                   .build();
@@ -93,7 +92,7 @@ public final class HeaderParser {
         // nothing
       }
       ImpexModifier impexModifier =
-          ImpexModifier.builder().key(key).value(extract.get(1)).modifier(modifier).build();
+          ImpexModifier.builder(key, extract.get(1)).modifier(modifier).build();
       result.add(impexModifier);
     }
     return result;
@@ -110,12 +109,10 @@ public final class HeaderParser {
       ImpexMappingBuilder impexMappingBuilder;
       if (extract.get(1) != null) {
         impexMappingBuilder =
-            ImpexMapping.builder()
-                .field(extract.get(0).trim())
-                .mappings(parseMapping(extract.get(1)));
+            ImpexMapping.builder(extract.get(0).trim()).mappings(parseMapping(extract.get(1)));
 
       } else {
-        impexMappingBuilder = ImpexMapping.builder().field(extract.get(0).trim());
+        impexMappingBuilder = ImpexMapping.builder(extract.get(0).trim());
       }
       result.add(impexMappingBuilder.build());
     }

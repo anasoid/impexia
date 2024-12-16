@@ -40,4 +40,8 @@ public class ImpexMapping {
   protected ImpexAttribute parent;
 
   @Singular protected List<ImpexMapping> mappings;
+
+  public static ImpexMapping.ImpexMappingBuilder builder(String field) {
+    return new ImpexMapping.ImpexMappingBuilderImpl().field(field);
+  }
 }

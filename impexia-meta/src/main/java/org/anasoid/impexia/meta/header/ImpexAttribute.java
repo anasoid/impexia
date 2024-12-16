@@ -41,6 +41,10 @@ public class ImpexAttribute {
   @ToString.Exclude
   protected ImpexHeader parent;
 
+  public static ImpexAttribute.ImpexAttributeBuilder builder(String field) {
+    return new ImpexAttribute.ImpexAttributeBuilderImpl().field(field);
+  }
+
   private static final class ImpexAttributeBuilderImpl
       extends ImpexAttributeBuilder<ImpexAttribute, ImpexAttributeBuilderImpl> {
 

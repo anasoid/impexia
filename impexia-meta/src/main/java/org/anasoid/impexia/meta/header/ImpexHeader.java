@@ -35,6 +35,10 @@ public class ImpexHeader {
   @Singular protected List<ImpexModifier> modifiers;
   @Singular protected List<ImpexAttribute> attributes;
 
+  public static ImpexHeader.ImpexHeaderBuilder builder(String type, ImpexAction action) {
+    return new ImpexHeader.ImpexHeaderBuilderImpl().action(action).type(type);
+  }
+
   private static final class ImpexHeaderBuilderImpl
       extends ImpexHeaderBuilder<ImpexHeader, ImpexHeaderBuilderImpl> {
 
