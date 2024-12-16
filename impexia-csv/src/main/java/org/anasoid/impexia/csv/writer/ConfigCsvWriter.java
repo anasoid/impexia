@@ -18,66 +18,20 @@
 
 package org.anasoid.impexia.csv.writer;
 
-/**
- * Config Csv Writer.
- */
+import com.opencsv.ICSVParser;
+import com.opencsv.ICSVWriter;
+import lombok.Builder.Default;
+import lombok.Getter;
+import lombok.experimental.SuperBuilder;
+
+/** Config Csv Writer. */
+@Getter
+@SuperBuilder
+@SuppressWarnings({"PMD.ImmutableField"})
 public class ConfigCsvWriter {
-
-  private final char separatorChar;
-
-  private final char quoteChar;
-  private final char escapeChar;
-  private final boolean applyQuotesToAll;
-
-  private final String lineEnd;
-
-  /**
-   * Default constructor.
-   *
-   * @see ConfigCsvWriterBuilder
-   */
-  ConfigCsvWriter(
-      char separatorChar,
-      char quoteChar,
-      char escapeChar,
-      boolean applyQuotesToAll,
-      String lineEnd) {
-    this.separatorChar = separatorChar;
-    this.quoteChar = quoteChar;
-    this.escapeChar = escapeChar;
-    this.applyQuotesToAll = applyQuotesToAll;
-    this.lineEnd = lineEnd;
-  }
-
-  /**
-   * The delimiter to use for separating entries.
-   */
-  public char getSeparatorChar() {
-    return separatorChar;
-  }
-
-  /**
-   * The character to use for quoted elements. default (")
-   */
-  public char getQuoteChar() {
-    return quoteChar;
-  }
-
-  /**
-   * The character to use for escaping a separator or quote default (\\).
-   */
-  public char getEscapeChar() {
-    return escapeChar;
-  }
-
-  /**
-   * lineEnd String to append at end of data (either "\n" or "\r\n").
-   */
-  public String getLineEnd() {
-    return lineEnd;
-  }
-
-  public boolean isApplyQuotesToAll() {
-    return applyQuotesToAll;
-  }
+  @Default private char separatorChar = ';';
+  @Default private char quoteChar = ICSVParser.DEFAULT_QUOTE_CHARACTER;
+  @Default private char escapeChar = ICSVParser.DEFAULT_ESCAPE_CHARACTER;
+  private boolean applyQuotesToAll;
+  @Default private String lineEnd = ICSVWriter.DEFAULT_LINE_END;
 }

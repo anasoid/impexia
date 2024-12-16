@@ -30,7 +30,7 @@ class CsvDataWriterTest {
   @Test
   void testSimpleWrite() throws IOException {
     StringWriter writer = new StringWriter();
-    CsvDataWriter csvDataWriter = new CsvDataWriter(writer, new ConfigCsvWriterBuilder().build());
+    CsvDataWriter csvDataWriter = new CsvDataWriter(writer, ConfigCsvWriter.builder().build());
     csvDataWriter.writeHeader("INSERT_UPDATE Product", "code");
     csvDataWriter.writeLine(null, "1");
     csvDataWriter.writeLine(null, "a\"b");
@@ -45,7 +45,7 @@ class CsvDataWriterTest {
   @Test
   void testWriteheaderTwiceError() throws IOException {
     StringWriter writer = new StringWriter();
-    CsvDataWriter csvDataWriter = new CsvDataWriter(writer, new ConfigCsvWriterBuilder().build());
+    CsvDataWriter csvDataWriter = new CsvDataWriter(writer, ConfigCsvWriter.builder().build());
     csvDataWriter.writeHeader("INSERT_UPDATE Product", "code");
     try {
       csvDataWriter.writeHeader("INSERT_UPDATE Product", "code");
@@ -59,7 +59,7 @@ class CsvDataWriterTest {
   @Test
   void testWriteHeaderAfterLineError() throws IOException {
     StringWriter writer = new StringWriter();
-    CsvDataWriter csvDataWriter = new CsvDataWriter(writer, new ConfigCsvWriterBuilder().build());
+    CsvDataWriter csvDataWriter = new CsvDataWriter(writer, ConfigCsvWriter.builder().build());
     csvDataWriter.writeLine(null, "1");
     try {
       csvDataWriter.writeHeader("INSERT_UPDATE Product", "code");
@@ -76,11 +76,11 @@ class CsvDataWriterTest {
     CsvDataWriter csvDataWriter =
         new CsvDataWriter(
             writer,
-            new ConfigCsvWriterBuilder()
-                .setEscapeChar('!')
-                .setLineEnd("\r\n")
-                .setQuoteChar('\'')
-                .setSeparatorChar(',')
+            ConfigCsvWriter.builder()
+                .escapeChar('!')
+                .lineEnd("\r\n")
+                .quoteChar('\'')
+                .separatorChar(',')
                 .build());
     csvDataWriter.writeHeader("INSERT_UPDATE Product", "code");
     csvDataWriter.writeLine(null, "1");
@@ -97,7 +97,7 @@ class CsvDataWriterTest {
   void testWriteApplyQuoteToAll() throws IOException {
     StringWriter writer = new StringWriter();
     CsvDataWriter csvDataWriter =
-        new CsvDataWriter(writer, new ConfigCsvWriterBuilder().setApplyQuotesToAll(true).build());
+        new CsvDataWriter(writer, ConfigCsvWriter.builder().applyQuotesToAll(true).build());
     csvDataWriter.writeHeader("INSERT_UPDATE Product", "code");
     csvDataWriter.writeLine(null, "1");
     csvDataWriter.writeLine(null, "a\"b");
@@ -112,7 +112,7 @@ class CsvDataWriterTest {
   @Test
   void testWriteIoexception() throws IOException {
     Writer writer = new BufferedWriter(new StringWriter());
-    CsvDataWriter csvDataWriter = new CsvDataWriter(writer, new ConfigCsvWriterBuilder().build());
+    CsvDataWriter csvDataWriter = new CsvDataWriter(writer, ConfigCsvWriter.builder().build());
     writer.close();
     try {
       csvDataWriter.writeHeader("INSERT_UPDATE Product", "code"); // SONAR
