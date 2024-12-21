@@ -20,13 +20,14 @@ package org.anasoid.impexia.csv.writer;
 
 import com.opencsv.CSVParserWriter;
 import com.opencsv.ICSVWriter;
+import java.io.Closeable;
 import java.io.IOException;
 import java.io.Writer;
-import org.anasoid.impexia.core.data.IDataWriter;
+import org.anasoid.impexia.core.data.importing.DataWriter;
 import org.anasoid.impexia.csv.opencsv.writer.OpenCsvWriterParser;
 
 /** Csv Data Writer. */
-public class CsvDataWriter implements IDataWriter {
+public class CsvDataWriter implements DataWriter, Closeable {
 
   private final ICSVWriter csvWriter;
   private final ConfigCsvWriter configCsv;

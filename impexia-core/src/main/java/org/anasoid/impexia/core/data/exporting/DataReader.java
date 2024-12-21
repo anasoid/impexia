@@ -13,28 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * @author : anas
- * Date :   27-Nov-2020
+ * Date :   22-Nov-2020
  */
 
-package org.anasoid.impexia.core.data;
+package org.anasoid.impexia.core.data.exporting;
 
-import java.io.Closeable;
 import java.io.IOException;
+import org.anasoid.impexia.core.data.DataLine;
 
-/** Interface to define DataWriter for Impex. */
-public interface IDataWriter extends Closeable {
+/** Interface to define Data reader for Impex. */
+public interface DataReader {
 
-  /**
-   * Write header.
-   *
-   * @param header impex header
-   */
-  void writeHeader(String... header) throws IOException;
+  /** get next record. */
+  DataLine nextRecord() throws IOException;
 
-  /**
-   * Write line.
-   *
-   * @param nextLine data line.
-   */
-  void writeLine(String... nextLine) throws IOException;
+  /** return total records, -1 if not calculated. */
+  int getRecordCount();
+
+  /** skip record. */
+  boolean skipRecord() throws IOException;
+
+  /** get current pass, 1 for first. */
+  int getCurrentPass();
+
+  /** Restart for new pass. */
+  void restart() throws IOException;
 }
