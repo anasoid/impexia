@@ -10,7 +10,7 @@ sonar {
         property("sonar.projectKey", "anasoid_impexia")
         property("sonar.organization", "anasoid-org")
         property("sonar.host.url", "https://sonarcloud.io")
-        property("sonar.exclusions", "**/generated/**, **.gradle.kts, com/opencsv/**")
+        property("sonar.exclusions", "**/generated/**, **.gradle.kts, com/opencsv/**,org/anasoid/impexia/csv/opencsv/**")
         property(
                 "sonar.coverage.jacoco.xmlReportPaths",
                 "${rootDir}/buildUtils/code-coverage-report/build/reports/jacoco/testCodeCoverageReport/testCodeCoverageReport.xml"
