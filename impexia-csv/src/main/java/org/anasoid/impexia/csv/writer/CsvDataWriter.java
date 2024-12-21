@@ -23,11 +23,9 @@ import com.opencsv.ICSVWriter;
 import java.io.IOException;
 import java.io.Writer;
 import org.anasoid.impexia.core.data.IDataWriter;
-import org.anasoid.impexia.csv.opencsv.writer.OpenCsvWriterParserBuilder;
+import org.anasoid.impexia.csv.opencsv.writer.OpenCsvWriterParser;
 
-/**
- * Csv Data Writer.
- */
+/** Csv Data Writer. */
 public class CsvDataWriter implements IDataWriter {
 
   private final ICSVWriter csvWriter;
@@ -50,14 +48,7 @@ public class CsvDataWriter implements IDataWriter {
 
   private ICSVWriter getCsvWriter() {
 
-    return new CSVParserWriter(
-        writer,
-        new OpenCsvWriterParserBuilder()
-            .withSeparator(configCsv.getSeparatorChar())
-            .withEscapeChar(configCsv.getEscapeChar())
-            .withQuoteChar(configCsv.getQuoteChar())
-            .build(),
-        configCsv.getLineEnd());
+    return new CSVParserWriter(writer, new OpenCsvWriterParser(configCsv), configCsv.getLineEnd());
   }
 
   @Override
