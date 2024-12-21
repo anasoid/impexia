@@ -1,7 +1,6 @@
 package codecontrol
 
-import gradle.kotlin.dsl.accessors._5b87717b970be038396a119c635d37b5.check
-import gradle.kotlin.dsl.accessors._5b87717b970be038396a119c635d37b5.reporting
+
 import org.gradle.kotlin.dsl.*
 
 plugins {
@@ -33,7 +32,7 @@ tasks.withType<JacocoReport> {
                 files(
                         classDirectories.files.map {
                             fileTree(it).apply {
-                                exclude(listOf("org/anasoid/impexia/csv/opencsv/**","**/generated/**" ))
+                                exclude(listOf("org/anasoid/impexia/csv/opencsv/**", "**/generated/**"))
                             }
                         }
                 )
