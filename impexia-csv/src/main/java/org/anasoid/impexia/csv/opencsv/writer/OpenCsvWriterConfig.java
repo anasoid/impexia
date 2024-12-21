@@ -41,17 +41,4 @@ public class OpenCsvWriterConfig {
   private CSVReaderNullFieldIndicator nullFieldIndicator = CSVReaderNullFieldIndicator.NEITHER;
 
   @Default private Locale errorLocale = Locale.getDefault();
-
-  public OpenCsvWriterParser buildCsvWriter() {
-
-    return new OpenCsvWriterParser(
-        separator,
-        quoteChar,
-        escapeChar,
-        strictQuotes,
-        ignoreLeadingWhiteSpace,
-        ignoreQuotations,
-        nullFieldIndicator,
-        errorLocale);
-  }
 }

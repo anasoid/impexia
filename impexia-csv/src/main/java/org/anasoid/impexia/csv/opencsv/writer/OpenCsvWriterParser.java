@@ -19,8 +19,6 @@
 package org.anasoid.impexia.csv.opencsv.writer;
 
 import com.opencsv.CSVParser;
-import com.opencsv.enums.CSVReaderNullFieldIndicator;
-import java.util.Locale;
 import org.anasoid.impexia.csv.writer.ConfigCsvWriter;
 
 /**
@@ -31,29 +29,8 @@ import org.anasoid.impexia.csv.writer.ConfigCsvWriter;
  */
 public class OpenCsvWriterParser extends OpenCsvParser {
 
-  /** Constructor. */
-  public OpenCsvWriterParser(
-      char separator,
-      char quotechar,
-      char escape,
-      boolean strictQuotes,
-      boolean ignoreLeadingWhiteSpace,
-      boolean ignoreQuotations,
-      CSVReaderNullFieldIndicator nullFieldIndicator,
-      Locale errorLocale) {
+  private OpenCsvWriterParser(OpenCsvWriterConfig config) {
     super(
-        separator,
-        quotechar,
-        escape,
-        strictQuotes,
-        ignoreLeadingWhiteSpace,
-        ignoreQuotations,
-        nullFieldIndicator,
-        errorLocale);
-  }
-
-  public OpenCsvWriterParser(OpenCsvWriterConfig config) {
-    this(
         config.getSeparator(),
         config.getQuoteChar(),
         config.getEscapeChar(),
