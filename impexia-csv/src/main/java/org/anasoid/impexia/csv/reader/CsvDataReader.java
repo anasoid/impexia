@@ -22,6 +22,7 @@ import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.enums.CSVReaderNullFieldIndicator;
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -29,14 +30,15 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.text.MessageFormat;
 import org.anasoid.impexia.core.data.DataLine;
-import org.anasoid.impexia.core.data.IDataReader;
+import org.anasoid.impexia.core.data.exporting.DataReader;
+import org.anasoid.impexia.core.data.exporting.HeaderReader;
 import org.anasoid.impexia.csv.exceptions.InvalidCsvFormatException;
 import org.anasoid.impexia.meta.header.ImpexAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /** Csv Data Reader. */
-public class CsvDataReader implements IDataReader {
+public class CsvDataReader implements DataReader, HeaderReader, Closeable {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(CsvDataReader.class);
 
