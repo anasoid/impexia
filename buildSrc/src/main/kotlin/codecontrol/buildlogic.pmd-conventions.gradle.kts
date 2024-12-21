@@ -1,7 +1,5 @@
 package codecontrol
 
-import gradle.kotlin.dsl.accessors._b5258395f318e256771440d90b569284.java
-import gradle.kotlin.dsl.accessors._b5258395f318e256771440d90b569284.pmd
 import org.gradle.kotlin.dsl.java
 import org.gradle.kotlin.dsl.pmd
 
