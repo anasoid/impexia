@@ -32,7 +32,7 @@ tasks.withType<JacocoReport> {
                 files(
                         classDirectories.files.map {
                             fileTree(it).apply {
-                                exclude(listOf("org/anasoid/impexia/csv/opencsv/**", "**/generated/**"))
+                                exclude(listOf("com/opencsv/**", "org/anasoid/impexia/csv/opencsv/**", "**/generated/**"))
                             }
                         }
                 )

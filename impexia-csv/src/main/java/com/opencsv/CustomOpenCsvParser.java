@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2020 the original author or authors.
+ * Copyright 2020-2024 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License")
  * you may not use this file except in compliance with the License.
@@ -13,25 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * @author : anas
- * Date :   29-Nov-2020
+ * Date :   21-Dec-2024
  */
 
-package org.anasoid.impexia.csv.opencsv.writer;
+package com.opencsv;
 
-import com.opencsv.CSVParser;
-import com.opencsv.CustomOpenCsvParser;
 import com.opencsv.enums.CSVReaderNullFieldIndicator;
 import java.util.Locale;
 
-/**
- * Copy of {@link CSVParser} to be overridableenable as constructor was protected from openCSV 5.3.
- *
- * @see CSVParser
- */
 @SuppressWarnings("PMD")
-public abstract class OpenCsvParser extends CustomOpenCsvParser {
+public abstract class CustomOpenCsvParser extends CSVParser {
 
-  protected OpenCsvParser(
+  protected CustomOpenCsvParser(
       char separator,
       char quotechar,
       char escape,

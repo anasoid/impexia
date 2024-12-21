@@ -33,7 +33,7 @@ tasks.withType<JacocoCoverageVerification> {
                 files(
                         classDirectories.files.map {
                             fileTree(it).apply {
-                                exclude("**/generated/**")
+                                exclude(listOf("com/opencsv/**", "org/anasoid/impexia/csv/opencsv/**", "**/generated/**"))
                             }
                         }
                 )
@@ -47,7 +47,7 @@ tasks.withType<JacocoReport> {
                 files(
                         classDirectories.files.map {
                             fileTree(it).apply {
-                                exclude("**/generated/**")
+                                exclude(listOf("com/opencsv/**", "org/anasoid/impexia/csv/opencsv/**", "**/generated/**"))
                             }
                         }
                 )

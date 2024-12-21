@@ -21,7 +21,7 @@ package org.anasoid.impexia.csv.opencsv.writer;
 import com.opencsv.CSVParser;
 import com.opencsv.enums.CSVReaderNullFieldIndicator;
 import java.util.Locale;
-import org.apache.commons.lang3.StringUtils;
+import org.anasoid.impexia.csv.writer.ConfigCsvWriter;
 
 /**
  * Custom CSVParser to correct bug : 1- Writing null can be only writed as null or "", need to have.
@@ -52,39 +52,33 @@ public class OpenCsvWriterParser extends OpenCsvParser {
         errorLocale);
   }
 
+  public OpenCsvWriterParser(OpenCsvWriterConfig config) {
+    this(
+        config.getSeparator(),
+        config.getQuoteChar(),
+        config.getEscapeChar(),
+        config.isStrictQuotes(),
+        config.isIgnoreLeadingWhiteSpace(),
+        config.isIgnoreQuotations(),
+        config.getNullFieldIndicator(),
+        config.getErrorLocale());
+  }
+
+  public OpenCsvWriterParser(ConfigCsvWriter config) {
+    this(
+        OpenCsvWriterConfig.builder()
+            .quoteChar(config.getQuoteChar())
+            .separator(config.getSeparatorChar())
+            .escapeChar(config.getEscapeChar())
+            .build());
+  }
+
   @Override
   protected String convertToCsvValue(String value, boolean applyQuotestoAll) {
-    String testValue = value;
-    StringBuilder builder =
-        new StringBuilder(testValue == null ? MAX_SIZE_FOR_EMPTY_FIELD : (testValue.length() * 2));
-    boolean containsQuoteChar = StringUtils.contains(testValue, getQuotechar());
-    boolean containsEscapeChar = StringUtils.contains(testValue, getEscape());
-    boolean containsSeparatorChar = StringUtils.contains(testValue, getSeparator());
-    boolean surroundWithQuotes =
-        applyQuotestoAll || isSurroundWithQuotes(value, containsSeparatorChar);
-
-    String convertedString = // NOSONAR
-        !containsQuoteChar
-            ? testValue
-            : testValue.replaceAll(
-                Character.toString(getQuotechar()),
-                Character.toString(getQuotechar()) + getQuotechar());
-    convertedString =
-        !containsEscapeChar
-            ? convertedString
-            : convertedString.replace(
-                Character.toString(getEscape()), Character.toString(getEscape()) + getEscape());
-    if (value != null) {
-      if (surroundWithQuotes) {
-        builder.append(getQuotechar());
-      }
-
-      builder.append(convertedString);
-
-      if (surroundWithQuotes) {
-        builder.append(getQuotechar());
-      }
+    if (value == null) {
+      return "";
+    } else {
+      return super.convertToCsvValue(value, applyQuotestoAll);
     }
-    return builder.toString();
   }
 }
