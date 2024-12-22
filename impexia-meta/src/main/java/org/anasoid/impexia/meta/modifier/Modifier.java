@@ -38,25 +38,22 @@ public class Modifier {
 
   public static final Set<String> BOOLEAN_VALUES =
       Collections.unmodifiableSet(new HashSet<>(Arrays.asList("true", "false")));
-  @Getter @ToString.Include private String code;
-  @Getter @Singular private Set<Mode> modes;
-  @Getter @Singular private Set<Level> levels;
-  @Getter @Singular private Set<BasicType> basicTypes;
-  @Getter @Singular private Set<GroupType> groupTypes;
   @Getter private final Set<ImpexAction> actions;
   @Getter private final Class<?> clazz;
-  @Getter @Singular private Set<String> values;
   @Getter private final boolean needMapping;
 
   /**
    * Modifier Manager Register Known list of modifier, modifier also can have scope, GLOBAL for
    * global same modifier can be restricted to scope like JPA, SQL.
    */
-  @Getter @ToString.Include private final String scope;
+  @Getter @ToString.Include private String code;
 
-  public boolean isAcceptCustomAttribute() {
-    return clazz != null && ImpexTransfromer.class.isAssignableFrom(clazz);
-  }
+  @Getter @ToString.Include private final String scope;
+  @Getter @Singular private Set<Mode> modes;
+  @Getter @Singular private Set<Level> levels;
+  @Getter @Singular private Set<BasicType> basicTypes;
+  @Getter @Singular private Set<GroupType> groupTypes;
+  @Getter @Singular private Set<String> values;
 
   public static Modifier.ModifierBuilder builder(ModifierEnum code) {
     return new Modifier.ModifierBuilderImpl().code(code);
@@ -64,6 +61,10 @@ public class Modifier {
 
   public static Modifier.ModifierBuilder builder(ModifierEnum code, String scope) {
     return builder(code).scope(scope);
+  }
+
+  public boolean isAcceptCustomAttribute() {
+    return clazz != null && ImpexTransfromer.class.isAssignableFrom(clazz);
   }
 
   @SuppressWarnings("PMD.AbstractClassWithoutAbstractMethod")
