@@ -16,7 +16,7 @@
  * Date :   02-Dec-2020
  */
 
-package org.anasoid.impexia.core.parser;
+package org.anasoid.impexia.core.parser.header;
 
 import static org.anasoid.impexia.core.ParserConstants.BRACKET_END;
 import static org.anasoid.impexia.core.ParserConstants.BRACKET_START;

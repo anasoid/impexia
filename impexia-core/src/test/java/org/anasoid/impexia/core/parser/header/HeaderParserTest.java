@@ -16,7 +16,7 @@
  * Date :   03-Dec-2020
  */
 
-package org.anasoid.impexia.core.parser;
+package org.anasoid.impexia.core.parser.header;
 
 import java.util.Iterator;
 import java.util.List;
