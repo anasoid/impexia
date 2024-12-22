@@ -18,4 +18,4 @@
 
 package org.anasoid.impexia.meta.transformer;
 
-public interface ErrorHandler {}
+public interface ErrorHandler extends ImpexTransfromer {}

@@ -53,7 +53,15 @@ public class ValueModifierValidator implements ModifierValidator {
     if (!modifierEnum.getValues().isEmpty()
         && !modifierEnum.getValues().contains(impexModifier.getValue())) {
       throw new AttributeModifierException(
-          MessageFormat.format("Field ({0}) should be boolean ", impexModifier.getKey()));
+          MessageFormat.format(
+              "Field ({0}) should be in the list : {1}",
+              impexModifier.getKey(), modifierEnum.getValues()));
+    }
+    if (Boolean.class.equals(modifierEnum.getClazz())
+        && !Modifier.BOOLEAN_VALUES.contains(impexModifier.getValue())) {
+      throw new AttributeModifierException(
+          MessageFormat.format(
+              "Field ({0}) should be boolean", impexModifier.getKey(), modifierEnum.getValues()));
     }
   }
 }

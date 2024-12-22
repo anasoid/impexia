@@ -18,4 +18,4 @@
 
 package org.anasoid.impexia.meta.transformer;
 
-public interface Listener extends ImpexTransfromer {}
+public interface ImpexTransfromer {}

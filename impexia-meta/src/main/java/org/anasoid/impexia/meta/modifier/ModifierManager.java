@@ -22,11 +22,7 @@ import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import org.anasoid.impexia.meta.Mode;
-import org.anasoid.impexia.meta.transformer.Decorator;
-import org.anasoid.impexia.meta.transformer.ErrorHandler;
-import org.anasoid.impexia.meta.transformer.Listener;
-import org.anasoid.impexia.meta.transformer.Translator;
+import org.anasoid.impexia.meta.modifier.Modifier.ModifierBuilder;
 
 /**
  * Modifier Manager Register Known list of modifier, modifier also can have scope, GLOBAL for global
@@ -63,86 +59,24 @@ public final class ModifierManager {
   @SuppressWarnings("PMD.ExcessiveMethodLength")
   private static void init() {
     // batchmode
-    register(
-        Modifier.builder(ModifierEnum.BATCHMODE, DEFAULT_SCOPE)
-            .mode(Mode.IMPORT)
-            .level(Level.TYPE)
-            .values(Modifier.BOOLEAN_VALUES));
-    // listner
-    register(
-        Modifier.builder(ModifierEnum.LISTNER, DEFAULT_SCOPE)
-            .mode(Mode.IMPORT)
-            .level(Level.TYPE)
-            .clazz(Listener.class));
-
-    // errorHandler
-    register(
-        Modifier.builder(ModifierEnum.ERRORHANDLER, DEFAULT_SCOPE)
-            .mode(Mode.IMPORT)
-            .level(Level.TYPE)
-            .clazz(ErrorHandler.class));
-    // cellDecorator
-    register(
-        Modifier.builder(ModifierEnum.CELLDECORATOR, DEFAULT_SCOPE)
-            .level(Level.FIELD)
-            .clazz(Decorator.class));
-
-    // translator
-    register(
-        Modifier.builder(ModifierEnum.TRANSLATOR, DEFAULT_SCOPE)
-            .level(Level.FIELD)
-            .clazz(Translator.class));
-    // collection-delimiter
-    register(
-        Modifier.builder(ModifierEnum.COLLECTIONDELIMITER, DEFAULT_SCOPE)
-            .level(Level.FIELD)
-            .groupType(GroupType.COLLECTION)
-            .groupType(GroupType.MAP));
-
-    // key2value-delimiter
-    register(
-        Modifier.builder(ModifierEnum.KEY2VALUEDELIMITER, DEFAULT_SCOPE)
-            .level(Level.FIELD)
-            .groupType(GroupType.COLLECTION)
-            .groupType(GroupType.MAP));
-
-    // numberformat
-    register(
-        Modifier.builder(ModifierEnum.NUMBERFORMAT, DEFAULT_SCOPE)
-            .level(Level.FIELD)
-            .basicType(BasicType.NUMBER));
-
-    // dateformat
-    register(
-        Modifier.builder(ModifierEnum.DATEFORMAT, DEFAULT_SCOPE)
-            .level(Level.FIELD)
-            .basicType(BasicType.DATE));
-
-    // path-delimiter
-    register(Modifier.builder(ModifierEnum.PATHDELIMITER, DEFAULT_SCOPE).level(Level.FIELD));
-
-    // unique
-    register(
-        Modifier.builder(ModifierEnum.UNIQUE, DEFAULT_SCOPE)
-            .level(Level.FIELD)
-            .values(Modifier.BOOLEAN_VALUES)
-            .needMapping(true));
-
-    // mandatory
-    register(
-        Modifier.builder(ModifierEnum.MANDATORY, DEFAULT_SCOPE)
-            .mode(Mode.IMPORT)
-            .level(Level.FIELD)
-            .values(Modifier.BOOLEAN_VALUES));
-
-    // ignorenull
-    register(
-        Modifier.builder(ModifierEnum.IGNORE_NULL, DEFAULT_SCOPE)
-            .mode(Mode.IMPORT)
-            .level(Level.FIELD)
-            .values(Modifier.BOOLEAN_VALUES));
-
+    register(ModifierEnum.BATCHMODE);
+    register(ModifierEnum.LISTENER);
+    register(ModifierEnum.ERRORHANDLER);
+    register(ModifierEnum.CELLDECORATOR);
+    register(ModifierEnum.TRANSLATOR);
+    register(ModifierEnum.COLLECTIONDELIMITER);
+    register(ModifierEnum.KEY2VALUEDELIMITER);
+    register(ModifierEnum.NUMBERFORMAT);
+    register(ModifierEnum.DATEFORMAT);
+    register(ModifierEnum.PATHDELIMITER);
+    register(ModifierEnum.UNIQUE);
+    register(ModifierEnum.MANDATORY);
+    register(ModifierEnum.IGNORE_NULL);
+    register(ModifierEnum.MODE);
+    register(ModifierEnum.VIRTUAL);
+    register(ModifierEnum.DEFAULT);
     // mode
+    /*
     register(
         Modifier.builder(ModifierEnum.MODE, DEFAULT_SCOPE)
             .mode(Mode.IMPORT)
@@ -162,9 +96,21 @@ public final class ModifierManager {
     // default
     register(
         Modifier.builder(ModifierEnum.DEFAULT, DEFAULT_SCOPE).mode(Mode.IMPORT).level(Level.FIELD));
+     */
   }
 
-  private static void register(Modifier.ModifierBuilder builder) {
+  private static void register(ModifierEnum modifierEnum) {
+    ModifierBuilder builder =
+        Modifier.builder(modifierEnum, DEFAULT_SCOPE)
+            .levels(modifierEnum.getLevels())
+            .modes(modifierEnum.getModes())
+            .basicTypes(modifierEnum.getBasicTypes())
+            .groupTypes(modifierEnum.getGroupTypes())
+            .actions(modifierEnum.getActions())
+            .values(modifierEnum.getValues())
+            .clazz(modifierEnum.getClazz())
+            .needMapping(modifierEnum.isNeedMapping());
+
     register(builder.build());
   }
 

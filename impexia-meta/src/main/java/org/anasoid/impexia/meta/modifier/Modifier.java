@@ -28,6 +28,8 @@ import lombok.Singular;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import org.anasoid.impexia.meta.Mode;
+import org.anasoid.impexia.meta.header.ImpexAction;
+import org.anasoid.impexia.meta.transformer.ImpexTransfromer;
 
 /** Modifiers container. */
 @SuperBuilder
@@ -41,7 +43,8 @@ public class Modifier {
   @Getter @Singular private Set<Level> levels;
   @Getter @Singular private Set<BasicType> basicTypes;
   @Getter @Singular private Set<GroupType> groupTypes;
-  private final Class<?> clazz;
+  @Getter private final Set<ImpexAction> actions;
+  @Getter private final Class<?> clazz;
   @Getter @Singular private Set<String> values;
   @Getter private final boolean needMapping;
 
@@ -52,7 +55,7 @@ public class Modifier {
   @Getter @ToString.Include private final String scope;
 
   public boolean isAcceptCustomAttribute() {
-    return clazz != null;
+    return clazz != null && ImpexTransfromer.class.isAssignableFrom(clazz);
   }
 
   public static Modifier.ModifierBuilder builder(ModifierEnum code) {
