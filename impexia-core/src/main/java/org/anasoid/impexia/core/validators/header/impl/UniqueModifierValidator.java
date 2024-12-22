@@ -23,7 +23,7 @@ import org.anasoid.impexia.meta.Mode;
 import org.anasoid.impexia.meta.exceptions.header.AttributeModifierException;
 import org.anasoid.impexia.meta.exceptions.header.ImpexHeaderException;
 import org.anasoid.impexia.meta.header.ImpexHeader;
-import org.anasoid.impexia.meta.modifier.ModifierEnum;
+import org.anasoid.impexia.meta.modifier.ModifierEnumGlobal;
 
 /** Default header Validator. */
 public class UniqueModifierValidator implements HeaderValidator {
@@ -37,7 +37,10 @@ public class UniqueModifierValidator implements HeaderValidator {
                   att ->
                       att.getModifiers().stream()
                           .anyMatch(
-                              m -> ModifierEnum.UNIQUE.toString().equalsIgnoreCase(m.getKey())));
+                              m ->
+                                  ModifierEnumGlobal.UNIQUE
+                                      .toString()
+                                      .equalsIgnoreCase(m.getKey())));
       if (!hasUnique) {
         throw new AttributeModifierException("Import should have at least one unique Field ");
       }

@@ -30,8 +30,6 @@ import org.anasoid.impexia.meta.modifier.Modifier.ModifierBuilder;
  */
 public final class ModifierManager {
 
-  private static final String DEFAULT_SCOPE = "GLOBAL";
-
   @SuppressWarnings("PMD.UseConcurrentHashMap")
   private static final Map<String, Modifier> MODIFIERS = new HashMap<>();
 
@@ -59,49 +57,27 @@ public final class ModifierManager {
   @SuppressWarnings("PMD.ExcessiveMethodLength")
   private static void init() {
     // batchmode
-    register(ModifierEnum.BATCHMODE);
-    register(ModifierEnum.LISTENER);
-    register(ModifierEnum.ERRORHANDLER);
-    register(ModifierEnum.CELLDECORATOR);
-    register(ModifierEnum.TRANSLATOR);
-    register(ModifierEnum.COLLECTIONDELIMITER);
-    register(ModifierEnum.KEY2VALUEDELIMITER);
-    register(ModifierEnum.NUMBERFORMAT);
-    register(ModifierEnum.DATEFORMAT);
-    register(ModifierEnum.PATHDELIMITER);
-    register(ModifierEnum.UNIQUE);
-    register(ModifierEnum.MANDATORY);
-    register(ModifierEnum.IGNORE_NULL);
-    register(ModifierEnum.MODE);
-    register(ModifierEnum.VIRTUAL);
-    register(ModifierEnum.DEFAULT);
-    // mode
-    /*
-    register(
-        Modifier.builder(ModifierEnum.MODE, DEFAULT_SCOPE)
-            .mode(Mode.IMPORT)
-            .level(Level.FIELD)
-            .groupType(GroupType.COLLECTION)
-            .groupType(GroupType.MAP)
-            .value("append")
-            .value("remove"));
-
-    // virtual
-    register(
-        Modifier.builder(ModifierEnum.VIRTUAL, DEFAULT_SCOPE)
-            .mode(Mode.IMPORT)
-            .level(Level.FIELD)
-            .values(Modifier.BOOLEAN_VALUES));
-
-    // default
-    register(
-        Modifier.builder(ModifierEnum.DEFAULT, DEFAULT_SCOPE).mode(Mode.IMPORT).level(Level.FIELD));
-     */
+    register(ModifierEnumGlobal.BATCHMODE);
+    register(ModifierEnumGlobal.LISTENER);
+    register(ModifierEnumGlobal.ERRORHANDLER);
+    register(ModifierEnumGlobal.CELLDECORATOR);
+    register(ModifierEnumGlobal.TRANSLATOR);
+    register(ModifierEnumGlobal.COLLECTIONDELIMITER);
+    register(ModifierEnumGlobal.KEY2VALUEDELIMITER);
+    register(ModifierEnumGlobal.NUMBERFORMAT);
+    register(ModifierEnumGlobal.DATEFORMAT);
+    register(ModifierEnumGlobal.PATHDELIMITER);
+    register(ModifierEnumGlobal.UNIQUE);
+    register(ModifierEnumGlobal.MANDATORY);
+    register(ModifierEnumGlobal.IGNORE_NULL);
+    register(ModifierEnumGlobal.MODE);
+    register(ModifierEnumGlobal.VIRTUAL);
+    register(ModifierEnumGlobal.DEFAULT);
   }
 
   private static void register(ModifierEnum modifierEnum) {
     ModifierBuilder builder =
-        Modifier.builder(modifierEnum, DEFAULT_SCOPE)
+        Modifier.builder(modifierEnum, modifierEnum.getScope())
             .levels(modifierEnum.getLevels())
             .modes(modifierEnum.getModes())
             .basicTypes(modifierEnum.getBasicTypes())

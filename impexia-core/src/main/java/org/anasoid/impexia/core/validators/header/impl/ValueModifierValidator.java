@@ -47,21 +47,21 @@ public class ValueModifierValidator implements ModifierValidator {
     return false;
   }
 
-  protected void validateModifierValues(ImpexModifier impexModifier, Modifier modifierEnum)
+  protected void validateModifierValues(ImpexModifier impexModifier, Modifier modifier)
       throws ImpexHeaderException {
 
-    if (!modifierEnum.getValues().isEmpty()
-        && !modifierEnum.getValues().contains(impexModifier.getValue())) {
+    if (!modifier.getValues().isEmpty()
+        && !modifier.getValues().contains(impexModifier.getValue())) {
       throw new AttributeModifierException(
           MessageFormat.format(
               "Field ({0}) should be in the list : {1}",
-              impexModifier.getKey(), modifierEnum.getValues()));
+              impexModifier.getKey(), modifier.getValues()));
     }
-    if (Boolean.class.equals(modifierEnum.getClazz())
+    if (Boolean.class.equals(modifier.getClazz())
         && !Modifier.BOOLEAN_VALUES.contains(impexModifier.getValue())) {
       throw new AttributeModifierException(
           MessageFormat.format(
-              "Field ({0}) should be boolean", impexModifier.getKey(), modifierEnum.getValues()));
+              "Field ({0}) should be boolean", impexModifier.getKey(), modifier.getValues()));
     }
   }
 }
