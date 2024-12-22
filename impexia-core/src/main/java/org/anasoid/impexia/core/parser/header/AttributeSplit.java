@@ -16,7 +16,7 @@
  * Date :   02-Dec-2020
  */
 
-package org.anasoid.impexia.core.parser;
+package org.anasoid.impexia.core.parser.header;
 
 import org.anasoid.impexia.meta.header.ImpexAction;
 
