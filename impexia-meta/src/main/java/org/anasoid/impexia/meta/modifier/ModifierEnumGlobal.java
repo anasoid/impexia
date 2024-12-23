@@ -24,6 +24,7 @@ import static org.anasoid.impexia.meta.header.ImpexAction.*;
 import static org.anasoid.impexia.meta.modifier.BasicType.*;
 import static org.anasoid.impexia.meta.modifier.GroupType.*;
 import static org.anasoid.impexia.meta.modifier.Level.*;
+import static org.anasoid.impexia.meta.modifier.ScopeEnum.*;
 
 import java.util.Set;
 import lombok.Getter;
@@ -36,11 +37,11 @@ import org.anasoid.impexia.meta.transformer.Translator;
 
 /** List of acceptable Modifiers. */
 public enum ModifierEnumGlobal implements ModifierEnum {
-  BATCHMODE(of(TYPE), of(UPDATE, INSERT_UPDATE), of(IMPORT), Boolean.class),
-  LISTENER(of(TYPE), of(), of(IMPORT), Listener.class),
-  ERRORHANDLER(of(TYPE), of(), of(IMPORT), ErrorHandler.class),
-  CELLDECORATOR(of(FIELD), of(), of(IMPORT, EXPORT), CellDecorator.class),
-  TRANSLATOR(of(FIELD), of(), of(IMPORT), Translator.class),
+  BATCHMODE(of(TYPE), of(UPDATE, INSERT_UPDATE), of(IMPORT), Boolean.class, GLOBAL),
+  LISTENER(of(TYPE), of(), of(IMPORT), Listener.class, GLOBAL),
+  ERRORHANDLER(of(TYPE), of(), of(IMPORT), ErrorHandler.class, GLOBAL),
+  CELLDECORATOR(of(FIELD), of(), of(IMPORT, EXPORT), CellDecorator.class, GLOBAL),
+  TRANSLATOR(of(FIELD), of(), of(IMPORT), Translator.class, GLOBAL),
   COLLECTIONDELIMITER(
       of(FIELD, TYPE),
       of(UPDATE, INSERT_UPDATE, INSERT),
@@ -48,7 +49,8 @@ public enum ModifierEnumGlobal implements ModifierEnum {
       String.class,
       of(),
       of(MAP, COLLECTION),
-      of()),
+      of(),
+      ORM),
   KEY2VALUEDELIMITER(
       of(FIELD, TYPE),
       of(UPDATE, INSERT_UPDATE, INSERT),
@@ -56,13 +58,14 @@ public enum ModifierEnumGlobal implements ModifierEnum {
       String.class,
       of(),
       of(MAP, COLLECTION),
-      of()),
-  NUMBERFORMAT(of(FIELD, TYPE), of(), of(), String.class, of(NUMBER), of(), of()),
-  DATEFORMAT(of(FIELD, TYPE), of(), of(), String.class, of(DATE), of(), of()),
-  PATHDELIMITER(of(FIELD, TYPE), of(), of(), String.class),
-  UNIQUE(of(FIELD), of(), of(), Boolean.class, of(), of(SINGLE), of(), true),
-  MANDATORY(of(FIELD), of(), of(IMPORT), Boolean.class),
-  IGNORE_NULL(of(FIELD), of(), of(IMPORT), Boolean.class, of(), of(COLLECTION), of()),
+      of(),
+      ORM),
+  NUMBERFORMAT(of(FIELD, TYPE), of(), of(), String.class, of(NUMBER), of(), of(), GLOBAL),
+  DATEFORMAT(of(FIELD, TYPE), of(), of(), String.class, of(DATE), of(), of(), GLOBAL),
+  PATHDELIMITER(of(FIELD, TYPE), of(), of(), String.class, GLOBAL),
+  UNIQUE(of(FIELD), of(), of(), Boolean.class, of(), of(SINGLE), of(), true, GLOBAL),
+  MANDATORY(of(FIELD), of(), of(IMPORT), Boolean.class, GLOBAL),
+  IGNORE_NULL(of(FIELD), of(), of(IMPORT), Boolean.class, of(), of(COLLECTION), of(), GLOBAL),
   MODE(
       of(FIELD),
       of(UPDATE, INSERT_UPDATE, INSERT),
@@ -70,11 +73,12 @@ public enum ModifierEnumGlobal implements ModifierEnum {
       String.class,
       of(),
       of(MAP, COLLECTION),
-      of("append", "remove", "merge")),
-  VIRTUAL(of(FIELD), of(UPDATE, INSERT_UPDATE, INSERT), of(IMPORT), Boolean.class),
-  DEFAULT(of(FIELD), of(UPDATE, INSERT_UPDATE, INSERT), of(IMPORT), String.class);
+      of("append", "remove", "merge"),
+      ORM),
+  VIRTUAL(of(FIELD), of(UPDATE, INSERT_UPDATE, INSERT), of(IMPORT), Boolean.class, GLOBAL),
+  DEFAULT(of(FIELD), of(UPDATE, INSERT_UPDATE, INSERT), of(IMPORT), String.class, GLOBAL);
 
-  @Getter private final String scope;
+  @Getter private final Scope scope;
   @Getter private final Set<Level> levels;
   @Getter private final Set<ImpexAction> actions;
   @Getter private final Set<Mode> modes;
@@ -93,7 +97,8 @@ public enum ModifierEnumGlobal implements ModifierEnum {
       Set<BasicType> basicTypes,
       Set<GroupType> groupTypes,
       Set<String> values,
-      boolean needMapping) {
+      boolean needMapping,
+      Scope scope) {
     this.levels = levels;
     this.actions = actions;
     this.modes = modes;
@@ -102,7 +107,7 @@ public enum ModifierEnumGlobal implements ModifierEnum {
     this.groupTypes = groupTypes;
     this.values = values;
     this.needMapping = needMapping;
-    this.scope = "GLOBAL";
+    this.scope = scope;
   }
 
   ModifierEnumGlobal(
@@ -112,11 +117,13 @@ public enum ModifierEnumGlobal implements ModifierEnum {
       Class<?> clazz,
       Set<BasicType> basicTypes,
       Set<GroupType> groupTypes,
-      Set<String> values) {
-    this(levels, actions, modes, clazz, basicTypes, groupTypes, values, false);
+      Set<String> values,
+      Scope scope) {
+    this(levels, actions, modes, clazz, basicTypes, groupTypes, values, false, scope);
   }
 
-  ModifierEnumGlobal(Set<Level> levels, Set<ImpexAction> actions, Set<Mode> modes, Class<?> clazz) {
-    this(levels, actions, modes, clazz, of(), of(), of(), false);
+  ModifierEnumGlobal(
+      Set<Level> levels, Set<ImpexAction> actions, Set<Mode> modes, Class<?> clazz, Scope scope) {
+    this(levels, actions, modes, clazz, of(), of(), of(), false, scope);
   }
 }

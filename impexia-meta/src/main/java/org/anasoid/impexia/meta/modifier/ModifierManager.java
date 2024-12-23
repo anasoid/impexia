@@ -76,7 +76,7 @@ public final class ModifierManager {
   }
 
   private static void register(ModifierEnum modifierEnum) {
-    ModifierBuilder builder =
+    ModifierBuilder<?, ?> builder =
         Modifier.builder(modifierEnum, modifierEnum.getScope())
             .levels(modifierEnum.getLevels())
             .modes(modifierEnum.getModes())
@@ -93,7 +93,8 @@ public final class ModifierManager {
   private static void register(Modifier modifier) {
 
     String codeKey = modifier.getCode().toLowerCase(Locale.ROOT);
-    String scopeKey = modifier.getScope().toLowerCase(Locale.ROOT);
+    String scopeKey = modifier.getScope().getName();
+
     if (!MODIFIERS_BY_SCOPE.containsKey(scopeKey)) {
       MODIFIERS_BY_SCOPE.put(scopeKey, new HashMap<>());
     }
@@ -101,7 +102,7 @@ public final class ModifierManager {
     if (modifierOldValue != null) {
       throw new IllegalStateException(
           MessageFormat.format(
-              "modifier confilict between (({0})) and (({1})) ", modifierOldValue, modifier));
+              "modifier conflict between (({0})) and (({1})) ", modifierOldValue, modifier));
     }
 
     MODIFIERS_BY_SCOPE.get(scopeKey).put(codeKey, modifier);
@@ -132,9 +133,9 @@ public final class ModifierManager {
    * @return enum value
    * @throws IllegalArgumentException throw if no scope found by code
    */
-  public Map<String, Modifier> getValuesByScope(String scope) {
+  public Map<String, Modifier> getValuesByScope(Scope scope) {
 
-    Map<String, Modifier> modifiers = MODIFIERS_BY_SCOPE.get(scope.toLowerCase(Locale.ROOT));
+    Map<String, Modifier> modifiers = MODIFIERS_BY_SCOPE.get(scope.getName());
 
     if (modifiers != null) {
       return modifiers;
