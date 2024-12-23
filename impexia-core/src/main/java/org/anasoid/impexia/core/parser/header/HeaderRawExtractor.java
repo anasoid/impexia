@@ -42,8 +42,7 @@ final class HeaderRawExtractor {
 
   private HeaderRawExtractor() {}
 
-  protected static AttributeSplit split(String candidate, boolean header)
-      throws InvalidHeaderFormatException {
+  protected static AttributeSplit split(String candidate, boolean header) {
     AttributeSplit split = new AttributeSplit();
     Objects.requireNonNull(candidate);
     String candidateTrim = candidate.trim();
@@ -78,7 +77,7 @@ final class HeaderRawExtractor {
     return split;
   }
 
-  private static String extractRawMapping(String candidate) throws InvalidHeaderFormatException {
+  private static String extractRawMapping(String candidate) {
     String mapping;
     if (candidate.indexOf('[') < 0) {
       mapping = candidate;
@@ -98,7 +97,7 @@ final class HeaderRawExtractor {
         MessageFormat.format("Header not valid (({0})), Invalid modifiers", candidate));
   }
 
-  private static String extractRawModifiers(String candidate) throws InvalidHeaderFormatException {
+  private static String extractRawModifiers(String candidate) {
     String candidateClean = candidate.trim();
     if (candidateClean.isEmpty()
         || ((candidateClean.charAt(0) == '[')
@@ -109,8 +108,7 @@ final class HeaderRawExtractor {
         MessageFormat.format("Header not valid (({0})), Invalid modifiers", candidate));
   }
 
-  private static String extractRawField(String candidate, boolean header)
-      throws InvalidHeaderFormatException {
+  private static String extractRawField(String candidate, boolean header) {
     int indexBracket = candidate.indexOf('[');
     int indexParentheses = candidate.indexOf('(');
     String field;
@@ -146,9 +144,7 @@ final class HeaderRawExtractor {
   }
 
   @SuppressWarnings("PMD.NPathComplexity")
-  protected static List<String> splitMapping(String rawMapping) // NOSONAR
-      throws InvalidHeaderFormatException {
-
+  protected static List<String> splitMapping(String rawMapping) {
     if (StringUtils.isBlank(rawMapping)) {
       return new ArrayList<>();
     }
@@ -218,8 +214,7 @@ final class HeaderRawExtractor {
   }
 
   @SuppressWarnings("PMD.NPathComplexity")
-  protected static List<String> splitModifier(String rawModifiers) // NOSONAR
-      throws InvalidHeaderFormatException {
+  protected static List<String> splitModifier(String rawModifiers) {
     if (StringUtils.isBlank(rawModifiers)) {
       return new ArrayList<>();
     }
@@ -263,7 +258,7 @@ final class HeaderRawExtractor {
     return result;
   }
 
-  private static void validateFragment(String fragment) throws InvalidHeaderFormatException {
+  private static void validateFragment(String fragment) {
 
     if ((fragment.indexOf(FIELD_MAPPING_SEPARATOR) > -1)
         && (fragment.charAt(fragment.length() - 1) != PARENTHESES_END)) {

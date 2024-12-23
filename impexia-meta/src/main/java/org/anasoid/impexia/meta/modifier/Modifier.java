@@ -48,7 +48,7 @@ public class Modifier {
    */
   @Getter @ToString.Include private String code;
 
-  @Getter @ToString.Include private final String scope;
+  @Getter @ToString.Include private final Scope scope;
   @Getter @Singular private Set<Mode> modes;
   @Getter @Singular private Set<Level> levels;
   @Getter @Singular private Set<BasicType> basicTypes;
@@ -59,7 +59,7 @@ public class Modifier {
     return new Modifier.ModifierBuilderImpl().code(code);
   }
 
-  public static Modifier.ModifierBuilder builder(ModifierEnum code, String scope) {
+  public static Modifier.ModifierBuilder builder(ModifierEnum code, Scope scope) {
     return builder(code).scope(scope);
   }
 

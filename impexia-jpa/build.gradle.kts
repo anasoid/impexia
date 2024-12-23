@@ -7,6 +7,7 @@ plugins {
 }
 
 dependencies {
+    implementation(project(":impexia-meta"))
     implementation(project(":impexia-exporting"))
     implementation(project(":impexia-importing"))
     implementation(libs.opencsv)

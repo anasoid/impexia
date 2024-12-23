@@ -13,9 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * @author : anas
- * Date :   21-Dec-2024
+ * Date :   23-Dec-2024
  */
 
-package org.anasoid.impexia.importing.service;
+package org.anasoid.impexia.importing.manager.transformer;
 
-public class ImpexiaImportingService {}
+public enum TransformerOrder {
+  HEADER_INIT(0),
+  HEADER_FIRST(0),
+  COLUMN_INIT(0),
+  COLUMN_FIRST(0),
+  COLUMN_END(0),
+  HEADER_END(0);
+
+  int order;
+
+  TransformerOrder(int order) {
+    this.order = order;
+  }
+}

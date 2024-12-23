@@ -13,32 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * @author : anas
- * Date :   22-Dec-2024
+ * Date :   23-Dec-2024
  */
 
-package org.anasoid.impexia.meta.modifier;
+package org.anasoid.impexia.jpa.importing.service;
 
-import java.util.Set;
-import org.anasoid.impexia.meta.Mode;
-import org.anasoid.impexia.meta.header.ImpexAction;
+import org.anasoid.impexia.importing.service.AbstractImpexiaImportingService;
+import org.anasoid.impexia.jpa.meta.modifier.JpaScopeEnum;
+import org.anasoid.impexia.meta.modifier.Scope;
 
-public interface ModifierEnum {
+public class JpaImpexiaImportingService extends AbstractImpexiaImportingService {
 
-  Set<Level> getLevels();
-
-  Set<ImpexAction> getActions();
-
-  Set<Mode> getModes();
-
-  Class<?> getClazz();
-
-  Set<BasicType> getBasicTypes();
-
-  Set<GroupType> getGroupTypes();
-
-  Set<String> getValues();
-
-  boolean isNeedMapping();
-
-  Scope getScope();
+  @Override
+  protected Scope getScope() {
+    return JpaScopeEnum.JPA;
+  }
 }

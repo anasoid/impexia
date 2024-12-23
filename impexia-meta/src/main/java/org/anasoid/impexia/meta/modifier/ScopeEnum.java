@@ -13,32 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * @author : anas
- * Date :   22-Dec-2024
+ * Date :   23-Dec-2024
  */
 
 package org.anasoid.impexia.meta.modifier;
 
+import java.util.HashSet;
 import java.util.Set;
-import org.anasoid.impexia.meta.Mode;
-import org.anasoid.impexia.meta.header.ImpexAction;
+import lombok.Getter;
 
-public interface ModifierEnum {
+public enum ScopeEnum implements Scope {
+  GLOBAL("GLOBAL", Set.of()),
+  ORM("ORM", Set.of(GLOBAL));
+  @Getter private final String name;
+  @Getter private final Set<Scope> scopes;
 
-  Set<Level> getLevels();
+  ScopeEnum(String name, Set<Scope> scopes) {
+    this.name = name;
+    this.scopes = scopes;
+  }
 
-  Set<ImpexAction> getActions();
+  @Override
+  public Set<String> getScopesAsString() {
 
-  Set<Mode> getModes();
+    Set<String> result = new HashSet<>(Set.of(name));
+    scopes.forEach(s -> result.addAll(s.getScopesAsString()));
 
-  Class<?> getClazz();
-
-  Set<BasicType> getBasicTypes();
-
-  Set<GroupType> getGroupTypes();
-
-  Set<String> getValues();
-
-  boolean isNeedMapping();
-
-  Scope getScope();
+    return result;
+  }
 }

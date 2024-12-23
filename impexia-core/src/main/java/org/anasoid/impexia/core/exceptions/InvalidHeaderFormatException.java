@@ -18,7 +18,7 @@
 
 package org.anasoid.impexia.core.exceptions;
 
-public class InvalidHeaderFormatException extends Exception {
+public class InvalidHeaderFormatException extends RuntimeException {
   static final long serialVersionUID = -3387554563124229948L;
 
   public static final String ERROR_INVALID_MAPPING = "Header not valid (({0})), Invalid Mapping";

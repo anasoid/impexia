@@ -41,8 +41,7 @@ public final class HeaderParser {
   private HeaderParser() {}
 
   @SuppressWarnings({"PMD.AvoidInstantiatingObjectsInLoops", "PMD.AvoidLiteralsInIfCondition"})
-  protected static ImpexHeader parseHeaderRow(String... columns)
-      throws InvalidHeaderFormatException {
+  public static ImpexHeader parseHeaderRow(String... columns) {
 
     if (columns.length < 2) {
       throw new InvalidHeaderFormatException(
@@ -78,8 +77,7 @@ public final class HeaderParser {
   }
 
   @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
-  protected static List<ImpexModifier> parseModifier(String rawModifiers)
-      throws InvalidHeaderFormatException {
+  protected static List<ImpexModifier> parseModifier(String rawModifiers) {
     List<ImpexModifier> result = new ArrayList<>();
     List<String> rawModifierList = HeaderRawExtractor.splitModifier(rawModifiers);
     for (String rawModifier : rawModifierList) {
@@ -99,8 +97,7 @@ public final class HeaderParser {
   }
 
   @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
-  protected static List<ImpexMapping> parseMapping(String rawMapping)
-      throws InvalidHeaderFormatException {
+  protected static List<ImpexMapping> parseMapping(String rawMapping) {
     List<ImpexMapping> result = new ArrayList<>();
 
     List<String> mappingList = HeaderRawExtractor.splitMapping(rawMapping);
@@ -120,8 +117,7 @@ public final class HeaderParser {
     return result;
   }
 
-  private static List<String> extractKeyValueFromModifier(String modifier)
-      throws InvalidHeaderFormatException {
+  private static List<String> extractKeyValueFromModifier(String modifier) {
 
     String cleanModifier = modifier;
     String key = cleanModifier.substring(0, cleanModifier.indexOf('=')).trim();
@@ -145,8 +141,7 @@ public final class HeaderParser {
     return result;
   }
 
-  private static List<String> extractFieldFromMapping(String mapping)
-      throws InvalidHeaderFormatException {
+  private static List<String> extractFieldFromMapping(String mapping) {
     int indexP = mapping.indexOf(PARENTHESES_START);
     String field;
     String subMapping = null;

@@ -13,32 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * @author : anas
- * Date :   22-Dec-2024
+ * Date :   23-Dec-2024
  */
 
 package org.anasoid.impexia.meta.modifier;
 
 import java.util.Set;
-import org.anasoid.impexia.meta.Mode;
-import org.anasoid.impexia.meta.header.ImpexAction;
 
-public interface ModifierEnum {
+public interface Scope {
+  String getName();
 
-  Set<Level> getLevels();
+  Set<Scope> getScopes();
 
-  Set<ImpexAction> getActions();
-
-  Set<Mode> getModes();
-
-  Class<?> getClazz();
-
-  Set<BasicType> getBasicTypes();
-
-  Set<GroupType> getGroupTypes();
-
-  Set<String> getValues();
-
-  boolean isNeedMapping();
-
-  Scope getScope();
+  Set<String> getScopesAsString();
 }
