@@ -13,12 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * @author : anas
- * Date :   22-Dec-2024
+ * Date :   24-Dec-2024
  */
 
-package org.anasoid.impexia.importing.manager.transformer;
+package org.anasoid.impexia.core.manager.values;
 
-public interface LineTransformer<T, V> {
+import lombok.Getter;
+import lombok.Setter;
+import org.anasoid.impexia.core.manager.values.column.AbstractColumnValue;
+import org.anasoid.impexia.meta.header.ImpexAttribute;
 
-  V transform(T in);
+public class AtomicColumnReference {
+  @Getter ImpexAttribute impexAttribute;
+  @Getter @Setter AbstractColumnValue<?> columnValue;
+
+  public AtomicColumnReference(ImpexAttribute impexAttribute, AbstractColumnValue<?> columnValue) {
+    this.impexAttribute = impexAttribute;
+    this.columnValue = columnValue;
+  }
 }

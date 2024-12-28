@@ -22,12 +22,11 @@ import java.util.List;
 import lombok.Getter;
 import lombok.Singular;
 import lombok.experimental.SuperBuilder;
-import org.anasoid.impexia.core.manager.values.column.ColumnValue;
 
 @SuperBuilder
 @Getter
 public class LineValues {
-  @Singular List<ColumnValue<?>> values;
+  @Singular List<AtomicColumnReference> values;
 
   public int size() {
     return values == null ? 0 : values.size();

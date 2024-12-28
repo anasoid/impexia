@@ -13,14 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * @author : anas
- * Date :   22-Dec-2024
+ * Date :   23-Dec-2024
  */
 
-package org.anasoid.impexia.importing.manager.transformer;
+package org.anasoid.impexia.core.manager.config;
 
-import org.anasoid.impexia.core.manager.transformer.Transformer;
-import org.anasoid.impexia.core.manager.values.LineValues;
-import org.anasoid.impexia.importing.manager.config.ImportingImpexContext;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
+import org.anasoid.impexia.meta.modifier.Scope;
 
-public interface LineValueTransformer<C extends ImportingImpexContext<?>>
-    extends Transformer<LineValues, LineValues, C> {}
+@Getter
+@Setter
+@SuperBuilder
+@SuppressWarnings({"PMD.AbstractClassWithoutAbstractMethod", "PMD.AbstractClassWithoutAnyMethod"})
+public abstract class AbstractImpexContext<T extends AbstractImpexConfig> {
+
+  private T config;
+  private final Scope scope;
+}

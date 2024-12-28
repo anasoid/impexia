@@ -13,14 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * @author : anas
- * Date :   22-Dec-2024
+ * Date :   24-Dec-2024
  */
 
-package org.anasoid.impexia.importing.manager.transformer;
+package org.anasoid.impexia.importing.manager.configurer;
 
+import java.util.List;
 import org.anasoid.impexia.core.manager.transformer.Transformer;
-import org.anasoid.impexia.core.manager.values.LineValues;
-import org.anasoid.impexia.importing.manager.config.ImportingImpexContext;
+import org.anasoid.impexia.core.manager.transformer.TransformerOrder;
+import org.anasoid.impexia.importing.manager.config.ImportingImpexConfig;
+import org.anasoid.impexia.meta.header.ImpexHeader;
+import org.apache.commons.lang3.tuple.Pair;
 
-public interface LineValueTransformer<C extends ImportingImpexContext<?>>
-    extends Transformer<LineValues, LineValues, C> {}
+public interface ImpexiaImportingConfigurer<C extends ImportingImpexConfig> {
+
+  List<Pair<TransformerOrder, Transformer<ImpexHeader, ImpexHeader, C>>> getHeaderTransformer();
+}

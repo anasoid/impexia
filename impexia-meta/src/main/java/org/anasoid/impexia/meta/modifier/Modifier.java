@@ -29,7 +29,7 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import org.anasoid.impexia.meta.Mode;
 import org.anasoid.impexia.meta.header.ImpexAction;
-import org.anasoid.impexia.meta.transformer.ImpexTransfromer;
+import org.anasoid.impexia.meta.transformer.ImpexHandler;
 
 /** Modifiers container. */
 @SuperBuilder
@@ -64,7 +64,7 @@ public class Modifier {
   }
 
   public boolean isAcceptCustomAttribute() {
-    return clazz != null && ImpexTransfromer.class.isAssignableFrom(clazz);
+    return clazz != null && ImpexHandler.class.isAssignableFrom(clazz);
   }
 
   @SuppressWarnings("PMD.AbstractClassWithoutAbstractMethod")

@@ -16,19 +16,17 @@
  * Date :   23-Dec-2024
  */
 
-package org.anasoid.impexia.importing.manager.transformer;
+package org.anasoid.impexia.core.manager.config;
 
-public enum TransformerOrder {
-  HEADER_INIT(0),
-  HEADER_FIRST(0),
-  COLUMN_INIT(0),
-  COLUMN_FIRST(0),
-  COLUMN_END(0),
-  HEADER_END(0);
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
-  int order;
+@Getter
+@Setter
+@SuperBuilder
+@SuppressWarnings({"PMD.AbstractClassWithoutAbstractMethod", "PMD.AbstractClassWithoutAnyMethod"})
+public abstract class AbstractImpexConfig {
 
-  TransformerOrder(int order) {
-    this.order = order;
-  }
+  int todo;
 }
