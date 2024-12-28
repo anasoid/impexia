@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2024 the original author or authors.
+ * Copyright 2020-2020 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License")
  * you may not use this file except in compliance with the License.
@@ -13,23 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * @author : anas
- * Date :   23-Dec-2024
+ * Date :   30-Nov-2020
  */
 
-package org.anasoid.impexia.core.manager.config;
+package org.anasoid.impexia.core.exceptions;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.SuperBuilder;
+public class InvalidLineStrictFormatException extends RuntimeException {
+  static final long serialVersionUID = -3387554563124229948L;
 
-@Getter
-@Setter
-@SuperBuilder
-@SuppressWarnings({"PMD.AbstractClassWithoutAbstractMethod", "PMD.AbstractClassWithoutAnyMethod"})
-public abstract class AbstractImpexConfig {
-  private static final String PREFIX = "config.";
-
-  public static final String STRICT = PREFIX + "strict";
-
-  Boolean strict;
+  public InvalidLineStrictFormatException(String message) {
+    super(message);
+  }
 }

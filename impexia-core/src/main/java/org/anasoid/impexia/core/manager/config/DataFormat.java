@@ -13,23 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * @author : anas
- * Date :   23-Dec-2024
+ * Date :   28-Dec-2024
  */
 
 package org.anasoid.impexia.core.manager.config;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.SuperBuilder;
-
-@Getter
-@Setter
-@SuperBuilder
-@SuppressWarnings({"PMD.AbstractClassWithoutAbstractMethod", "PMD.AbstractClassWithoutAnyMethod"})
-public abstract class AbstractImpexConfig {
-  private static final String PREFIX = "config.";
-
-  public static final String STRICT = PREFIX + "strict";
-
-  Boolean strict;
+public enum DataFormat {
+  CSV
 }

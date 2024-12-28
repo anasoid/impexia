@@ -22,45 +22,77 @@ import static org.anasoid.impexia.meta.modifier.ModifierEnumGlobal.DEFAULT;
 import static org.anasoid.impexia.meta.modifier.ModifierEnumGlobal.VIRTUAL;
 
 import java.util.concurrent.atomic.AtomicInteger;
+import org.anasoid.impexia.core.exceptions.InvalidLineStrictFormatException;
 import org.anasoid.impexia.core.manager.transformer.ChildTransformer;
 import org.anasoid.impexia.core.manager.values.AtomicColumnReference;
 import org.anasoid.impexia.core.manager.values.LineValues;
 import org.anasoid.impexia.core.manager.values.LineValues.LineValuesBuilder;
 import org.anasoid.impexia.core.manager.values.column.StringColumnValue;
+import org.anasoid.impexia.importing.manager.config.ImportingImpexConfig;
 import org.anasoid.impexia.importing.manager.config.ImportingImpexContext;
+import org.anasoid.impexia.meta.header.ImpexAttribute;
 import org.anasoid.impexia.meta.header.ImpexHeader;
 
 public class RecordLineTransformer<C extends ImportingImpexContext<?>>
     implements ChildTransformer<LineValues, String[], ImpexHeader, C> {
 
   @Override
-  public LineValues transform(String[] records, ImpexHeader impexHeader, C ctx) {
+  public LineValues transform(String[] records, ImpexHeader impexHeader, C context) {
     LineValuesBuilder<?, ?> lineBuilder = LineValues.builder();
     AtomicInteger i = new AtomicInteger();
-    AtomicInteger v = new AtomicInteger();
+
     impexHeader.getAttributes().stream()
         .forEach(
             atr -> {
               if (atr.getModifiers().stream()
                   .anyMatch(m -> m.getKey().equalsIgnoreCase(VIRTUAL.name()))) {
-                String defaultValue =
-                    atr.getModifiers().stream()
-                        .filter(m -> m.getKey().equalsIgnoreCase(DEFAULT.name()))
-                        .findFirst()
-                        .get()
-                        .getValue();
-                lineBuilder.value(
-                    new AtomicColumnReference(
-                        atr, StringColumnValue.builder().value(defaultValue).build()));
-                v.getAndIncrement();
+                lineBuilder.value(getVirtualValue(atr));
               } else {
+                String value = null;
+                if (checkMissingColumn(records, i.get(), context.getConfig())) {
+                  value = records[i.get()];
+                }
                 lineBuilder.value(
                     new AtomicColumnReference(
-                        atr, StringColumnValue.builder().value(records[i.get()]).build()));
+                        atr, StringColumnValue.builder().value(value).build()));
                 i.getAndIncrement();
               }
             });
-
+    checkAdditionalColumn(records, i.get(), context.getConfig());
     return lineBuilder.build();
+  }
+
+  private AtomicColumnReference getVirtualValue(ImpexAttribute impexAttribute) {
+    String defaultValue =
+        impexAttribute.getModifiers().stream()
+            .filter(m -> m.getKey().equalsIgnoreCase(DEFAULT.name()))
+            .findFirst()
+            .get()
+            .getValue();
+
+    return new AtomicColumnReference(
+        impexAttribute, StringColumnValue.builder().value(defaultValue).build());
+  }
+
+  private void checkAdditionalColumn(
+      String[] records, int elementCount, ImportingImpexConfig config) {
+    if (records.length > elementCount
+        && (config == null || !Boolean.TRUE.equals(config.getLineIgnoreAdditionalColumn()))) {
+      throw new InvalidLineStrictFormatException(
+          String.format("Line has more elements {0} than header", records.length));
+    }
+  }
+
+  private boolean checkMissingColumn(
+      String[] records, int elementCount, ImportingImpexConfig config) {
+    if (elementCount >= records.length) {
+      if (config == null || !Boolean.TRUE.equals(config.getLineMissingColumnAsNull())) {
+        throw new InvalidLineStrictFormatException(
+            String.format("Line has less elements {0} than header", records.length));
+      }
+      return false;
+    } else {
+      return true;
+    }
   }
 }

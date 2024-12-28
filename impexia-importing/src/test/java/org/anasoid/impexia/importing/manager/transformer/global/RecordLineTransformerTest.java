@@ -1,15 +1,18 @@
 package org.anasoid.impexia.importing.manager.transformer.global;
 
 import static org.anasoid.impexia.meta.modifier.ModifierEnumGlobal.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
+import org.anasoid.impexia.core.exceptions.InvalidLineStrictFormatException;
 import org.anasoid.impexia.core.manager.values.AtomicColumnReference;
 import org.anasoid.impexia.core.manager.values.LineValues;
+import org.anasoid.impexia.importing.manager.config.ImportingImpexConfig;
 import org.anasoid.impexia.importing.manager.config.ImportingImpexContext;
 import org.anasoid.impexia.meta.header.ImpexAction;
 import org.anasoid.impexia.meta.header.ImpexAttribute;
 import org.anasoid.impexia.meta.header.ImpexHeader;
 import org.anasoid.impexia.meta.header.ImpexModifier;
-import org.junit.jupiter.api.Assertions;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /*
@@ -47,13 +50,13 @@ class RecordLineTransformerTest {
     LineValues lineValue =
         recordLineTransformer.transform(
             new String[] {"aa", "bb"}, impexHeader, ImportingImpexContext.builder().build());
-    Assertions.assertEquals(2, lineValue.size());
+    assertThat(lineValue.size()).isEqualTo(2);
     AtomicColumnReference v1 = lineValue.getValues().get(0);
-    Assertions.assertEquals("aa", v1.getColumnValue().getValue());
-    Assertions.assertEquals("code", v1.getImpexAttribute().getField());
+    assertThat(v1.getColumnValue().getValue()).isEqualTo("aa");
+    assertThat(v1.getImpexAttribute().getField()).isEqualTo("code");
     AtomicColumnReference v2 = lineValue.getValues().get(1);
-    Assertions.assertEquals("bb", v2.getColumnValue().getValue());
-    Assertions.assertEquals("name", v2.getImpexAttribute().getField());
+    assertThat(v2.getColumnValue().getValue()).isEqualTo("bb");
+    assertThat(v2.getImpexAttribute().getField()).isEqualTo("name");
   }
 
   @Test
@@ -76,15 +79,110 @@ class RecordLineTransformerTest {
     LineValues lineValue =
         recordLineTransformer.transform(
             new String[] {"aa", "bb"}, impexHeader, ImportingImpexContext.builder().build());
-    Assertions.assertEquals(3, lineValue.size());
+    assertThat(lineValue.size()).isEqualTo(3);
     AtomicColumnReference v1 = lineValue.getValues().get(0);
-    Assertions.assertEquals("aa", v1.getColumnValue().getValue());
-    Assertions.assertEquals("code", v1.getImpexAttribute().getField());
+    assertThat(v1.getColumnValue().getValue()).isEqualTo("aa");
+    assertThat(v1.getImpexAttribute().getField()).isEqualTo("code");
     AtomicColumnReference v2 = lineValue.getValues().get(1);
-    Assertions.assertEquals("vv", v2.getColumnValue().getValue());
-    Assertions.assertEquals("virtual", v2.getImpexAttribute().getField());
+    assertThat(v2.getColumnValue().getValue()).isEqualTo("vv");
+    assertThat(v2.getImpexAttribute().getField()).isEqualTo("virtual");
     AtomicColumnReference v3 = lineValue.getValues().get(2);
-    Assertions.assertEquals("bb", v3.getColumnValue().getValue());
-    Assertions.assertEquals("name", v3.getImpexAttribute().getField());
+    assertThat(v3.getColumnValue().getValue()).isEqualTo("bb");
+    assertThat(v3.getImpexAttribute().getField()).isEqualTo("name");
+  }
+
+  @Test
+  void transform_fail_header_missing_line_value() {
+
+    RecordLineTransformer recordLineTransformer = new RecordLineTransformer();
+    ImpexHeader impexHeader =
+        ImpexHeader.builder("product", ImpexAction.INSERT)
+            .attribute(
+                ImpexAttribute.builder("code")
+                    .modifier(ImpexModifier.builder(UNIQUE, "true").build())
+                    .build())
+            .attribute(ImpexAttribute.builder("name").build())
+            .build();
+    try {
+      recordLineTransformer.transform(
+          new String[] {"aa"}, impexHeader, ImportingImpexContext.builder().build());
+      Assertions.fail();
+    } catch (InvalidLineStrictFormatException e) {
+      assertThat(e.getMessage()).contains("has less ");
+    }
+  }
+
+  @Test
+  void transform_success_header_missing_line_value() {
+
+    RecordLineTransformer recordLineTransformer = new RecordLineTransformer();
+    ImpexHeader impexHeader =
+        ImpexHeader.builder("product", ImpexAction.INSERT)
+            .attribute(
+                ImpexAttribute.builder("code")
+                    .modifier(ImpexModifier.builder(UNIQUE, "true").build())
+                    .build())
+            .attribute(ImpexAttribute.builder("name").build())
+            .build();
+
+    LineValues lineValue =
+        recordLineTransformer.transform(
+            new String[] {"aa"},
+            impexHeader,
+            ImportingImpexContext.builder()
+                .config(ImportingImpexConfig.builder().lineMissingColumnAsNull(true).build())
+                .build());
+    assertThat(lineValue.size()).isEqualTo(2);
+    AtomicColumnReference v1 = lineValue.getValues().get(0);
+    assertThat(v1.getColumnValue().getValue()).isEqualTo("aa");
+    assertThat(v1.getImpexAttribute().getField()).isEqualTo("code");
+    AtomicColumnReference v2 = lineValue.getValues().get(1);
+    assertThat(v2.getColumnValue().getValue()).isNull();
+    assertThat(v2.getImpexAttribute().getField()).isEqualTo("name");
+  }
+
+  @Test
+  void transform_fail_header_additional_column_value() {
+
+    RecordLineTransformer recordLineTransformer = new RecordLineTransformer();
+    ImpexHeader impexHeader =
+        ImpexHeader.builder("product", ImpexAction.INSERT)
+            .attribute(
+                ImpexAttribute.builder("code")
+                    .modifier(ImpexModifier.builder(UNIQUE, "true").build())
+                    .build())
+            .build();
+    try {
+      recordLineTransformer.transform(
+          new String[] {"aa", "bb"}, impexHeader, ImportingImpexContext.builder().build());
+      Assertions.fail();
+    } catch (InvalidLineStrictFormatException e) {
+      assertThat(e.getMessage()).contains("has more ");
+    }
+  }
+
+  @Test
+  void transform_success_header_additional_column_value() {
+
+    RecordLineTransformer recordLineTransformer = new RecordLineTransformer();
+    ImpexHeader impexHeader =
+        ImpexHeader.builder("product", ImpexAction.INSERT)
+            .attribute(
+                ImpexAttribute.builder("code")
+                    .modifier(ImpexModifier.builder(UNIQUE, "true").build())
+                    .build())
+            .build();
+
+    LineValues lineValue =
+        recordLineTransformer.transform(
+            new String[] {"aa", "bb"},
+            impexHeader,
+            ImportingImpexContext.builder()
+                .config(ImportingImpexConfig.builder().lineIgnoreAdditionalColumn(true).build())
+                .build());
+
+    AtomicColumnReference v1 = lineValue.getValues().get(0);
+    assertThat(v1.getColumnValue().getValue()).isEqualTo("aa");
+    assertThat(v1.getImpexAttribute().getField()).isEqualTo("code");
   }
 }
