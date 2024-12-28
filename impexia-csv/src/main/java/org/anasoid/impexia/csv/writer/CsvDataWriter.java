@@ -23,7 +23,7 @@ import com.opencsv.ICSVWriter;
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.Writer;
-import org.anasoid.impexia.core.data.importing.DataWriter;
+import org.anasoid.impexia.core.data.exporting.DataWriter;
 import org.anasoid.impexia.csv.opencsv.writer.OpenCsvWriterParser;
 
 /** Csv Data Writer. */

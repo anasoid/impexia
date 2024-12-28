@@ -13,17 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * @author : anas
- * Date :   22-Nov-2020
+ * Date :   27-Nov-2020
  */
 
 package org.anasoid.impexia.core.data.exporting;
 
-/** Interface to header reader Impex. */
-public interface HeaderReader {
+import java.io.IOException;
+
+/** Interface to define DataWriter for Impex. */
+public interface DataWriter {
 
   /**
-   * get Impex header as String array.
+   * Write header.
    *
+   * @param header impex header
    */
-  String[] getHeader();
+  void writeHeader(String... header) throws IOException;
+
+  /**
+   * Write line.
+   *
+   * @param nextLine data line.
+   */
+  void writeLine(String... nextLine) throws IOException;
 }

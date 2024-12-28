@@ -18,8 +18,8 @@
 
 package org.anasoid.impexia.importing.service;
 
-import org.anasoid.impexia.core.data.exporting.DataReader;
-import org.anasoid.impexia.core.data.exporting.HeaderReader;
+import org.anasoid.impexia.core.data.importing.DataReader;
+import org.anasoid.impexia.core.data.importing.HeaderReader;
 import org.anasoid.impexia.core.parser.header.HeaderParser;
 import org.anasoid.impexia.meta.header.ImpexHeader;
 import org.anasoid.impexia.meta.modifier.Scope;
