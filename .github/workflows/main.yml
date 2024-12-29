@@ -54,7 +54,7 @@ jobs :
 
       - name: Publish coverage
         id: jacoco
-        uses: madrapps/jacoco-report@v1.2
+        uses: madrapps/jacoco-report@v1.3
         with:
           paths: ${{ github.workspace }}/buildUtils/code-coverage-report/build/reports/jacoco/testCodeCoverageReport/testCodeCoverageReport.xml
           token: ${{ secrets.GITHUB_TOKEN }}
