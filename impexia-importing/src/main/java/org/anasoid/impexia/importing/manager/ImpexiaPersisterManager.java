@@ -22,5 +22,8 @@ import org.anasoid.impexia.meta.header.ImpexHeader;
 
 public class ImpexiaPersisterManager {
 
-  void persist(ImpexHeader impexHeader, String line) {}
+  void persist(ImpexHeader impexHeader, String line) {
+
+    throw new UnsupportedOperationException();
+  }
 }
