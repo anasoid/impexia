@@ -20,12 +20,8 @@ package org.anasoid.impexia.core.parser.header;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.Iterator;
-import java.util.List;
 import org.anasoid.impexia.core.exceptions.InvalidHeaderFormatException;
 import org.anasoid.impexia.meta.header.ImpexHeader;
-import org.anasoid.impexia.meta.header.ImpexMapping;
-import org.anasoid.impexia.meta.header.ImpexModifier;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
@@ -42,7 +38,7 @@ class HeaderParserTest {
   @CsvFileSource(resources = "/parser/testParseHeaderSuccess.csv")
   void testParseHeaderSuccess(String header, String result) throws InvalidHeaderFormatException {
     String[] columns = header.split(";");
-    ImpexHeader impexHeader = HeaderParser.parseHeaderRow(columns);
+    ImpexHeader impexHeader = HeaderParser.parse(columns);
     assertThat(impexHeader).hasToString(result);
   }
 
@@ -56,83 +52,6 @@ class HeaderParserTest {
   void testParseHeaderError(String header) {
 
     String[] columns = header.split(";");
-    Assertions.assertThrows(
-        InvalidHeaderFormatException.class, () -> HeaderParser.parseHeaderRow(columns));
-  }
-
-  @ParameterizedTest
-  @CsvFileSource(resources = "/parser/testParseModifierSuccess.csv")
-  void testParseModifierSuccess(String mapping, String result) throws InvalidHeaderFormatException {
-
-    List<ImpexModifier> resList = HeaderParser.parseModifier(mapping);
-    assertThat(toStringImpexModifier(resList)).isEqualTo(result);
-  }
-
-  @ParameterizedTest
-  @ValueSource(strings = {"[key=value", "[key=val\"ue]", "[ =value]", "[ke8y=value]"})
-  void testParseModifierError(String mapping) {
-
-    Assertions.assertThrows(
-        InvalidHeaderFormatException.class, () -> HeaderParser.parseModifier(mapping));
-  }
-
-  @ParameterizedTest
-  @CsvFileSource(resources = "/parser/testParseMappingSuccess.csv")
-  void testParseMappingSuccess(String mapping, String result) throws InvalidHeaderFormatException {
-
-    List<ImpexMapping> resList = HeaderParser.parseMapping(mapping);
-    assertThat(toStringImpexMapping(resList)).isEqualTo(result);
-  }
-
-  @ParameterizedTest
-  @ValueSource(
-      strings = {
-        "(id,name",
-        "id,name)",
-        "((id,name)",
-        "(id,name))",
-        "(id,name),",
-        "(id1,id2(id21,)),",
-        "(id1,id 2(id21))",
-        "(id1,id[g(id21))",
-        "(id1,((id21)))",
-        "((id1))",
-        "(id1",
-        "(id1,(id21,id22)),",
-        "(id1,(id21,id22)",
-        "(id1,id2((id21,id22))),",
-        "(catalog (id,type)x, version )",
-        "( )",
-        "(id11,  )",
-        "(id11, ,id12 )"
-      })
-  void testParseMappingError(String mapping) {
-
-    Assertions.assertThrows(
-        InvalidHeaderFormatException.class, () -> HeaderParser.parseMapping(mapping));
-  }
-
-  private String toStringImpexModifier(List<ImpexModifier> list) {
-    StringBuffer sb = new StringBuffer();
-    Iterator<ImpexModifier> iterator = list.iterator();
-    while (iterator.hasNext()) {
-      sb.append(iterator.next());
-      if (iterator.hasNext()) {
-        sb.append("|");
-      }
-    }
-    return sb.toString();
-  }
-
-  private String toStringImpexMapping(List<ImpexMapping> list) {
-    StringBuffer sb = new StringBuffer();
-    Iterator<ImpexMapping> iterator = list.iterator();
-    while (iterator.hasNext()) {
-      sb.append(iterator.next());
-      if (iterator.hasNext()) {
-        sb.append("|");
-      }
-    }
-    return sb.toString();
+    Assertions.assertThrows(InvalidHeaderFormatException.class, () -> HeaderParser.parse(columns));
   }
 }

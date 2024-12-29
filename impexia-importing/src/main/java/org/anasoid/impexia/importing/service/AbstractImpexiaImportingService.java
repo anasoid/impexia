@@ -32,7 +32,7 @@ public abstract class AbstractImpexiaImportingService {
 
   @SuppressWarnings("PMD.UseVarargs")
   protected ImpexHeader parseHeader(String[] headerRecords) {
-    return HeaderParser.parseHeaderRow(headerRecords);
+    return HeaderParser.parse(headerRecords);
   }
 
   protected abstract Scope getScope();
