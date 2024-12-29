@@ -1,6 +1,7 @@
 package org.anasoid.impexia.core.validators.header;
 
 import java.util.List;
+import org.anasoid.impexia.core.validators.header.descriptor.modifier.ModifierDescriptorEnumGlobal;
 import org.anasoid.impexia.meta.Mode;
 import org.anasoid.impexia.meta.exceptions.header.ActionException;
 import org.anasoid.impexia.meta.exceptions.header.AttributeModifierException;
@@ -9,7 +10,6 @@ import org.anasoid.impexia.meta.header.ImpexAction;
 import org.anasoid.impexia.meta.header.ImpexAttribute;
 import org.anasoid.impexia.meta.header.ImpexHeader;
 import org.anasoid.impexia.meta.header.ImpexModifier;
-import org.anasoid.impexia.meta.modifier.ModifierDescriptorEnumGlobal;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

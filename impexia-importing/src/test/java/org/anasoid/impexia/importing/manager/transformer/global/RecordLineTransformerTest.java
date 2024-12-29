@@ -1,6 +1,6 @@
 package org.anasoid.impexia.importing.manager.transformer.global;
 
-import static org.anasoid.impexia.meta.modifier.ModifierDescriptorEnumGlobal.*;
+import static org.anasoid.impexia.core.validators.header.descriptor.modifier.ModifierDescriptorEnumGlobal.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.anasoid.impexia.core.exceptions.InvalidLineStrictFormatException;

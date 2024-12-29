@@ -22,6 +22,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.anasoid.impexia.core.validators.header.descriptor.modifier.Level;
 import org.anasoid.impexia.core.validators.header.impl.CustomModifierValidator;
 import org.anasoid.impexia.core.validators.header.impl.MappingAttribueValidator;
 import org.anasoid.impexia.core.validators.header.impl.RawHeaderValidator;
@@ -32,7 +33,6 @@ import org.anasoid.impexia.meta.exceptions.header.ImpexHeaderException;
 import org.anasoid.impexia.meta.header.ImpexAttribute;
 import org.anasoid.impexia.meta.header.ImpexHeader;
 import org.anasoid.impexia.meta.header.ImpexModifier;
-import org.anasoid.impexia.meta.modifier.Level;
 
 public class HeaderValidatorManager implements HeaderValidator {
 

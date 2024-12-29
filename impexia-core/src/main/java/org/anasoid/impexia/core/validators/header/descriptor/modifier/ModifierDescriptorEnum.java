@@ -16,7 +16,7 @@
  * Date :   22-Dec-2024
  */
 
-package org.anasoid.impexia.meta.modifier;
+package org.anasoid.impexia.core.validators.header.descriptor.modifier;
 
 import java.util.Set;
 import org.anasoid.impexia.meta.Mode;

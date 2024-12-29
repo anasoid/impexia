@@ -20,6 +20,8 @@ package org.anasoid.impexia.core.validators.header.impl;
 
 import java.text.MessageFormat;
 import org.anasoid.impexia.core.validators.header.AbstractHeaderValidator;
+import org.anasoid.impexia.core.validators.header.descriptor.modifier.Level;
+import org.anasoid.impexia.core.validators.header.descriptor.modifier.ModifierDescriptor;
 import org.anasoid.impexia.meta.Mode;
 import org.anasoid.impexia.meta.exceptions.header.ActionException;
 import org.anasoid.impexia.meta.exceptions.header.AttributeModifierException;
@@ -27,8 +29,6 @@ import org.anasoid.impexia.meta.exceptions.header.ImpexHeaderException;
 import org.anasoid.impexia.meta.header.ImpexAttribute;
 import org.anasoid.impexia.meta.header.ImpexHeader;
 import org.anasoid.impexia.meta.header.ImpexModifier;
-import org.anasoid.impexia.meta.modifier.Level;
-import org.anasoid.impexia.meta.modifier.ModifierDescriptor;
 
 /** Default header Validator. */
 @SuppressWarnings("PMD.LawOfDemeter")

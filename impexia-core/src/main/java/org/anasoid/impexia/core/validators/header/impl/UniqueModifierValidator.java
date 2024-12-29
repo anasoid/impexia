@@ -19,11 +19,11 @@
 package org.anasoid.impexia.core.validators.header.impl;
 
 import org.anasoid.impexia.core.validators.header.HeaderValidator;
+import org.anasoid.impexia.core.validators.header.descriptor.modifier.ModifierDescriptorEnumGlobal;
 import org.anasoid.impexia.meta.Mode;
 import org.anasoid.impexia.meta.exceptions.header.AttributeModifierException;
 import org.anasoid.impexia.meta.exceptions.header.ImpexHeaderException;
 import org.anasoid.impexia.meta.header.ImpexHeader;
-import org.anasoid.impexia.meta.modifier.ModifierDescriptorEnumGlobal;
 
 /** Default header Validator. */
 public class UniqueModifierValidator implements HeaderValidator {

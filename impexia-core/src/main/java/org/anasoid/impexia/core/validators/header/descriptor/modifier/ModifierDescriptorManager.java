@@ -16,14 +16,14 @@
  * Date :   09-Dec-2020
  */
 
-package org.anasoid.impexia.meta.modifier;
+package org.anasoid.impexia.core.validators.header.descriptor.modifier;
 
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import org.anasoid.impexia.core.validators.header.descriptor.modifier.ModifierDescriptor.ModifierDescriptorBuilder;
 import org.anasoid.impexia.meta.Scope;
-import org.anasoid.impexia.meta.modifier.ModifierDescriptor.ModifierDescriptorBuilder;
 
 /**
  * Modifier Manager Register Known list of modifier, modifier also can have scope, GLOBAL for global

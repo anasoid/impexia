@@ -19,13 +19,13 @@
 package org.anasoid.impexia.core.validators.header;
 
 import java.util.List;
+import org.anasoid.impexia.core.validators.header.descriptor.modifier.ModifierDescriptor;
+import org.anasoid.impexia.core.validators.header.descriptor.modifier.ModifierDescriptorManager;
 import org.anasoid.impexia.meta.Mode;
 import org.anasoid.impexia.meta.exceptions.header.ImpexHeaderException;
 import org.anasoid.impexia.meta.header.ImpexAttribute;
 import org.anasoid.impexia.meta.header.ImpexHeader;
 import org.anasoid.impexia.meta.header.ImpexModifier;
-import org.anasoid.impexia.meta.modifier.ModifierDescriptor;
-import org.anasoid.impexia.meta.modifier.ModifierDescriptorManager;
 
 /** Validate Impex header. */
 public abstract class AbstractHeaderValidator implements HeaderValidator {

@@ -16,14 +16,14 @@
  * Date :   07-Nov-2020
  */
 
-package org.anasoid.impexia.meta.modifier;
+package org.anasoid.impexia.core.validators.header.descriptor.modifier;
 
 import static java.util.Set.of;
+import static org.anasoid.impexia.core.validators.header.descriptor.modifier.BasicType.*;
+import static org.anasoid.impexia.core.validators.header.descriptor.modifier.GroupType.*;
+import static org.anasoid.impexia.core.validators.header.descriptor.modifier.Level.*;
 import static org.anasoid.impexia.meta.Mode.*;
 import static org.anasoid.impexia.meta.header.ImpexAction.*;
-import static org.anasoid.impexia.meta.modifier.BasicType.*;
-import static org.anasoid.impexia.meta.modifier.GroupType.*;
-import static org.anasoid.impexia.meta.modifier.Level.*;
 import static org.anasoid.impexia.meta.scope.ScopeEnum.*;
 
 import java.util.Set;

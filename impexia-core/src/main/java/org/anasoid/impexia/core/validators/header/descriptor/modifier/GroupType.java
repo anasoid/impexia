@@ -16,12 +16,13 @@
  * Date :   07-Nov-2020
  */
 
-package org.anasoid.impexia.meta.modifier;
+package org.anasoid.impexia.core.validators.header.descriptor.modifier;
 
 /**
- * level on witch modifier can be applied.
+ * Collections type.
  */
-public enum Level {
-  TYPE,
-  FIELD
+public enum GroupType {
+  SINGLE,
+  COLLECTION,
+  MAP
 }

@@ -24,12 +24,12 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import org.anasoid.impexia.core.validators.header.ModifierValidator;
+import org.anasoid.impexia.core.validators.header.descriptor.modifier.ModifierDescriptor;
+import org.anasoid.impexia.core.validators.header.descriptor.modifier.ModifierDescriptorManager;
 import org.anasoid.impexia.meta.Mode;
 import org.anasoid.impexia.meta.exceptions.header.AttributeModifierException;
 import org.anasoid.impexia.meta.exceptions.header.ImpexHeaderException;
 import org.anasoid.impexia.meta.header.ImpexModifier;
-import org.anasoid.impexia.meta.modifier.ModifierDescriptor;
-import org.anasoid.impexia.meta.modifier.ModifierDescriptorManager;
 
 /** Default header Validator. */
 public class ValueModifierValidator implements ModifierValidator {
