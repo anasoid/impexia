@@ -28,7 +28,7 @@ import org.anasoid.impexia.meta.header.ImpexAttribute;
 import org.anasoid.impexia.meta.header.ImpexHeader;
 import org.anasoid.impexia.meta.header.ImpexModifier;
 import org.anasoid.impexia.meta.modifier.Level;
-import org.anasoid.impexia.meta.modifier.Modifier;
+import org.anasoid.impexia.meta.modifier.ModifierDescriptor;
 
 /** Default header Validator. */
 @SuppressWarnings("PMD.LawOfDemeter")
@@ -44,17 +44,17 @@ public class RawHeaderValidator extends AbstractHeaderValidator {
   protected boolean validateModifier(ImpexModifier impexModifier, Mode mode)
       throws ImpexHeaderException {
 
-    Modifier modifier = null;
+    ModifierDescriptor modifierDescriptor = null;
     try {
-      modifier = getModifier(impexModifier);
+      modifierDescriptor = getModifier(impexModifier);
     } catch (java.lang.IllegalArgumentException e) {
       // nothing
     }
 
-    if (modifier != null) {
+    if (modifierDescriptor != null) {
 
-      validateModifierLevel(modifier, impexModifier);
-      validateModifierMode(modifier, mode);
+      validateModifierLevel(modifierDescriptor, impexModifier);
+      validateModifierMode(modifierDescriptor, mode);
     }
     return true;
   }
@@ -65,7 +65,8 @@ public class RawHeaderValidator extends AbstractHeaderValidator {
     return true;
   }
 
-  protected void validateModifierLevel(Modifier modifier, ImpexModifier impexModifier)
+  protected void validateModifierLevel(
+      ModifierDescriptor modifierDescriptor, ImpexModifier impexModifier)
       throws ImpexHeaderException {
     Level level;
     if (impexModifier.getAttribute() != null) {
@@ -76,18 +77,19 @@ public class RawHeaderValidator extends AbstractHeaderValidator {
       throw new IllegalStateException("ImpexModifier has null level : " + impexModifier);
     }
 
-    if (!modifier.getLevels().contains(level)) {
+    if (!modifierDescriptor.getLevels().contains(level)) {
       throw new AttributeModifierException(
           MessageFormat.format(
-              "Field ({0}) is not acceptable by Level : {1}", modifier.getCode(), level));
+              "Field ({0}) is not acceptable by Level : {1}", modifierDescriptor.getCode(), level));
     }
   }
 
-  protected void validateModifierMode(Modifier modifier, Mode mode) throws ImpexHeaderException {
-    if (!modifier.getModes().isEmpty() && !modifier.getModes().contains(mode)) {
+  protected void validateModifierMode(ModifierDescriptor modifierDescriptor, Mode mode)
+      throws ImpexHeaderException {
+    if (!modifierDescriptor.getModes().isEmpty() && !modifierDescriptor.getModes().contains(mode)) {
       throw new AttributeModifierException(
           MessageFormat.format(
-              "Field ({0}) is not acceptable by Mode : {1}", modifier.getCode(), mode));
+              "Field ({0}) is not acceptable by Mode : {1}", modifierDescriptor.getCode(), mode));
     }
   }
 

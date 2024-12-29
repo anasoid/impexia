@@ -18,8 +18,8 @@
 
 package org.anasoid.impexia.importing.manager.transformer.global;
 
-import static org.anasoid.impexia.meta.modifier.ModifierEnumGlobal.DEFAULT;
-import static org.anasoid.impexia.meta.modifier.ModifierEnumGlobal.VIRTUAL;
+import static org.anasoid.impexia.meta.modifier.ModifierDescriptorEnumGlobal.DEFAULT;
+import static org.anasoid.impexia.meta.modifier.ModifierDescriptorEnumGlobal.VIRTUAL;
 
 import java.text.MessageFormat;
 import java.util.Optional;

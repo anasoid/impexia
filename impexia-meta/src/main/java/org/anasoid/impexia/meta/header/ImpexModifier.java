@@ -23,8 +23,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-import org.anasoid.impexia.meta.modifier.Modifier;
-import org.anasoid.impexia.meta.modifier.ModifierEnum;
+import org.anasoid.impexia.meta.modifier.ModifierDescriptor;
+import org.anasoid.impexia.meta.modifier.ModifierDescriptorEnum;
 
 /** Impex Modifier description container. */
 @SuperBuilder
@@ -33,7 +33,7 @@ public class ImpexModifier {
 
   @Getter protected String key;
   @Getter protected String value;
-  @Getter protected Modifier modifier;
+  @ToString.Exclude @Getter protected ModifierDescriptor modifierDescriptor;
 
   @Setter(AccessLevel.PROTECTED)
   @Getter
@@ -53,11 +53,12 @@ public class ImpexModifier {
     return builder(key).value(value);
   }
 
-  public static ImpexModifier.ImpexModifierBuilder builder(ModifierEnum key) {
+  public static ImpexModifier.ImpexModifierBuilder builder(ModifierDescriptorEnum key) {
     return builder(key.toString());
   }
 
-  public static ImpexModifier.ImpexModifierBuilder builder(ModifierEnum key, String value) {
+  public static ImpexModifier.ImpexModifierBuilder builder(
+      ModifierDescriptorEnum key, String value) {
     return builder(key).value(value);
   }
 }

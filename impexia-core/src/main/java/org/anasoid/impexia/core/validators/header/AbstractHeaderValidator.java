@@ -24,8 +24,8 @@ import org.anasoid.impexia.meta.exceptions.header.ImpexHeaderException;
 import org.anasoid.impexia.meta.header.ImpexAttribute;
 import org.anasoid.impexia.meta.header.ImpexHeader;
 import org.anasoid.impexia.meta.header.ImpexModifier;
-import org.anasoid.impexia.meta.modifier.Modifier;
-import org.anasoid.impexia.meta.modifier.ModifierManager;
+import org.anasoid.impexia.meta.modifier.ModifierDescriptor;
+import org.anasoid.impexia.meta.modifier.ModifierDescriptorManager;
 
 /** Validate Impex header. */
 public abstract class AbstractHeaderValidator implements HeaderValidator {
@@ -81,7 +81,7 @@ public abstract class AbstractHeaderValidator implements HeaderValidator {
   protected abstract boolean validateHeader(ImpexHeader header, Mode mode)
       throws ImpexHeaderException;
 
-  protected Modifier getModifier(ImpexModifier modifier) {
-    return ModifierManager.getInstance().getValueByCode(modifier.getKey());
+  protected ModifierDescriptor getModifier(ImpexModifier modifier) {
+    return ModifierDescriptorManager.getInstance().getValueByCode(modifier.getKey());
   }
 }

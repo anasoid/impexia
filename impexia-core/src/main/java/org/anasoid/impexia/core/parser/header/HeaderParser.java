@@ -30,8 +30,8 @@ import org.anasoid.impexia.meta.header.ImpexHeader;
 import org.anasoid.impexia.meta.header.ImpexMapping;
 import org.anasoid.impexia.meta.header.ImpexMapping.ImpexMappingBuilder;
 import org.anasoid.impexia.meta.header.ImpexModifier;
-import org.anasoid.impexia.meta.modifier.Modifier;
-import org.anasoid.impexia.meta.modifier.ModifierManager;
+import org.anasoid.impexia.meta.modifier.ModifierDescriptor;
+import org.anasoid.impexia.meta.modifier.ModifierDescriptorManager;
 import org.apache.commons.lang3.StringUtils;
 
 /** Header parser. */
@@ -83,14 +83,14 @@ public final class HeaderParser {
     for (String rawModifier : rawModifierList) {
       List<String> extract = extractKeyValueFromModifier(rawModifier);
       String key = extract.get(0);
-      Modifier modifier = null;
+      ModifierDescriptor modifierDescriptor = null;
       try {
-        modifier = ModifierManager.getInstance().getValueByCode(key);
+        modifierDescriptor = ModifierDescriptorManager.getInstance().getValueByCode(key);
       } catch (IllegalArgumentException e) { // NOPMD
         // nothing
       }
       ImpexModifier impexModifier =
-          ImpexModifier.builder(key, extract.get(1)).modifier(modifier).build();
+          ImpexModifier.builder(key, extract.get(1)).modifierDescriptor(modifierDescriptor).build();
       result.add(impexModifier);
     }
     return result;

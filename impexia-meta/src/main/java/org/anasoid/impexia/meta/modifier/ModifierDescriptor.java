@@ -33,7 +33,7 @@ import org.anasoid.impexia.meta.transformer.ImpexHandler;
 /** Modifiers container. */
 @SuperBuilder
 @ToString(onlyExplicitlyIncluded = true)
-public class Modifier {
+public class ModifierDescriptor {
 
   @Getter private final Set<ImpexAction> actions;
   @Getter private final Class<?> clazz;
@@ -52,11 +52,12 @@ public class Modifier {
   @Getter @Singular private Set<GroupType> groupTypes;
   @Getter @Singular private Set<String> values;
 
-  public static Modifier.ModifierBuilder builder(ModifierEnum code) {
-    return new Modifier.ModifierBuilderImpl().code(code);
+  public static ModifierDescriptor.ModifierDescriptorBuilder builder(ModifierDescriptorEnum code) {
+    return new ModifierDescriptor.ModifierDescriptorBuilderImpl().code(code);
   }
 
-  public static Modifier.ModifierBuilder builder(ModifierEnum code, Scope scope) {
+  public static ModifierDescriptor.ModifierDescriptorBuilder builder(
+      ModifierDescriptorEnum code, Scope scope) {
     return builder(code).scope(scope);
   }
 
@@ -65,15 +66,15 @@ public class Modifier {
   }
 
   @SuppressWarnings("PMD.AbstractClassWithoutAbstractMethod")
-  public abstract static class ModifierBuilder<
-      C extends Modifier, B extends ModifierBuilder<C, B>> {
+  public abstract static class ModifierDescriptorBuilder<
+      C extends ModifierDescriptor, B extends ModifierDescriptorBuilder<C, B>> {
 
     public B code(String code) {
       this.code = code;
       return self();
     }
 
-    public B code(ModifierEnum code) {
+    public B code(ModifierDescriptorEnum code) {
       return code(code.toString().toLowerCase(Locale.ROOT));
     }
   }
@@ -83,7 +84,7 @@ public class Modifier {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    return Objects.equals(code, ((Modifier) o).code);
+    return Objects.equals(code, ((ModifierDescriptor) o).code);
   }
 
   @Override

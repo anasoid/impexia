@@ -32,7 +32,9 @@ public class MappingAttribueValidator implements AttributeValidator {
   public boolean validate(ImpexAttribute attribute, Mode mode) throws ImpexHeaderException {
     boolean needMapping =
         attribute.getModifiers().stream()
-            .anyMatch(m -> m.getModifier() != null && m.getModifier().isNeedMapping());
+            .anyMatch(
+                m ->
+                    m.getModifierDescriptor() != null && m.getModifierDescriptor().isNeedMapping());
     if (needMapping && attribute.getMappings().isEmpty()) {
       throw new AttributeModifierException(
           MessageFormat.format(

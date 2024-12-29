@@ -23,7 +23,7 @@ import org.anasoid.impexia.meta.Mode;
 import org.anasoid.impexia.meta.exceptions.header.AttributeModifierException;
 import org.anasoid.impexia.meta.exceptions.header.ImpexHeaderException;
 import org.anasoid.impexia.meta.header.ImpexHeader;
-import org.anasoid.impexia.meta.modifier.ModifierEnumGlobal;
+import org.anasoid.impexia.meta.modifier.ModifierDescriptorEnumGlobal;
 
 /** Default header Validator. */
 public class UniqueModifierValidator implements HeaderValidator {
@@ -38,7 +38,7 @@ public class UniqueModifierValidator implements HeaderValidator {
                       att.getModifiers().stream()
                           .anyMatch(
                               m ->
-                                  ModifierEnumGlobal.UNIQUE
+                                  ModifierDescriptorEnumGlobal.UNIQUE
                                       .toString()
                                       .equalsIgnoreCase(m.getKey())));
       if (!hasUnique) {

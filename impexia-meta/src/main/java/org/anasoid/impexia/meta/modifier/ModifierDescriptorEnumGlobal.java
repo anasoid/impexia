@@ -37,7 +37,7 @@ import org.anasoid.impexia.meta.transformer.Listener;
 import org.anasoid.impexia.meta.transformer.Translator;
 
 /** List of acceptable Modifiers. */
-public enum ModifierEnumGlobal implements ModifierEnum {
+public enum ModifierDescriptorEnumGlobal implements ModifierDescriptorEnum {
   BATCHMODE(of(TYPE), of(UPDATE, INSERT_UPDATE), of(IMPORT), Boolean.class, GLOBAL),
   LISTENER(of(TYPE), of(), of(IMPORT), Listener.class, GLOBAL),
   ERRORHANDLER(of(TYPE), of(), of(IMPORT), ErrorHandler.class, GLOBAL),
@@ -90,7 +90,7 @@ public enum ModifierEnumGlobal implements ModifierEnum {
   @Getter private final Set<String> values;
   @Getter private final boolean needMapping;
 
-  ModifierEnumGlobal(
+  ModifierDescriptorEnumGlobal(
       Set<Level> levels,
       Set<ImpexAction> actions,
       Set<Mode> modes,
@@ -111,7 +111,7 @@ public enum ModifierEnumGlobal implements ModifierEnum {
     this.scope = scope;
   }
 
-  ModifierEnumGlobal(
+  ModifierDescriptorEnumGlobal(
       Set<Level> levels,
       Set<ImpexAction> actions,
       Set<Mode> modes,
@@ -123,7 +123,7 @@ public enum ModifierEnumGlobal implements ModifierEnum {
     this(levels, actions, modes, clazz, basicTypes, groupTypes, values, false, scope);
   }
 
-  ModifierEnumGlobal(
+  ModifierDescriptorEnumGlobal(
       Set<Level> levels, Set<ImpexAction> actions, Set<Mode> modes, Class<?> clazz, Scope scope) {
     this(levels, actions, modes, clazz, of(), of(), of(), false, scope);
   }

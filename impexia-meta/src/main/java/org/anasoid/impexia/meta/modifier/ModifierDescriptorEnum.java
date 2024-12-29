@@ -23,7 +23,7 @@ import org.anasoid.impexia.meta.Mode;
 import org.anasoid.impexia.meta.Scope;
 import org.anasoid.impexia.meta.header.ImpexAction;
 
-public interface ModifierEnum {
+public interface ModifierDescriptorEnum {
 
   Set<Level> getLevels();
 

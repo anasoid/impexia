@@ -25,8 +25,8 @@ import org.anasoid.impexia.meta.Mode;
 import org.anasoid.impexia.meta.exceptions.header.AttributeModifierException;
 import org.anasoid.impexia.meta.exceptions.header.ImpexHeaderException;
 import org.anasoid.impexia.meta.header.ImpexModifier;
-import org.anasoid.impexia.meta.modifier.Modifier;
-import org.anasoid.impexia.meta.modifier.ModifierManager;
+import org.anasoid.impexia.meta.modifier.ModifierDescriptor;
+import org.anasoid.impexia.meta.modifier.ModifierDescriptorManager;
 
 /** Default header Validator. */
 public class CustomModifierValidator implements ModifierValidator {
@@ -35,20 +35,22 @@ public class CustomModifierValidator implements ModifierValidator {
   @SuppressWarnings({"PMD.EmptyCatchBlock"})
   public boolean validate(ImpexModifier impexModifier, Mode mode) throws ImpexHeaderException {
 
-    Modifier modifier = null;
+    ModifierDescriptor modifierDescriptor = null;
     try {
-      modifier = ModifierManager.getInstance().getValueByCode(impexModifier.getKey());
+      modifierDescriptor =
+          ModifierDescriptorManager.getInstance().getValueByCode(impexModifier.getKey());
     } catch (java.lang.IllegalArgumentException e) {
       // nothing
     }
-    validateCustomModifier(impexModifier, modifier);
+    validateCustomModifier(impexModifier, modifierDescriptor);
     return false;
   }
 
   @SuppressWarnings({"PMD.EmptyCatchBlock", "PMD.CognitiveComplexity"})
-  protected void validateCustomModifier(ImpexModifier impexModifier, Modifier modifier)
+  protected void validateCustomModifier(
+      ImpexModifier impexModifier, ModifierDescriptor modifierDescriptor)
       throws ImpexHeaderException {
-    if (modifier == null) {
+    if (modifierDescriptor == null) {
       List<ImpexModifier> modifiers;
 
       if (impexModifier.getAttribute() != null) {
@@ -61,8 +63,9 @@ public class CustomModifierValidator implements ModifierValidator {
       boolean acceptCustom = false;
       for (ImpexModifier other : modifiers) {
         try {
-          Modifier otherModifier = ModifierManager.getInstance().getValueByCode(other.getKey());
-          if (otherModifier.isAcceptCustomAttribute()) {
+          ModifierDescriptor otherModifierDescriptor =
+              ModifierDescriptorManager.getInstance().getValueByCode(other.getKey());
+          if (otherModifierDescriptor.isAcceptCustomAttribute()) {
             acceptCustom = true;
             break;
           }
