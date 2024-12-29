@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2020 the original author or authors.
+ * Copyright 2020-2024 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License")
  * you may not use this file except in compliance with the License.
@@ -13,9 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * @author : anas
- * Date :   03-Nov-2020
+ * Date :   22-Dec-2024
  */
 
-package org.anasoid.impexia.meta.transformer;
+package org.anasoid.impexia.importing.manager.transformer;
 
-public interface ImpexTransfromer {}
+import org.anasoid.impexia.core.manager.transformer.Transformer;
+import org.anasoid.impexia.core.manager.values.LineValues;
+import org.anasoid.impexia.importing.manager.config.ImportingImpexContext;
+
+public interface LineValueTransformer<C extends ImportingImpexContext<?>>
+    extends Transformer<LineValues, LineValues, C> {}

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2020 the original author or authors.
+ * Copyright 2020-2024 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License")
  * you may not use this file except in compliance with the License.
@@ -13,27 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * @author : anas
- * Date :   27-Nov-2020
+ * Date :   22-Dec-2024
  */
 
-package org.anasoid.impexia.core.data.importing;
+package org.anasoid.impexia.core.manager.values.column;
 
-import java.io.IOException;
+import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 
-/** Interface to define DataWriter for Impex. */
-public interface DataWriter {
-
-  /**
-   * Write header.
-   *
-   * @param header impex header
-   */
-  void writeHeader(String... header) throws IOException;
-
-  /**
-   * Write line.
-   *
-   * @param nextLine data line.
-   */
-  void writeLine(String... nextLine) throws IOException;
-}
+@SuperBuilder
+@Getter
+@SuppressWarnings({"PMD.ImmutableField"})
+public class StringColumnValue extends AbstractColumnValue<String> {}

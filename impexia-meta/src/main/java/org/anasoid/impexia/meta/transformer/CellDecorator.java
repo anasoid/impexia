@@ -18,4 +18,4 @@
 
 package org.anasoid.impexia.meta.transformer;
 
-public interface CellDecorator extends ImpexTransfromer {}
+public interface CellDecorator extends ImpexHandler {}

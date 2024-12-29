@@ -40,5 +40,5 @@ public interface ModifierEnum {
 
   boolean isNeedMapping();
 
-  String getScope();
+  Scope getScope();
 }

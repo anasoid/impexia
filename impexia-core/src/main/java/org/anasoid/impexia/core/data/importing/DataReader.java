@@ -16,7 +16,7 @@
  * Date :   22-Nov-2020
  */
 
-package org.anasoid.impexia.core.data.exporting;
+package org.anasoid.impexia.core.data.importing;
 
 import java.io.IOException;
 import org.anasoid.impexia.core.data.DataLine;

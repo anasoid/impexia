@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2020 the original author or authors.
+ * Copyright 2020-2024 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License")
  * you may not use this file except in compliance with the License.
@@ -13,17 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * @author : anas
- * Date :   22-Nov-2020
+ * Date :   28-Dec-2024
  */
 
-package org.anasoid.impexia.core.data.exporting;
+package org.anasoid.impexia.core.manager.config;
 
-/** Interface to header reader Impex. */
-public interface HeaderReader {
-
-  /**
-   * get Impex header as String array.
-   *
-   */
-  String[] getHeader();
+public enum DataFormat {
+  CSV
 }

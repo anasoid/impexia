@@ -18,11 +18,16 @@
 
 package org.anasoid.impexia.meta.header;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import lombok.Builder.Default;
 import lombok.Getter;
 import lombok.Singular;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import org.anasoid.impexia.meta.modifier.Modifier;
 
 /** Impex Header description container. */
 @SuperBuilder
@@ -39,6 +44,10 @@ public class ImpexHeader {
     return new ImpexHeader.ImpexHeaderBuilderImpl().action(action).type(type);
   }
 
+  @SuppressWarnings("PMD.UseConcurrentHashMap")
+  @Default
+  protected Map<String, Objects> meta = new HashMap<>();
+
   private static final class ImpexHeaderBuilderImpl
       extends ImpexHeaderBuilder<ImpexHeader, ImpexHeaderBuilderImpl> {
 
@@ -48,5 +57,12 @@ public class ImpexHeader {
       resul.getAttributes().stream().forEach(m -> m.setParent(resul));
       return resul;
     }
+  }
+
+  List<ImpexAttribute> getAttributesByModifier(Modifier modifier) {
+    String modifierStr = modifier.getCode();
+    return attributes.stream()
+        .filter(atr -> atr.getModifiers().stream().anyMatch(m -> m.key.equals(modifierStr)))
+        .toList();
   }
 }

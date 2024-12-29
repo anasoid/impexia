@@ -82,12 +82,8 @@ class HeaderRawExtractorTest {
   @ParameterizedTest
   @ValueSource(strings = {"[id=sd", "id=sd]", "[id=value][  ]"})
   void testSplitModifierError(String modifier) {
-    try {
-      List<String> resList = HeaderRawExtractor.splitModifier(modifier);
-      Assertions.fail(toString(resList));
-    } catch (InvalidHeaderFormatException e) {
-      // success
-    }
+    Assertions.assertThrows(
+        InvalidHeaderFormatException.class, () -> HeaderRawExtractor.splitModifier(modifier));
   }
 
   @ParameterizedTest
@@ -162,12 +158,8 @@ class HeaderRawExtractorTest {
         "(id11, ,id12 )"
       })
   void testSplitMappingError(String mapping) {
-    try {
-      List<String> result = HeaderRawExtractor.splitMapping(mapping);
-      Assertions.fail(toString(result));
-    } catch (InvalidHeaderFormatException e) {
-      // success
-    }
+    Assertions.assertThrows(
+        InvalidHeaderFormatException.class, () -> HeaderRawExtractor.splitMapping(mapping));
   }
 
   private String toString(List<String> list) {

@@ -44,21 +44,21 @@ class CsvDataReaderTest {
     Assertions.assertEquals(1, dateReader.getCurrentPass());
     // first line
     DataLine line = dateReader.nextRecord();
-    Assertions.assertEquals("1", line.getRecord()[1].trim());
-    Assertions.assertEquals(" Toys", line.getRecord()[2]);
+    Assertions.assertEquals("1", line.getRecords()[1].trim());
+    Assertions.assertEquals(" Toys", line.getRecords()[2]);
     Assertions.assertEquals(4, line.getLineNumber());
     Assertions.assertEquals(1, line.getRecordNumber());
     // second line
     line = dateReader.nextRecord();
-    Assertions.assertEquals("2", line.getRecord()[1].trim());
-    Assertions.assertEquals("multi\n line", line.getRecord()[2]);
+    Assertions.assertEquals("2", line.getRecords()[1].trim());
+    Assertions.assertEquals("multi\n line", line.getRecords()[2]);
     Assertions.assertEquals(6, line.getLineNumber());
     Assertions.assertEquals(2, line.getRecordNumber());
     // third line
     line = dateReader.nextRecord();
-    Assertions.assertEquals("3", line.getRecord()[1].trim());
-    Assertions.assertEquals("Processus ", line.getRecord()[2]);
-    Assertions.assertNull(line.getRecord()[3]);
+    Assertions.assertEquals("3", line.getRecords()[1].trim());
+    Assertions.assertEquals("Processus ", line.getRecords()[2]);
+    Assertions.assertNull(line.getRecords()[3]);
     Assertions.assertEquals(8, line.getLineNumber());
     Assertions.assertEquals(3, line.getRecordNumber());
     // end line
@@ -84,8 +84,8 @@ class CsvDataReaderTest {
     Assertions.assertEquals(1, dateReader.getCurrentPass());
     // first line
     DataLine line = dateReader.nextRecord();
-    Assertions.assertEquals("1", line.getRecord()[1].trim());
-    Assertions.assertEquals(" Toys", line.getRecord()[2]);
+    Assertions.assertEquals("1", line.getRecords()[1].trim());
+    Assertions.assertEquals(" Toys", line.getRecords()[2]);
     Assertions.assertEquals(4, line.getLineNumber());
     Assertions.assertEquals(1, line.getRecordNumber());
 
@@ -133,7 +133,7 @@ class CsvDataReaderTest {
     Assertions.assertNull(dateReader.getHeader());
     // header
     DataLine line = dateReader.nextRecord();
-    Assertions.assertEquals("code[unique = true]", line.getRecord()[1].trim());
+    Assertions.assertEquals("code[unique = true]", line.getRecords()[1].trim());
     Assertions.assertEquals(2, dateReader.getRecordCount());
     Assertions.assertEquals(1, dateReader.getCurrentPass());
   }
@@ -188,64 +188,6 @@ class CsvDataReaderTest {
   }
 
   @Test
-  void loadStandardFileRestartSkip() throws IOException { // NOSONAR
-    URL url =
-        this.getClass()
-            .getClassLoader()
-            .getResource("org/anasoid/impexia/csv/reader/standard.impex");
-    CsvDataReader dateReader =
-        new CsvDataReader(new File(url.getFile()), ConfigCsvReader.builder().build());
-    Assertions.assertEquals(4, dateReader.getHeader().length);
-    // header
-    Assertions.assertEquals("INSERT_UPDATE product", dateReader.getHeader()[0]);
-    Assertions.assertEquals("description", dateReader.getHeader()[3]);
-    Assertions.assertEquals(-1, dateReader.getRecordCount());
-    Assertions.assertEquals(1, dateReader.getCurrentPass());
-    // first line
-    DataLine line = dateReader.nextRecord();
-    Assertions.assertEquals("1", line.getRecord()[1].trim());
-    Assertions.assertEquals(" Toys", line.getRecord()[2]);
-    Assertions.assertEquals(4, line.getLineNumber());
-    Assertions.assertEquals(1, line.getRecordNumber());
-    // second line
-    line = dateReader.nextRecord();
-    Assertions.assertEquals("2", line.getRecord()[1].trim());
-    Assertions.assertEquals("multi\n line", line.getRecord()[2]);
-    Assertions.assertEquals(6, line.getLineNumber());
-    Assertions.assertEquals(2, line.getRecordNumber());
-    // third line
-    line = dateReader.nextRecord();
-    Assertions.assertEquals("3", line.getRecord()[1].trim());
-    Assertions.assertEquals("Processus ", line.getRecord()[2]);
-    Assertions.assertEquals(8, line.getLineNumber());
-    Assertions.assertEquals(3, line.getRecordNumber());
-    // end line
-    line = dateReader.nextRecord();
-    Assertions.assertNull(line);
-    // Restart
-    dateReader.restart();
-    Assertions.assertEquals(2, dateReader.getCurrentPass());
-    // header
-    // first line
-    line = dateReader.nextRecord();
-    Assertions.assertEquals("1", line.getRecord()[1].trim());
-    Assertions.assertEquals(4, line.getLineNumber());
-    Assertions.assertEquals(1, line.getRecordNumber());
-    // second line
-    Assertions.assertTrue(dateReader.skipRecord());
-    // third line
-    line = dateReader.nextRecord();
-    Assertions.assertEquals("3", line.getRecord()[1].trim());
-    Assertions.assertEquals(8, line.getLineNumber());
-    Assertions.assertEquals(3, line.getRecordNumber());
-    // end line
-    line = dateReader.nextRecord();
-    Assertions.assertNull(line);
-    Assertions.assertFalse(dateReader.skipRecord());
-    dateReader.close();
-  }
-
-  @Test
   void loadCommentFile() throws IOException {
     URL url =
         this.getClass()
@@ -256,7 +198,7 @@ class CsvDataReaderTest {
     Assertions.assertEquals(4, dateReader.getHeader().length);
     // first line
     DataLine line = dateReader.nextRecord();
-    Assertions.assertEquals("1", line.getRecord()[1].trim());
+    Assertions.assertEquals("1", line.getRecords()[1].trim());
     Assertions.assertEquals(1, line.getRecordNumber());
 
     dateReader.close();
@@ -286,20 +228,20 @@ class CsvDataReaderTest {
     Assertions.assertEquals(1, dateReader.getCurrentPass());
     // first line
     DataLine line = dateReader.nextRecord();
-    Assertions.assertEquals("1", line.getRecord()[1].trim());
-    Assertions.assertEquals(" Toys", line.getRecord()[2]);
+    Assertions.assertEquals("1", line.getRecords()[1].trim());
+    Assertions.assertEquals(" Toys", line.getRecords()[2]);
     Assertions.assertEquals(6, line.getLineNumber());
     Assertions.assertEquals(1, line.getRecordNumber());
     // second line
     line = dateReader.nextRecord();
-    Assertions.assertEquals("2", line.getRecord()[1].trim());
-    Assertions.assertEquals("multi\n line", line.getRecord()[2]);
+    Assertions.assertEquals("2", line.getRecords()[1].trim());
+    Assertions.assertEquals("multi\n line", line.getRecords()[2]);
     Assertions.assertEquals(8, line.getLineNumber());
     Assertions.assertEquals(2, line.getRecordNumber());
     // third line
     line = dateReader.nextRecord();
-    Assertions.assertEquals("3", line.getRecord()[1].trim());
-    Assertions.assertEquals("Processus ", line.getRecord()[2]);
+    Assertions.assertEquals("3", line.getRecords()[1].trim());
+    Assertions.assertEquals("Processus ", line.getRecords()[2]);
     Assertions.assertEquals(10, line.getLineNumber());
     Assertions.assertEquals(3, line.getRecordNumber());
     // end line
@@ -311,14 +253,14 @@ class CsvDataReaderTest {
     // header
     // first line
     line = dateReader.nextRecord();
-    Assertions.assertEquals("1", line.getRecord()[1].trim());
+    Assertions.assertEquals("1", line.getRecords()[1].trim());
     Assertions.assertEquals(6, line.getLineNumber());
     Assertions.assertEquals(1, line.getRecordNumber());
     // second line
     Assertions.assertTrue(dateReader.skipRecord());
     // third line
     line = dateReader.nextRecord();
-    Assertions.assertEquals("3", line.getRecord()[1].trim());
+    Assertions.assertEquals("3", line.getRecords()[1].trim());
     Assertions.assertEquals(10, line.getLineNumber());
     Assertions.assertEquals(3, line.getRecordNumber());
     // end line

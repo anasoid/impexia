@@ -30,8 +30,8 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.text.MessageFormat;
 import org.anasoid.impexia.core.data.DataLine;
-import org.anasoid.impexia.core.data.exporting.DataReader;
-import org.anasoid.impexia.core.data.exporting.HeaderReader;
+import org.anasoid.impexia.core.data.importing.DataReader;
+import org.anasoid.impexia.core.data.importing.HeaderReader;
 import org.anasoid.impexia.csv.exceptions.InvalidCsvFormatException;
 import org.anasoid.impexia.meta.header.ImpexAction;
 import org.slf4j.Logger;
@@ -81,9 +81,9 @@ public class CsvDataReader implements DataReader, HeaderReader, Closeable {
     csvReader = getCsvReader();
     try {
       initializeHeader();
-      String[] record = readRecord(false);
-      while (record != null) {
-        record = readRecord(false);
+      String[] records = readRecord(false);
+      while (records != null) {
+        records = readRecord(false);
       }
       recordCount = recordNumber;
       LOGGER.debug("Calculate total record ({}) of file : {}", recordCount, file);
@@ -173,7 +173,7 @@ public class CsvDataReader implements DataReader, HeaderReader, Closeable {
         hasNext = false;
         return null; // NOSONAR
       }
-      if (!isCommetOrEmpty(line)) {
+      if (!isCommentOrEmpty(line)) {
         if (!isHeader) {
           recordNumber++;
         }
@@ -183,8 +183,8 @@ public class CsvDataReader implements DataReader, HeaderReader, Closeable {
     return null; // NOSONAR
   }
 
-  private boolean isCommetOrEmpty(String... line) { // NOSONAR
-    if (line.length == 0 || (line.length == 1 && ((line[0] == null) || line[0].length() == 0))) {
+  private boolean isCommentOrEmpty(String... line) { // NOSONAR
+    if (line.length == 0 || (line.length == 1 && ((line[0] == null) || line[0].isEmpty()))) {
       return true;
     } else {
       boolean iscomment = false;
@@ -212,12 +212,12 @@ public class CsvDataReader implements DataReader, HeaderReader, Closeable {
   @Override
   public DataLine nextRecord() throws IOException {
 
-    String[] record = readRecord(false);
-    if (record == null) {
+    String[] records = readRecord(false);
+    if (records == null) {
       return null;
     }
     return DataLine.builder()
-        .record(record)
+        .records(records)
         .recordCount(getRecordCount())
         .recordNumber(recordNumber)
         .lineNumber(lineNumber)

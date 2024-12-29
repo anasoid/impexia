@@ -18,4 +18,4 @@
 
 package org.anasoid.impexia.meta.transformer;
 
-public interface Translator extends ImpexTransfromer {}
+public interface Translator extends ImpexHandler {}
