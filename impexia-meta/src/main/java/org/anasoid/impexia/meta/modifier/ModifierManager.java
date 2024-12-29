@@ -22,6 +22,7 @@ import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import org.anasoid.impexia.meta.Scope;
 import org.anasoid.impexia.meta.modifier.Modifier.ModifierBuilder;
 
 /**

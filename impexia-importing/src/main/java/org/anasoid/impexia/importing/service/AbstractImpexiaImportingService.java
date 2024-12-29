@@ -21,8 +21,8 @@ package org.anasoid.impexia.importing.service;
 import org.anasoid.impexia.core.data.importing.DataReader;
 import org.anasoid.impexia.core.data.importing.HeaderReader;
 import org.anasoid.impexia.core.parser.header.HeaderParser;
+import org.anasoid.impexia.meta.Scope;
 import org.anasoid.impexia.meta.header.ImpexHeader;
-import org.anasoid.impexia.meta.modifier.Scope;
 
 public abstract class AbstractImpexiaImportingService {
 

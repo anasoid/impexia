@@ -24,11 +24,12 @@ import static org.anasoid.impexia.meta.header.ImpexAction.*;
 import static org.anasoid.impexia.meta.modifier.BasicType.*;
 import static org.anasoid.impexia.meta.modifier.GroupType.*;
 import static org.anasoid.impexia.meta.modifier.Level.*;
-import static org.anasoid.impexia.meta.modifier.ScopeEnum.*;
+import static org.anasoid.impexia.meta.scope.ScopeEnum.*;
 
 import java.util.Set;
 import lombok.Getter;
 import org.anasoid.impexia.meta.Mode;
+import org.anasoid.impexia.meta.Scope;
 import org.anasoid.impexia.meta.header.ImpexAction;
 import org.anasoid.impexia.meta.transformer.CellDecorator;
 import org.anasoid.impexia.meta.transformer.ErrorHandler;

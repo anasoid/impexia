@@ -28,6 +28,7 @@ import lombok.Singular;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import org.anasoid.impexia.meta.Mode;
+import org.anasoid.impexia.meta.Scope;
 import org.anasoid.impexia.meta.header.ImpexAction;
 import org.anasoid.impexia.meta.transformer.ImpexHandler;
 

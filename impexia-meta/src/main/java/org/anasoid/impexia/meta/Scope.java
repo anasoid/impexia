@@ -16,29 +16,14 @@
  * Date :   23-Dec-2024
  */
 
-package org.anasoid.impexia.meta.modifier;
+package org.anasoid.impexia.meta;
 
-import java.util.HashSet;
 import java.util.Set;
-import lombok.Getter;
 
-public enum ScopeEnum implements Scope {
-  GLOBAL("GLOBAL", Set.of()),
-  ORM("ORM", Set.of(GLOBAL));
-  @Getter private final String name;
-  @Getter private final Set<Scope> scopes;
+public interface Scope {
+  String getName();
 
-  ScopeEnum(String name, Set<Scope> scopes) {
-    this.name = name;
-    this.scopes = scopes;
-  }
+  Set<Scope> getScopes();
 
-  @Override
-  public Set<String> getScopesAsString() {
-
-    Set<String> result = new HashSet<>(Set.of(name));
-    scopes.forEach(s -> result.addAll(s.getScopesAsString()));
-
-    return result;
-  }
+  Set<String> getScopesAsString();
 }

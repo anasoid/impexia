@@ -19,8 +19,8 @@
 package org.anasoid.impexia.jpa.importing.service;
 
 import org.anasoid.impexia.importing.service.AbstractImpexiaImportingService;
-import org.anasoid.impexia.jpa.meta.modifier.JpaScopeEnum;
-import org.anasoid.impexia.meta.modifier.Scope;
+import org.anasoid.impexia.jpa.meta.JpaScopeEnum;
+import org.anasoid.impexia.meta.Scope;
 
 public class JpaImpexiaImportingService extends AbstractImpexiaImportingService {
 

@@ -20,6 +20,7 @@ package org.anasoid.impexia.meta.modifier;
 
 import java.util.Set;
 import org.anasoid.impexia.meta.Mode;
+import org.anasoid.impexia.meta.Scope;
 import org.anasoid.impexia.meta.header.ImpexAction;
 
 public interface ModifierEnum {
