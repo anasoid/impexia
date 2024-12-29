@@ -16,21 +16,20 @@
  * Date :   23-Dec-2024
  */
 
-package org.anasoid.impexia.jpa.meta.modifier;
+package org.anasoid.impexia.meta.scope;
 
 import java.util.HashSet;
 import java.util.Set;
 import lombok.Getter;
-import org.anasoid.impexia.meta.modifier.Scope;
-import org.anasoid.impexia.meta.modifier.ScopeEnum;
+import org.anasoid.impexia.meta.Scope;
 
-public enum JpaScopeEnum implements Scope {
-  JPA("ORM", Set.of(ScopeEnum.GLOBAL));
-
+public enum ScopeEnum implements Scope {
+  GLOBAL("GLOBAL", Set.of()),
+  ORM("ORM", Set.of(GLOBAL));
   @Getter private final String name;
   @Getter private final Set<Scope> scopes;
 
-  JpaScopeEnum(String name, Set<Scope> scopes) {
+  ScopeEnum(String name, Set<Scope> scopes) {
     this.name = name;
     this.scopes = scopes;
   }

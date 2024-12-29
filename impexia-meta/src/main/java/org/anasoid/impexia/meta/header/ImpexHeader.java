@@ -27,7 +27,6 @@ import lombok.Getter;
 import lombok.Singular;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-import org.anasoid.impexia.meta.modifier.Modifier;
 
 /** Impex Header description container. */
 @SuperBuilder
@@ -59,10 +58,10 @@ public class ImpexHeader {
     }
   }
 
-  List<ImpexAttribute> getAttributesByModifier(Modifier modifier) {
-    String modifierStr = modifier.getCode();
+  List<ImpexAttribute> getAttributesByKey(String code) {
+
     return attributes.stream()
-        .filter(atr -> atr.getModifiers().stream().anyMatch(m -> m.key.equals(modifierStr)))
+        .filter(atr -> atr.getModifiers().stream().anyMatch(m -> m.key.equalsIgnoreCase(code)))
         .toList();
   }
 }

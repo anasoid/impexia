@@ -13,27 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * @author : anas
- * Date :   22-Dec-2024
+ * Date :   23-Dec-2024
  */
 
-package org.anasoid.impexia.importing.service;
+package org.anasoid.impexia.jpa.meta;
 
-import org.anasoid.impexia.core.data.importing.DataReader;
-import org.anasoid.impexia.core.data.importing.HeaderReader;
-import org.anasoid.impexia.core.parser.header.HeaderParser;
+import java.util.HashSet;
+import java.util.Set;
+import lombok.Getter;
 import org.anasoid.impexia.meta.Scope;
-import org.anasoid.impexia.meta.header.ImpexHeader;
+import org.anasoid.impexia.meta.scope.ScopeEnum;
 
-public abstract class AbstractImpexiaImportingService {
+public enum JpaScopeEnum implements Scope {
+  JPA("ORM", Set.of(ScopeEnum.GLOBAL));
 
-  void importData(HeaderReader headerReader, DataReader dataReader, int maxPass) {
-    parseHeader(headerReader.getHeader());
+  @Getter private final String name;
+  @Getter private final Set<Scope> scopes;
+
+  JpaScopeEnum(String name, Set<Scope> scopes) {
+    this.name = name;
+    this.scopes = scopes;
   }
 
-  @SuppressWarnings("PMD.UseVarargs")
-  protected ImpexHeader parseHeader(String[] headerRecords) {
-    return HeaderParser.parse(headerRecords);
-  }
+  @Override
+  public Set<String> getScopesAsString() {
 
-  protected abstract Scope getScope();
+    Set<String> result = new HashSet<>(Set.of(name));
+    scopes.forEach(s -> result.addAll(s.getScopesAsString()));
+
+    return result;
+  }
 }

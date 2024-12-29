@@ -16,31 +16,27 @@
  * Date :   07-Nov-2020
  */
 
-package org.anasoid.impexia.meta.modifier;
+package org.anasoid.impexia.core.validators.header.descriptor.modifier;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Set;
 import lombok.Getter;
 import lombok.Singular;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import org.anasoid.impexia.meta.Mode;
+import org.anasoid.impexia.meta.Scope;
 import org.anasoid.impexia.meta.header.ImpexAction;
 import org.anasoid.impexia.meta.transformer.ImpexHandler;
 
 /** Modifiers container. */
 @SuperBuilder
 @ToString(onlyExplicitlyIncluded = true)
-public class Modifier {
+public class ModifierDescriptor {
 
-  public static final Set<String> BOOLEAN_VALUES =
-      Collections.unmodifiableSet(new HashSet<>(Arrays.asList("true", "false")));
   @Getter private final Set<ImpexAction> actions;
   @Getter private final Class<?> clazz;
-  @Getter private final boolean needMapping;
 
   /**
    * Modifier Manager Register Known list of modifier, modifier also can have scope, GLOBAL for
@@ -55,11 +51,12 @@ public class Modifier {
   @Getter @Singular private Set<GroupType> groupTypes;
   @Getter @Singular private Set<String> values;
 
-  public static Modifier.ModifierBuilder builder(ModifierEnum code) {
-    return new Modifier.ModifierBuilderImpl().code(code);
+  public static ModifierDescriptor.ModifierDescriptorBuilder builder(ModifierDescriptorEnum code) {
+    return new ModifierDescriptor.ModifierDescriptorBuilderImpl().code(code);
   }
 
-  public static Modifier.ModifierBuilder builder(ModifierEnum code, Scope scope) {
+  public static ModifierDescriptor.ModifierDescriptorBuilder builder(
+      ModifierDescriptorEnum code, Scope scope) {
     return builder(code).scope(scope);
   }
 
@@ -68,16 +65,29 @@ public class Modifier {
   }
 
   @SuppressWarnings("PMD.AbstractClassWithoutAbstractMethod")
-  public abstract static class ModifierBuilder<
-      C extends Modifier, B extends ModifierBuilder<C, B>> {
+  public abstract static class ModifierDescriptorBuilder<
+      C extends ModifierDescriptor, B extends ModifierDescriptorBuilder<C, B>> {
 
     public B code(String code) {
       this.code = code;
       return self();
     }
 
-    public B code(ModifierEnum code) {
+    public B code(ModifierDescriptorEnum code) {
       return code(code.toString().toLowerCase(Locale.ROOT));
     }
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    return Objects.equals(code, ((ModifierDescriptor) o).code);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(code);
   }
 }

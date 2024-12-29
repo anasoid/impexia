@@ -16,13 +16,14 @@
  * Date :   07-Nov-2020
  */
 
-package org.anasoid.impexia.meta.modifier;
+package org.anasoid.impexia.core.validators.header.descriptor.modifier;
 
 /**
- * Collections type.
+ * Field type.
  */
-public enum GroupType {
-  SINGLE,
-  COLLECTION,
-  MAP
+public enum BasicType {
+  NUMBER,
+  STRING,
+  DATE,
+  COMPOSED
 }

@@ -20,6 +20,8 @@ package org.anasoid.impexia.core.validators.header.impl;
 
 import java.text.MessageFormat;
 import org.anasoid.impexia.core.validators.header.AbstractHeaderValidator;
+import org.anasoid.impexia.core.validators.header.descriptor.modifier.Level;
+import org.anasoid.impexia.core.validators.header.descriptor.modifier.ModifierDescriptor;
 import org.anasoid.impexia.meta.Mode;
 import org.anasoid.impexia.meta.exceptions.header.ActionException;
 import org.anasoid.impexia.meta.exceptions.header.AttributeModifierException;
@@ -27,8 +29,6 @@ import org.anasoid.impexia.meta.exceptions.header.ImpexHeaderException;
 import org.anasoid.impexia.meta.header.ImpexAttribute;
 import org.anasoid.impexia.meta.header.ImpexHeader;
 import org.anasoid.impexia.meta.header.ImpexModifier;
-import org.anasoid.impexia.meta.modifier.Level;
-import org.anasoid.impexia.meta.modifier.Modifier;
 
 /** Default header Validator. */
 @SuppressWarnings("PMD.LawOfDemeter")
@@ -44,17 +44,12 @@ public class RawHeaderValidator extends AbstractHeaderValidator {
   protected boolean validateModifier(ImpexModifier impexModifier, Mode mode)
       throws ImpexHeaderException {
 
-    Modifier modifier = null;
-    try {
-      modifier = getModifier(impexModifier);
-    } catch (java.lang.IllegalArgumentException e) {
-      // nothing
-    }
+    ModifierDescriptor modifierDescriptor = getModifier(impexModifier);
 
-    if (modifier != null) {
+    if (modifierDescriptor != null) {
 
-      validateModifierLevel(modifier, impexModifier);
-      validateModifierMode(modifier, mode);
+      validateModifierLevel(modifierDescriptor, impexModifier);
+      validateModifierMode(modifierDescriptor, mode);
     }
     return true;
   }
@@ -65,7 +60,8 @@ public class RawHeaderValidator extends AbstractHeaderValidator {
     return true;
   }
 
-  protected void validateModifierLevel(Modifier modifier, ImpexModifier impexModifier)
+  protected void validateModifierLevel(
+      ModifierDescriptor modifierDescriptor, ImpexModifier impexModifier)
       throws ImpexHeaderException {
     Level level;
     if (impexModifier.getAttribute() != null) {
@@ -76,18 +72,19 @@ public class RawHeaderValidator extends AbstractHeaderValidator {
       throw new IllegalStateException("ImpexModifier has null level : " + impexModifier);
     }
 
-    if (!modifier.getLevels().contains(level)) {
+    if (!modifierDescriptor.getLevels().contains(level)) {
       throw new AttributeModifierException(
           MessageFormat.format(
-              "Field ({0}) is not acceptable by Level : {1}", modifier.getCode(), level));
+              "Field ({0}) is not acceptable by Level : {1}", modifierDescriptor.getCode(), level));
     }
   }
 
-  protected void validateModifierMode(Modifier modifier, Mode mode) throws ImpexHeaderException {
-    if (!modifier.getModes().isEmpty() && !modifier.getModes().contains(mode)) {
+  protected void validateModifierMode(ModifierDescriptor modifierDescriptor, Mode mode)
+      throws ImpexHeaderException {
+    if (!modifierDescriptor.getModes().isEmpty() && !modifierDescriptor.getModes().contains(mode)) {
       throw new AttributeModifierException(
           MessageFormat.format(
-              "Field ({0}) is not acceptable by Mode : {1}", modifier.getCode(), mode));
+              "Field ({0}) is not acceptable by Mode : {1}", modifierDescriptor.getCode(), mode));
     }
   }
 

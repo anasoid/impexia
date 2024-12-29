@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2024 the original author or authors.
+ * Copyright 2020-2020 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License")
  * you may not use this file except in compliance with the License.
@@ -13,32 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * @author : anas
- * Date :   22-Dec-2024
+ * Date :   07-Nov-2020
  */
 
-package org.anasoid.impexia.meta.modifier;
+package org.anasoid.impexia.core.validators.header.descriptor.modifier;
 
-import java.util.Set;
-import org.anasoid.impexia.meta.Mode;
-import org.anasoid.impexia.meta.header.ImpexAction;
-
-public interface ModifierEnum {
-
-  Set<Level> getLevels();
-
-  Set<ImpexAction> getActions();
-
-  Set<Mode> getModes();
-
-  Class<?> getClazz();
-
-  Set<BasicType> getBasicTypes();
-
-  Set<GroupType> getGroupTypes();
-
-  Set<String> getValues();
-
-  boolean isNeedMapping();
-
-  Scope getScope();
+/**
+ * level on witch modifier can be applied.
+ */
+public enum Level {
+  TYPE,
+  FIELD
 }

@@ -31,19 +31,14 @@ jobs :
 
       - name : Setup Gradle
         uses : gradle/actions/setup-gradle@v4
-        with:
-          build-scan-publish: true
-          build-scan-terms-of-use-url: "https://gradle.com/terms-of-service"
-          build-scan-terms-of-use-agree: "yes"
+        with :
+          build-scan-publish : true
+          build-scan-terms-of-use-url : "https://gradle.com/terms-of-service"
+          build-scan-terms-of-use-agree : "yes"
 
       - name : Build with Gradle
         run : ./gradlew build
 
-      - name : Sonar check
-        run : ./gradlew sonar
-        env :
-          GITHUB_TOKEN : ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN : ${{ secrets.SONAR_TOKEN }}
 
       - name : Publish Test Report
         uses : mikepenz/action-junit-report@v5
@@ -57,17 +52,23 @@ jobs :
           name : reports
           path : '**/build/reports/**'
 
-      - name: Run codacy-coverage-reporter
-        uses: codacy/codacy-coverage-reporter-action@v1.3.0
-        with:
-          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+      - name : Run codacy-coverage-reporter
+        uses : codacy/codacy-coverage-reporter-action@v1.3.0
+        with :
+          project-token : ${{ secrets.CODACY_PROJECT_TOKEN }}
           # or
           # api-token: ${{ secrets.CODACY_API_TOKEN }}
-          coverage-reports:  ${{ github.workspace }}/buildUtils/code-coverage-report/build/reports/jacoco/testCodeCoverageReport/testCodeCoverageReport.xml
+          coverage-reports : ${{ github.workspace }}/buildUtils/code-coverage-report/build/reports/jacoco/testCodeCoverageReport/testCodeCoverageReport.xml
 
-      - name: CodeCov
-        uses: codecov/codecov-action@v5
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
-          files: ${{ github.workspace }}/buildUtils/code-coverage-report/build/reports/jacoco/testCodeCoverageReport/testCodeCoverageReport.xml # optional
-          verbose: true
+      - name : CodeCov
+        uses : codecov/codecov-action@v5
+        with :
+          token : ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+          files : ${{ github.workspace }}/buildUtils/code-coverage-report/build/reports/jacoco/testCodeCoverageReport/testCodeCoverageReport.xml # optional
+          verbose : true
+
+      - name : Sonar check
+        run : ./gradlew sonar
+        env :
+          GITHUB_TOKEN : ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN : ${{ secrets.SONAR_TOKEN }}

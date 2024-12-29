@@ -16,19 +16,20 @@
  * Date :   07-Nov-2020
  */
 
-package org.anasoid.impexia.meta.modifier;
+package org.anasoid.impexia.core.validators.header.descriptor.modifier;
 
 import static java.util.Set.of;
+import static org.anasoid.impexia.core.validators.header.descriptor.modifier.BasicType.*;
+import static org.anasoid.impexia.core.validators.header.descriptor.modifier.GroupType.*;
+import static org.anasoid.impexia.core.validators.header.descriptor.modifier.Level.*;
 import static org.anasoid.impexia.meta.Mode.*;
 import static org.anasoid.impexia.meta.header.ImpexAction.*;
-import static org.anasoid.impexia.meta.modifier.BasicType.*;
-import static org.anasoid.impexia.meta.modifier.GroupType.*;
-import static org.anasoid.impexia.meta.modifier.Level.*;
-import static org.anasoid.impexia.meta.modifier.ScopeEnum.*;
+import static org.anasoid.impexia.meta.scope.ScopeEnum.*;
 
 import java.util.Set;
 import lombok.Getter;
 import org.anasoid.impexia.meta.Mode;
+import org.anasoid.impexia.meta.Scope;
 import org.anasoid.impexia.meta.header.ImpexAction;
 import org.anasoid.impexia.meta.transformer.CellDecorator;
 import org.anasoid.impexia.meta.transformer.ErrorHandler;
@@ -36,7 +37,7 @@ import org.anasoid.impexia.meta.transformer.Listener;
 import org.anasoid.impexia.meta.transformer.Translator;
 
 /** List of acceptable Modifiers. */
-public enum ModifierEnumGlobal implements ModifierEnum {
+public enum ModifierDescriptorEnumGlobal implements ModifierDescriptorEnum {
   BATCHMODE(of(TYPE), of(UPDATE, INSERT_UPDATE), of(IMPORT), Boolean.class, GLOBAL),
   LISTENER(of(TYPE), of(), of(IMPORT), Listener.class, GLOBAL),
   ERRORHANDLER(of(TYPE), of(), of(IMPORT), ErrorHandler.class, GLOBAL),
@@ -63,7 +64,7 @@ public enum ModifierEnumGlobal implements ModifierEnum {
   NUMBERFORMAT(of(FIELD, TYPE), of(), of(), String.class, of(NUMBER), of(), of(), GLOBAL),
   DATEFORMAT(of(FIELD, TYPE), of(), of(), String.class, of(DATE), of(), of(), GLOBAL),
   PATHDELIMITER(of(FIELD, TYPE), of(), of(), String.class, GLOBAL),
-  UNIQUE(of(FIELD), of(), of(), Boolean.class, of(), of(SINGLE), of(), true, GLOBAL),
+  UNIQUE(of(FIELD), of(), of(), Boolean.class, of(), of(SINGLE), of(), GLOBAL),
   MANDATORY(of(FIELD), of(), of(IMPORT), Boolean.class, GLOBAL),
   IGNORE_NULL(of(FIELD), of(), of(IMPORT), Boolean.class, of(), of(COLLECTION), of(), GLOBAL),
   MODE(
@@ -87,9 +88,8 @@ public enum ModifierEnumGlobal implements ModifierEnum {
   @Getter private final Set<BasicType> basicTypes;
   @Getter private final Set<GroupType> groupTypes;
   @Getter private final Set<String> values;
-  @Getter private final boolean needMapping;
 
-  ModifierEnumGlobal(
+  ModifierDescriptorEnumGlobal(
       Set<Level> levels,
       Set<ImpexAction> actions,
       Set<Mode> modes,
@@ -97,7 +97,6 @@ public enum ModifierEnumGlobal implements ModifierEnum {
       Set<BasicType> basicTypes,
       Set<GroupType> groupTypes,
       Set<String> values,
-      boolean needMapping,
       Scope scope) {
     this.levels = levels;
     this.actions = actions;
@@ -106,24 +105,11 @@ public enum ModifierEnumGlobal implements ModifierEnum {
     this.basicTypes = basicTypes;
     this.groupTypes = groupTypes;
     this.values = values;
-    this.needMapping = needMapping;
     this.scope = scope;
   }
 
-  ModifierEnumGlobal(
-      Set<Level> levels,
-      Set<ImpexAction> actions,
-      Set<Mode> modes,
-      Class<?> clazz,
-      Set<BasicType> basicTypes,
-      Set<GroupType> groupTypes,
-      Set<String> values,
-      Scope scope) {
-    this(levels, actions, modes, clazz, basicTypes, groupTypes, values, false, scope);
-  }
-
-  ModifierEnumGlobal(
+  ModifierDescriptorEnumGlobal(
       Set<Level> levels, Set<ImpexAction> actions, Set<Mode> modes, Class<?> clazz, Scope scope) {
-    this(levels, actions, modes, clazz, of(), of(), of(), false, scope);
+    this(levels, actions, modes, clazz, of(), of(), of(), scope);
   }
 }

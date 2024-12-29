@@ -21,7 +21,7 @@ package org.anasoid.impexia.core.manager.config;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import org.anasoid.impexia.meta.modifier.Scope;
+import org.anasoid.impexia.meta.Scope;
 
 @Getter
 @Setter

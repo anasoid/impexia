@@ -19,49 +19,59 @@
 package org.anasoid.impexia.core.validators.header.impl;
 
 import java.text.MessageFormat;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 import org.anasoid.impexia.core.validators.header.ModifierValidator;
+import org.anasoid.impexia.core.validators.header.descriptor.modifier.ModifierDescriptor;
+import org.anasoid.impexia.core.validators.header.descriptor.modifier.ModifierDescriptorManager;
 import org.anasoid.impexia.meta.Mode;
 import org.anasoid.impexia.meta.exceptions.header.AttributeModifierException;
 import org.anasoid.impexia.meta.exceptions.header.ImpexHeaderException;
 import org.anasoid.impexia.meta.header.ImpexModifier;
-import org.anasoid.impexia.meta.modifier.Modifier;
-import org.anasoid.impexia.meta.modifier.ModifierManager;
 
 /** Default header Validator. */
 public class ValueModifierValidator implements ModifierValidator {
+
+  public static final Set<String> BOOLEAN_VALUES =
+      Collections.unmodifiableSet(new HashSet<>(Arrays.asList("true", "false")));
 
   @Override
   @SuppressWarnings({"PMD.EmptyCatchBlock"})
   public boolean validate(ImpexModifier impexModifier, Mode mode) throws ImpexHeaderException {
 
-    Modifier modifier = null;
+    ModifierDescriptor modifierDescriptor = null;
     try {
-      modifier = ModifierManager.getInstance().getValueByCode(impexModifier.getKey());
+      modifierDescriptor =
+          ModifierDescriptorManager.getInstance().getValueByCode(impexModifier.getKey());
     } catch (IllegalArgumentException e) {
       // nothing
     }
 
-    if (modifier != null) {
-      validateModifierValues(impexModifier, modifier);
+    if (modifierDescriptor != null) {
+      validateModifierValues(impexModifier, modifierDescriptor);
     }
     return false;
   }
 
-  protected void validateModifierValues(ImpexModifier impexModifier, Modifier modifier)
+  protected void validateModifierValues(
+      ImpexModifier impexModifier, ModifierDescriptor modifierDescriptor)
       throws ImpexHeaderException {
 
-    if (!modifier.getValues().isEmpty()
-        && !modifier.getValues().contains(impexModifier.getValue())) {
+    if (!modifierDescriptor.getValues().isEmpty()
+        && !modifierDescriptor.getValues().contains(impexModifier.getValue())) {
       throw new AttributeModifierException(
           MessageFormat.format(
               "Field ({0}) should be in the list : {1}",
-              impexModifier.getKey(), modifier.getValues()));
+              impexModifier.getKey(), modifierDescriptor.getValues()));
     }
-    if (Boolean.class.equals(modifier.getClazz())
-        && !Modifier.BOOLEAN_VALUES.contains(impexModifier.getValue())) {
+    if (Boolean.class.equals(modifierDescriptor.getClazz())
+        && !BOOLEAN_VALUES.contains(impexModifier.getValue())) {
       throw new AttributeModifierException(
           MessageFormat.format(
-              "Field ({0}) should be boolean : {1}", impexModifier.getKey(), modifier.getValues()));
+              "Field ({0}) should be boolean : {1}",
+              impexModifier.getKey(), modifierDescriptor.getValues()));
     }
   }
 }
