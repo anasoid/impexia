@@ -22,6 +22,7 @@ import static org.anasoid.impexia.meta.modifier.ModifierEnumGlobal.DEFAULT;
 import static org.anasoid.impexia.meta.modifier.ModifierEnumGlobal.VIRTUAL;
 
 import java.text.MessageFormat;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.anasoid.impexia.core.exceptions.InvalidLineStrictFormatException;
 import org.anasoid.impexia.core.manager.transformer.ChildTransformer;
@@ -33,6 +34,7 @@ import org.anasoid.impexia.importing.manager.config.ImportingImpexConfig;
 import org.anasoid.impexia.importing.manager.config.ImportingImpexContext;
 import org.anasoid.impexia.meta.header.ImpexAttribute;
 import org.anasoid.impexia.meta.header.ImpexHeader;
+import org.anasoid.impexia.meta.header.ImpexModifier;
 
 public class RecordLineTransformer<C extends ImportingImpexContext<?>>
     implements ChildTransformer<LineValues, String[], ImpexHeader, C> {
@@ -64,15 +66,16 @@ public class RecordLineTransformer<C extends ImportingImpexContext<?>>
   }
 
   private AtomicColumnReference getVirtualValue(ImpexAttribute impexAttribute) {
-    String defaultValue =
+    Optional<ImpexModifier> defaultValue =
         impexAttribute.getModifiers().stream()
             .filter(m -> m.getKey().equalsIgnoreCase(DEFAULT.name()))
-            .findFirst()
-            .get()
-            .getValue();
-
-    return new AtomicColumnReference(
-        impexAttribute, StringColumnValue.builder().value(defaultValue).build());
+            .findFirst();
+    if (defaultValue.isPresent()) {
+      return new AtomicColumnReference(
+          impexAttribute, StringColumnValue.builder().value(defaultValue.get().getValue()).build());
+    } else {
+      throw new InvalidLineStrictFormatException("Default Value is mandatory for virtual");
+    }
   }
 
   private void checkAdditionalColumn(
