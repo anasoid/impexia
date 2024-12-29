@@ -43,7 +43,7 @@ class RecordLineTransformerTest {
         ImpexHeader.builder("product", ImpexAction.INSERT)
             .attribute(
                 ImpexAttribute.builder("code")
-                    .modifier(ImpexModifier.builder(UNIQUE, "true").build())
+                    .modifier(ImpexModifier.builder(UNIQUE.toString(), "true").build())
                     .build())
             .attribute(ImpexAttribute.builder("name").build())
             .build();
@@ -67,12 +67,12 @@ class RecordLineTransformerTest {
         ImpexHeader.builder("product", ImpexAction.INSERT)
             .attribute(
                 ImpexAttribute.builder("code")
-                    .modifier(ImpexModifier.builder(UNIQUE, "true").build())
+                    .modifier(ImpexModifier.builder(UNIQUE.toString(), "true").build())
                     .build())
             .attribute(
                 ImpexAttribute.builder("virtual")
-                    .modifier(ImpexModifier.builder(VIRTUAL, "true").build())
-                    .modifier(ImpexModifier.builder(DEFAULT, "vv").build())
+                    .modifier(ImpexModifier.builder(VIRTUAL.toString(), "true").build())
+                    .modifier(ImpexModifier.builder(DEFAULT.toString(), "vv").build())
                     .build())
             .attribute(ImpexAttribute.builder("name").build())
             .build();
@@ -99,7 +99,7 @@ class RecordLineTransformerTest {
         ImpexHeader.builder("product", ImpexAction.INSERT)
             .attribute(
                 ImpexAttribute.builder("code")
-                    .modifier(ImpexModifier.builder(UNIQUE, "true").build())
+                    .modifier(ImpexModifier.builder(UNIQUE.toString(), "true").build())
                     .build())
             .attribute(ImpexAttribute.builder("name").build())
             .build();
@@ -120,7 +120,7 @@ class RecordLineTransformerTest {
         ImpexHeader.builder("product", ImpexAction.INSERT)
             .attribute(
                 ImpexAttribute.builder("code")
-                    .modifier(ImpexModifier.builder(UNIQUE, "true").build())
+                    .modifier(ImpexModifier.builder(UNIQUE.toString(), "true").build())
                     .build())
             .attribute(ImpexAttribute.builder("name").build())
             .build();
@@ -149,7 +149,7 @@ class RecordLineTransformerTest {
         ImpexHeader.builder("product", ImpexAction.INSERT)
             .attribute(
                 ImpexAttribute.builder("code")
-                    .modifier(ImpexModifier.builder(UNIQUE, "true").build())
+                    .modifier(ImpexModifier.builder(UNIQUE.toString(), "true").build())
                     .build())
             .build();
     try {
@@ -169,7 +169,7 @@ class RecordLineTransformerTest {
         ImpexHeader.builder("product", ImpexAction.INSERT)
             .attribute(
                 ImpexAttribute.builder("code")
-                    .modifier(ImpexModifier.builder(UNIQUE, "true").build())
+                    .modifier(ImpexModifier.builder(UNIQUE.toString(), "true").build())
                     .build())
             .build();
 

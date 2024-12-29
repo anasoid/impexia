@@ -37,7 +37,6 @@ public class ModifierDescriptor {
 
   @Getter private final Set<ImpexAction> actions;
   @Getter private final Class<?> clazz;
-  @Getter private final boolean needMapping;
 
   /**
    * Modifier Manager Register Known list of modifier, modifier also can have scope, GLOBAL for

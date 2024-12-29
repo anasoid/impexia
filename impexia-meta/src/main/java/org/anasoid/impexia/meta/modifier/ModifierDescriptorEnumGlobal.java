@@ -64,7 +64,7 @@ public enum ModifierDescriptorEnumGlobal implements ModifierDescriptorEnum {
   NUMBERFORMAT(of(FIELD, TYPE), of(), of(), String.class, of(NUMBER), of(), of(), GLOBAL),
   DATEFORMAT(of(FIELD, TYPE), of(), of(), String.class, of(DATE), of(), of(), GLOBAL),
   PATHDELIMITER(of(FIELD, TYPE), of(), of(), String.class, GLOBAL),
-  UNIQUE(of(FIELD), of(), of(), Boolean.class, of(), of(SINGLE), of(), true, GLOBAL),
+  UNIQUE(of(FIELD), of(), of(), Boolean.class, of(), of(SINGLE), of(), GLOBAL),
   MANDATORY(of(FIELD), of(), of(IMPORT), Boolean.class, GLOBAL),
   IGNORE_NULL(of(FIELD), of(), of(IMPORT), Boolean.class, of(), of(COLLECTION), of(), GLOBAL),
   MODE(
@@ -88,7 +88,6 @@ public enum ModifierDescriptorEnumGlobal implements ModifierDescriptorEnum {
   @Getter private final Set<BasicType> basicTypes;
   @Getter private final Set<GroupType> groupTypes;
   @Getter private final Set<String> values;
-  @Getter private final boolean needMapping;
 
   ModifierDescriptorEnumGlobal(
       Set<Level> levels,
@@ -98,7 +97,6 @@ public enum ModifierDescriptorEnumGlobal implements ModifierDescriptorEnum {
       Set<BasicType> basicTypes,
       Set<GroupType> groupTypes,
       Set<String> values,
-      boolean needMapping,
       Scope scope) {
     this.levels = levels;
     this.actions = actions;
@@ -107,24 +105,11 @@ public enum ModifierDescriptorEnumGlobal implements ModifierDescriptorEnum {
     this.basicTypes = basicTypes;
     this.groupTypes = groupTypes;
     this.values = values;
-    this.needMapping = needMapping;
     this.scope = scope;
   }
 
   ModifierDescriptorEnumGlobal(
-      Set<Level> levels,
-      Set<ImpexAction> actions,
-      Set<Mode> modes,
-      Class<?> clazz,
-      Set<BasicType> basicTypes,
-      Set<GroupType> groupTypes,
-      Set<String> values,
-      Scope scope) {
-    this(levels, actions, modes, clazz, basicTypes, groupTypes, values, false, scope);
-  }
-
-  ModifierDescriptorEnumGlobal(
       Set<Level> levels, Set<ImpexAction> actions, Set<Mode> modes, Class<?> clazz, Scope scope) {
-    this(levels, actions, modes, clazz, of(), of(), of(), false, scope);
+    this(levels, actions, modes, clazz, of(), of(), of(), scope);
   }
 }

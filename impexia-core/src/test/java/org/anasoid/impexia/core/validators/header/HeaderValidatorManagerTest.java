@@ -92,7 +92,8 @@ class HeaderValidatorManagerTest {
                     .modifiers(
                         List.of(
                             ImpexModifier.builder("uniq", "tr").build(),
-                            ImpexModifier.builder(ModifierDescriptorEnumGlobal.UNIQUE, "true")
+                            ImpexModifier.builder(
+                                    ModifierDescriptorEnumGlobal.UNIQUE.toString(), "true")
                                 .build()))
                     .build())
             .build();
@@ -121,7 +122,8 @@ class HeaderValidatorManagerTest {
                         List.of(
                             ImpexModifier.builder("uniq", "tr").build(),
                             ImpexModifier.builder("unique", "true").build(),
-                            ImpexModifier.builder(ModifierDescriptorEnumGlobal.TRANSLATOR, "tr")
+                            ImpexModifier.builder(
+                                    ModifierDescriptorEnumGlobal.TRANSLATOR.toString(), "tr")
                                 .build()))
                     .build())
             .build();
@@ -135,7 +137,9 @@ class HeaderValidatorManagerTest {
         ImpexHeader.builder("product", ImpexAction.INSERT)
             .modifiers(
                 List.of(
-                    ImpexModifier.builder(ModifierDescriptorEnumGlobal.ERRORHANDLER, "tr").build(),
+                    ImpexModifier.builder(
+                            ModifierDescriptorEnumGlobal.ERRORHANDLER.toString(), "tr")
+                        .build(),
                     ImpexModifier.builder("uniq", "tr").build()))
             .attribute(
                 ImpexAttribute.builder("code")
@@ -154,7 +158,9 @@ class HeaderValidatorManagerTest {
             .attribute(
                 ImpexAttribute.builder("code")
                     .modifier(
-                        ImpexModifier.builder(ModifierDescriptorEnumGlobal.UNIQUE, "true").build())
+                        ImpexModifier.builder(
+                                ModifierDescriptorEnumGlobal.UNIQUE.toString().toString(), "true")
+                            .build())
                     .modifier(ImpexModifier.builder("pathDelimiter", ":").build())
                     .build())
             .build();
@@ -169,7 +175,9 @@ class HeaderValidatorManagerTest {
             .attribute(
                 ImpexAttribute.builder("code")
                     .modifier(
-                        ImpexModifier.builder(ModifierDescriptorEnumGlobal.UNIQUE, "true").build())
+                        ImpexModifier.builder(
+                                ModifierDescriptorEnumGlobal.UNIQUE.toString(), "true")
+                            .build())
                     .build())
             .build();
 
@@ -180,7 +188,9 @@ class HeaderValidatorManagerTest {
             .attribute(
                 ImpexAttribute.builder("code")
                     .modifier(
-                        ImpexModifier.builder(ModifierDescriptorEnumGlobal.UNIQUE, "false").build())
+                        ImpexModifier.builder(
+                                ModifierDescriptorEnumGlobal.UNIQUE.toString(), "false")
+                            .build())
                     .build())
             .build();
 
@@ -194,7 +204,8 @@ class HeaderValidatorManagerTest {
             .attribute(
                 ImpexAttribute.builder("code")
                     .modifier(
-                        ImpexModifier.builder(ModifierDescriptorEnumGlobal.UNIQUE, "tr").build())
+                        ImpexModifier.builder(ModifierDescriptorEnumGlobal.UNIQUE.toString(), "tr")
+                            .build())
                     .build())
             .build();
 
@@ -214,7 +225,8 @@ class HeaderValidatorManagerTest {
             .attribute(
                 ImpexAttribute.builder("code")
                     .modifier(
-                        ImpexModifier.builder(ModifierDescriptorEnumGlobal.MANDATORY, "true")
+                        ImpexModifier.builder(
+                                ModifierDescriptorEnumGlobal.MANDATORY.toString(), "true")
                             .build())
                     .build())
             .build();
@@ -231,11 +243,15 @@ class HeaderValidatorManagerTest {
   void validateModifierLevel() throws ImpexHeaderException {
     ImpexHeader impexHeader =
         ImpexHeader.builder("product", ImpexAction.INSERT)
-            .modifier(ImpexModifier.builder(ModifierDescriptorEnumGlobal.UNIQUE, "true").build())
+            .modifier(
+                ImpexModifier.builder(ModifierDescriptorEnumGlobal.UNIQUE.toString(), "true")
+                    .build())
             .attribute(
                 ImpexAttribute.builder("code")
                     .modifier(
-                        ImpexModifier.builder(ModifierDescriptorEnumGlobal.UNIQUE, "true").build())
+                        ImpexModifier.builder(
+                                ModifierDescriptorEnumGlobal.UNIQUE.toString(), "true")
+                            .build())
                     .build())
             .build();
 
@@ -255,7 +271,9 @@ class HeaderValidatorManagerTest {
             .attribute(
                 ImpexAttribute.builder("code")
                     .modifier(
-                        ImpexModifier.builder(ModifierDescriptorEnumGlobal.UNIQUE, "true").build())
+                        ImpexModifier.builder(
+                                ModifierDescriptorEnumGlobal.UNIQUE.toString(), "true")
+                            .build())
                     .build())
             .build();
 

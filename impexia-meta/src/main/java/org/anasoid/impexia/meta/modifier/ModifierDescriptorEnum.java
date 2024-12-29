@@ -39,7 +39,5 @@ public interface ModifierDescriptorEnum {
 
   Set<String> getValues();
 
-  boolean isNeedMapping();
-
   Scope getScope();
 }

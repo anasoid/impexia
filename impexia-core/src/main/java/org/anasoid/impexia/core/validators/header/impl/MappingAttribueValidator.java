@@ -18,10 +18,8 @@
 
 package org.anasoid.impexia.core.validators.header.impl;
 
-import java.text.MessageFormat;
 import org.anasoid.impexia.core.validators.header.AttributeValidator;
 import org.anasoid.impexia.meta.Mode;
-import org.anasoid.impexia.meta.exceptions.header.AttributeModifierException;
 import org.anasoid.impexia.meta.exceptions.header.ImpexHeaderException;
 import org.anasoid.impexia.meta.header.ImpexAttribute;
 
@@ -30,16 +28,7 @@ public class MappingAttribueValidator implements AttributeValidator {
 
   @Override
   public boolean validate(ImpexAttribute attribute, Mode mode) throws ImpexHeaderException {
-    boolean needMapping =
-        attribute.getModifiers().stream()
-            .anyMatch(
-                m ->
-                    m.getModifierDescriptor() != null && m.getModifierDescriptor().isNeedMapping());
-    if (needMapping && attribute.getMappings().isEmpty()) {
-      throw new AttributeModifierException(
-          MessageFormat.format(
-              "Field ({0}) with modifier should have mapping ", attribute.getField()));
-    }
-    return false;
+
+    return true;
   }
 }

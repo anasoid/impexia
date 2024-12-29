@@ -81,8 +81,7 @@ public final class ModifierDescriptorManager {
             .groupTypes(modifierDescriptorEnum.getGroupTypes())
             .actions(modifierDescriptorEnum.getActions())
             .values(modifierDescriptorEnum.getValues())
-            .clazz(modifierDescriptorEnum.getClazz())
-            .needMapping(modifierDescriptorEnum.isNeedMapping());
+            .clazz(modifierDescriptorEnum.getClazz());
 
     register(builder.build());
   }
@@ -116,12 +115,7 @@ public final class ModifierDescriptorManager {
   public ModifierDescriptor getValueByCode(String code) {
 
     ModifierDescriptor modifierDescriptor = MODIFIERS.get(code.toLowerCase(Locale.ROOT));
-
-    if (modifierDescriptor != null) {
-      return modifierDescriptor;
-    }
-
-    throw new IllegalArgumentException("Modifier (" + code + ") not found");
+    return modifierDescriptor;
   }
 
   /**

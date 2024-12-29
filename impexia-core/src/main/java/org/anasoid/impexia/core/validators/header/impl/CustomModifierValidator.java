@@ -35,13 +35,9 @@ public class CustomModifierValidator implements ModifierValidator {
   @SuppressWarnings({"PMD.EmptyCatchBlock"})
   public boolean validate(ImpexModifier impexModifier, Mode mode) throws ImpexHeaderException {
 
-    ModifierDescriptor modifierDescriptor = null;
-    try {
-      modifierDescriptor =
-          ModifierDescriptorManager.getInstance().getValueByCode(impexModifier.getKey());
-    } catch (java.lang.IllegalArgumentException e) {
-      // nothing
-    }
+    ModifierDescriptor modifierDescriptor =
+        ModifierDescriptorManager.getInstance().getValueByCode(impexModifier.getKey());
+
     validateCustomModifier(impexModifier, modifierDescriptor);
     return false;
   }
@@ -62,15 +58,12 @@ public class CustomModifierValidator implements ModifierValidator {
       }
       boolean acceptCustom = false;
       for (ImpexModifier other : modifiers) {
-        try {
-          ModifierDescriptor otherModifierDescriptor =
-              ModifierDescriptorManager.getInstance().getValueByCode(other.getKey());
-          if (otherModifierDescriptor.isAcceptCustomAttribute()) {
-            acceptCustom = true;
-            break;
-          }
-        } catch (java.lang.IllegalArgumentException e) {
-          // nothing
+
+        ModifierDescriptor otherModifierDescriptor =
+            ModifierDescriptorManager.getInstance().getValueByCode(other.getKey());
+        if (otherModifierDescriptor != null && otherModifierDescriptor.isAcceptCustomAttribute()) {
+          acceptCustom = true;
+          break;
         }
       }
 

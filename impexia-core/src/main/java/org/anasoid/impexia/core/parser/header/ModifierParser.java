@@ -23,8 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 import org.anasoid.impexia.core.exceptions.InvalidHeaderFormatException;
 import org.anasoid.impexia.meta.header.ImpexModifier;
-import org.anasoid.impexia.meta.modifier.ModifierDescriptor;
-import org.anasoid.impexia.meta.modifier.ModifierDescriptorManager;
 import org.apache.commons.lang3.StringUtils;
 
 public final class ModifierParser {
@@ -38,14 +36,8 @@ public final class ModifierParser {
     for (String rawModifier : rawModifierList) {
       List<String> extract = extractKeyValueFromModifier(rawModifier);
       String key = extract.get(0);
-      ModifierDescriptor modifierDescriptor = null;
-      try {
-        modifierDescriptor = ModifierDescriptorManager.getInstance().getValueByCode(key);
-      } catch (IllegalArgumentException e) { // NOPMD
-        // nothing
-      }
-      ImpexModifier impexModifier =
-          ImpexModifier.builder(key, extract.get(1)).modifierDescriptor(modifierDescriptor).build();
+
+      ImpexModifier impexModifier = ImpexModifier.builder(key, extract.get(1)).build();
       result.add(impexModifier);
     }
     return result;

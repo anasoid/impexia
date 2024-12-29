@@ -44,12 +44,7 @@ public class RawHeaderValidator extends AbstractHeaderValidator {
   protected boolean validateModifier(ImpexModifier impexModifier, Mode mode)
       throws ImpexHeaderException {
 
-    ModifierDescriptor modifierDescriptor = null;
-    try {
-      modifierDescriptor = getModifier(impexModifier);
-    } catch (java.lang.IllegalArgumentException e) {
-      // nothing
-    }
+    ModifierDescriptor modifierDescriptor = getModifier(impexModifier);
 
     if (modifierDescriptor != null) {
 
