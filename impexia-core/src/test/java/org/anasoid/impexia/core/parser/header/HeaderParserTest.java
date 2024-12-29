@@ -18,6 +18,8 @@
 
 package org.anasoid.impexia.core.parser.header;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.Iterator;
 import java.util.List;
 import org.anasoid.impexia.core.exceptions.InvalidHeaderFormatException;
@@ -41,7 +43,7 @@ class HeaderParserTest {
   void testParseHeaderSuccess(String header, String result) throws InvalidHeaderFormatException {
     String[] columns = header.split(";");
     ImpexHeader impexHeader = HeaderParser.parseHeaderRow(columns);
-    Assertions.assertEquals(result, impexHeader.toString());
+    assertThat(impexHeader).hasToString(result);
   }
 
   @ParameterizedTest
@@ -52,13 +54,10 @@ class HeaderParserTest {
         "insert_update product [batchmode=true];code[unique=true](id)",
       })
   void testParseHeaderError(String header) {
-    try {
-      String[] columns = header.split(";");
-      ImpexHeader impexHeader = HeaderParser.parseHeaderRow(columns);
-      Assertions.fail(impexHeader.toString());
-    } catch (InvalidHeaderFormatException e) {
-      // success
-    }
+
+    String[] columns = header.split(";");
+    Assertions.assertThrows(
+        InvalidHeaderFormatException.class, () -> HeaderParser.parseHeaderRow(columns));
   }
 
   @ParameterizedTest
@@ -66,18 +65,15 @@ class HeaderParserTest {
   void testParseModifierSuccess(String mapping, String result) throws InvalidHeaderFormatException {
 
     List<ImpexModifier> resList = HeaderParser.parseModifier(mapping);
-    Assertions.assertEquals(result, toStringImpexModifier(resList));
+    assertThat(toStringImpexModifier(resList)).isEqualTo(result);
   }
 
   @ParameterizedTest
   @ValueSource(strings = {"[key=value", "[key=val\"ue]", "[ =value]", "[ke8y=value]"})
   void testParseModifierError(String mapping) {
-    try {
-      List<ImpexModifier> resList = HeaderParser.parseModifier(mapping);
-      Assertions.fail(toStringImpexModifier(resList));
-    } catch (InvalidHeaderFormatException e) {
-      // success
-    }
+
+    Assertions.assertThrows(
+        InvalidHeaderFormatException.class, () -> HeaderParser.parseModifier(mapping));
   }
 
   @ParameterizedTest
@@ -85,7 +81,7 @@ class HeaderParserTest {
   void testParseMappingSuccess(String mapping, String result) throws InvalidHeaderFormatException {
 
     List<ImpexMapping> resList = HeaderParser.parseMapping(mapping);
-    Assertions.assertEquals(result, toStringImpexMapping(resList));
+    assertThat(toStringImpexMapping(resList)).isEqualTo(result);
   }
 
   @ParameterizedTest
@@ -111,12 +107,9 @@ class HeaderParserTest {
         "(id11, ,id12 )"
       })
   void testParseMappingError(String mapping) {
-    try {
-      List<ImpexMapping> resList = HeaderParser.parseMapping(mapping);
-      Assertions.fail(toStringImpexMapping(resList));
-    } catch (InvalidHeaderFormatException e) {
-      // success
-    }
+
+    Assertions.assertThrows(
+        InvalidHeaderFormatException.class, () -> HeaderParser.parseMapping(mapping));
   }
 
   private String toStringImpexModifier(List<ImpexModifier> list) {

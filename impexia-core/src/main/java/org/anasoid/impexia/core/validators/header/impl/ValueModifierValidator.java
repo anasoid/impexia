@@ -61,7 +61,7 @@ public class ValueModifierValidator implements ModifierValidator {
         && !Modifier.BOOLEAN_VALUES.contains(impexModifier.getValue())) {
       throw new AttributeModifierException(
           MessageFormat.format(
-              "Field ({0}) should be boolean", impexModifier.getKey(), modifier.getValues()));
+              "Field ({0}) should be boolean : {1}", impexModifier.getKey(), modifier.getValues()));
     }
   }
 }

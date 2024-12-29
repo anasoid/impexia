@@ -26,8 +26,6 @@ import org.anasoid.impexia.meta.modifier.Scope;
 
 public abstract class AbstractImpexiaImportingService {
 
-  // ImpexiaPersisterManager impexiaPersisterManager;
-
   void importData(HeaderReader headerReader, DataReader dataReader, int maxPass) {
     parseHeader(headerReader.getHeader());
   }

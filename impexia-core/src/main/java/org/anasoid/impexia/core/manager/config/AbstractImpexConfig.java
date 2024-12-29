@@ -29,7 +29,7 @@ import lombok.experimental.SuperBuilder;
 public abstract class AbstractImpexConfig {
   private static final String PREFIX = "config.";
 
-  public static final String STRICT = PREFIX + "strict";
+  public static final String CONFIG_STRICT = PREFIX + "strict";
 
-  Boolean strict;
+  private Boolean strict;
 }

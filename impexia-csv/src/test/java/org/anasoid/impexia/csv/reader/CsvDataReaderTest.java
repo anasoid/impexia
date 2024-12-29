@@ -44,21 +44,21 @@ class CsvDataReaderTest {
     Assertions.assertEquals(1, dateReader.getCurrentPass());
     // first line
     DataLine line = dateReader.nextRecord();
-    Assertions.assertEquals("1", line.getRecord()[1].trim());
-    Assertions.assertEquals(" Toys", line.getRecord()[2]);
+    Assertions.assertEquals("1", line.getRecords()[1].trim());
+    Assertions.assertEquals(" Toys", line.getRecords()[2]);
     Assertions.assertEquals(4, line.getLineNumber());
     Assertions.assertEquals(1, line.getRecordNumber());
     // second line
     line = dateReader.nextRecord();
-    Assertions.assertEquals("2", line.getRecord()[1].trim());
-    Assertions.assertEquals("multi\n line", line.getRecord()[2]);
+    Assertions.assertEquals("2", line.getRecords()[1].trim());
+    Assertions.assertEquals("multi\n line", line.getRecords()[2]);
     Assertions.assertEquals(6, line.getLineNumber());
     Assertions.assertEquals(2, line.getRecordNumber());
     // third line
     line = dateReader.nextRecord();
-    Assertions.assertEquals("3", line.getRecord()[1].trim());
-    Assertions.assertEquals("Processus ", line.getRecord()[2]);
-    Assertions.assertNull(line.getRecord()[3]);
+    Assertions.assertEquals("3", line.getRecords()[1].trim());
+    Assertions.assertEquals("Processus ", line.getRecords()[2]);
+    Assertions.assertNull(line.getRecords()[3]);
     Assertions.assertEquals(8, line.getLineNumber());
     Assertions.assertEquals(3, line.getRecordNumber());
     // end line
@@ -84,8 +84,8 @@ class CsvDataReaderTest {
     Assertions.assertEquals(1, dateReader.getCurrentPass());
     // first line
     DataLine line = dateReader.nextRecord();
-    Assertions.assertEquals("1", line.getRecord()[1].trim());
-    Assertions.assertEquals(" Toys", line.getRecord()[2]);
+    Assertions.assertEquals("1", line.getRecords()[1].trim());
+    Assertions.assertEquals(" Toys", line.getRecords()[2]);
     Assertions.assertEquals(4, line.getLineNumber());
     Assertions.assertEquals(1, line.getRecordNumber());
 
@@ -133,7 +133,7 @@ class CsvDataReaderTest {
     Assertions.assertNull(dateReader.getHeader());
     // header
     DataLine line = dateReader.nextRecord();
-    Assertions.assertEquals("code[unique = true]", line.getRecord()[1].trim());
+    Assertions.assertEquals("code[unique = true]", line.getRecords()[1].trim());
     Assertions.assertEquals(2, dateReader.getRecordCount());
     Assertions.assertEquals(1, dateReader.getCurrentPass());
   }
@@ -198,7 +198,7 @@ class CsvDataReaderTest {
     Assertions.assertEquals(4, dateReader.getHeader().length);
     // first line
     DataLine line = dateReader.nextRecord();
-    Assertions.assertEquals("1", line.getRecord()[1].trim());
+    Assertions.assertEquals("1", line.getRecords()[1].trim());
     Assertions.assertEquals(1, line.getRecordNumber());
 
     dateReader.close();
@@ -228,20 +228,20 @@ class CsvDataReaderTest {
     Assertions.assertEquals(1, dateReader.getCurrentPass());
     // first line
     DataLine line = dateReader.nextRecord();
-    Assertions.assertEquals("1", line.getRecord()[1].trim());
-    Assertions.assertEquals(" Toys", line.getRecord()[2]);
+    Assertions.assertEquals("1", line.getRecords()[1].trim());
+    Assertions.assertEquals(" Toys", line.getRecords()[2]);
     Assertions.assertEquals(6, line.getLineNumber());
     Assertions.assertEquals(1, line.getRecordNumber());
     // second line
     line = dateReader.nextRecord();
-    Assertions.assertEquals("2", line.getRecord()[1].trim());
-    Assertions.assertEquals("multi\n line", line.getRecord()[2]);
+    Assertions.assertEquals("2", line.getRecords()[1].trim());
+    Assertions.assertEquals("multi\n line", line.getRecords()[2]);
     Assertions.assertEquals(8, line.getLineNumber());
     Assertions.assertEquals(2, line.getRecordNumber());
     // third line
     line = dateReader.nextRecord();
-    Assertions.assertEquals("3", line.getRecord()[1].trim());
-    Assertions.assertEquals("Processus ", line.getRecord()[2]);
+    Assertions.assertEquals("3", line.getRecords()[1].trim());
+    Assertions.assertEquals("Processus ", line.getRecords()[2]);
     Assertions.assertEquals(10, line.getLineNumber());
     Assertions.assertEquals(3, line.getRecordNumber());
     // end line
@@ -253,14 +253,14 @@ class CsvDataReaderTest {
     // header
     // first line
     line = dateReader.nextRecord();
-    Assertions.assertEquals("1", line.getRecord()[1].trim());
+    Assertions.assertEquals("1", line.getRecords()[1].trim());
     Assertions.assertEquals(6, line.getLineNumber());
     Assertions.assertEquals(1, line.getRecordNumber());
     // second line
     Assertions.assertTrue(dateReader.skipRecord());
     // third line
     line = dateReader.nextRecord();
-    Assertions.assertEquals("3", line.getRecord()[1].trim());
+    Assertions.assertEquals("3", line.getRecords()[1].trim());
     Assertions.assertEquals(10, line.getLineNumber());
     Assertions.assertEquals(3, line.getRecordNumber());
     // end line

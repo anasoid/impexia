@@ -38,7 +38,14 @@ class CsvDataWriterTest {
     csvDataWriter.writeLine(null, ";");
     csvDataWriter.close();
     Assertions.assertEquals(
-        "INSERT_UPDATE Product;code\n" + ";1\n" + ";a\"\"b\n" + ";\"a\n" + "b\"\n" + ";\";\"\n",
+        """
+            INSERT_UPDATE Product;code
+            ;1
+            ;a""b
+            ;"a
+            b"
+            ;";"
+            """,
         writer.toString());
   }
 

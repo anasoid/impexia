@@ -21,6 +21,7 @@ package org.anasoid.impexia.importing.manager.transformer.global;
 import static org.anasoid.impexia.meta.modifier.ModifierEnumGlobal.DEFAULT;
 import static org.anasoid.impexia.meta.modifier.ModifierEnumGlobal.VIRTUAL;
 
+import java.text.MessageFormat;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.anasoid.impexia.core.exceptions.InvalidLineStrictFormatException;
 import org.anasoid.impexia.core.manager.transformer.ChildTransformer;
@@ -79,7 +80,7 @@ public class RecordLineTransformer<C extends ImportingImpexContext<?>>
     if (records.length > elementCount
         && (config == null || !Boolean.TRUE.equals(config.getLineIgnoreAdditionalColumn()))) {
       throw new InvalidLineStrictFormatException(
-          String.format("Line has more elements {0} than header", records.length));
+          MessageFormat.format("Line has more elements {0} than header", records.length));
     }
   }
 
@@ -88,7 +89,7 @@ public class RecordLineTransformer<C extends ImportingImpexContext<?>>
     if (elementCount >= records.length) {
       if (config == null || !Boolean.TRUE.equals(config.getLineMissingColumnAsNull())) {
         throw new InvalidLineStrictFormatException(
-            String.format("Line has less elements {0} than header", records.length));
+            MessageFormat.format("Line has less elements {0} than header", records.length));
       }
       return false;
     } else {

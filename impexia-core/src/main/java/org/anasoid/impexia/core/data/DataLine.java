@@ -38,5 +38,5 @@ public class DataLine implements Serializable {
   /** is first line. */
   private final long recordCount;
 
-  private final String[] record;
+  private final String[] records;
 }

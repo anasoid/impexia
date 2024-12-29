@@ -29,8 +29,10 @@ import org.anasoid.impexia.core.manager.config.AbstractImpexConfig;
 @SuppressWarnings({"PMD.AbstractClassWithoutAbstractMethod", "PMD.AbstractClassWithoutAnyMethod"})
 public class ImportingImpexConfig extends AbstractImpexConfig {
   private static final String PREFIX = "config.import.";
-  public static final String LINE_IGNORE_ADDITIONAL_COLUMN = PREFIX + "line.ignore.additional.data";
-  public static final String LINE_MISSING_COLUMN_AS_NULL = PREFIX + "line.missing.column.as.null";
+  public static final String CONFIG_LINE_IGNORE_ADDITIONAL_COLUMN =
+      PREFIX + "line.ignore.additional.data";
+  public static final String CONFIG_LINE_MISSING_COLUMN_AS_NULL =
+      PREFIX + "line.missing.column.as.null";
 
   Boolean lineIgnoreAdditionalColumn;
   Boolean lineMissingColumnAsNull;
