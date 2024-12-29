@@ -60,6 +60,7 @@ jobs :
           token: ${{ secrets.GITHUB_TOKEN }}
           min-coverage-overall: 40
           min-coverage-changed-files: 60
+
       - name : Upload artifact Report
         uses : actions/upload-artifact@v4
         with :
