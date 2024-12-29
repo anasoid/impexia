@@ -18,10 +18,8 @@
 
 package org.anasoid.impexia.meta.modifier;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Set;
 import lombok.Getter;
 import lombok.Singular;
@@ -37,8 +35,6 @@ import org.anasoid.impexia.meta.transformer.ImpexHandler;
 @ToString(onlyExplicitlyIncluded = true)
 public class Modifier {
 
-  public static final Set<String> BOOLEAN_VALUES =
-      Collections.unmodifiableSet(new HashSet<>(Arrays.asList("true", "false")));
   @Getter private final Set<ImpexAction> actions;
   @Getter private final Class<?> clazz;
   @Getter private final boolean needMapping;
@@ -80,5 +76,18 @@ public class Modifier {
     public B code(ModifierEnum code) {
       return code(code.toString().toLowerCase(Locale.ROOT));
     }
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    return Objects.equals(code, ((Modifier) o).code);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(code);
   }
 }

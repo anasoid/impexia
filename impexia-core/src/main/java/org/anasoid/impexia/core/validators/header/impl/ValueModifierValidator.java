@@ -19,6 +19,10 @@
 package org.anasoid.impexia.core.validators.header.impl;
 
 import java.text.MessageFormat;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 import org.anasoid.impexia.core.validators.header.ModifierValidator;
 import org.anasoid.impexia.meta.Mode;
 import org.anasoid.impexia.meta.exceptions.header.AttributeModifierException;
@@ -29,6 +33,9 @@ import org.anasoid.impexia.meta.modifier.ModifierManager;
 
 /** Default header Validator. */
 public class ValueModifierValidator implements ModifierValidator {
+
+  public static final Set<String> BOOLEAN_VALUES =
+      Collections.unmodifiableSet(new HashSet<>(Arrays.asList("true", "false")));
 
   @Override
   @SuppressWarnings({"PMD.EmptyCatchBlock"})
@@ -58,7 +65,7 @@ public class ValueModifierValidator implements ModifierValidator {
               impexModifier.getKey(), modifier.getValues()));
     }
     if (Boolean.class.equals(modifier.getClazz())
-        && !Modifier.BOOLEAN_VALUES.contains(impexModifier.getValue())) {
+        && !BOOLEAN_VALUES.contains(impexModifier.getValue())) {
       throw new AttributeModifierException(
           MessageFormat.format(
               "Field ({0}) should be boolean : {1}", impexModifier.getKey(), modifier.getValues()));
