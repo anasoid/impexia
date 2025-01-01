@@ -18,11 +18,9 @@
 
 package org.anasoid.impexia.core.validators.header.descriptor.modifier;
 
-import java.text.MessageFormat;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import org.anasoid.impexia.core.validators.header.descriptor.modifier.ModifierDescriptor.ModifierDescriptorBuilder;
+import org.anasoid.impexia.core.internal.api.register.RegisterModifierManager;
 import org.anasoid.impexia.meta.Scope;
 
 /**
@@ -31,14 +29,10 @@ import org.anasoid.impexia.meta.Scope;
  */
 public final class ModifierDescriptorManager {
 
-  @SuppressWarnings("PMD.UseConcurrentHashMap")
-  private static final Map<String, ModifierDescriptor> MODIFIERS = new HashMap<>();
-
-  @SuppressWarnings("PMD.UseConcurrentHashMap")
-  private static final Map<String, Map<String, ModifierDescriptor>> MODIFIERS_BY_SCOPE =
-      new HashMap<>();
+  private final RegisterModifierManager registerModifierManager;
 
   private ModifierDescriptorManager() {
+    registerModifierManager = RegisterModifierManager.getInstance();
     init();
   }
 
@@ -52,57 +46,24 @@ public final class ModifierDescriptorManager {
   }
 
   @SuppressWarnings("PMD.ExcessiveMethodLength")
-  private static void init() {
+  private void init() {
     // batchmode
-    register(ModifierDescriptorEnumGlobal.BATCHMODE);
-    register(ModifierDescriptorEnumGlobal.LISTENER);
-    register(ModifierDescriptorEnumGlobal.ERRORHANDLER);
-    register(ModifierDescriptorEnumGlobal.CELLDECORATOR);
-    register(ModifierDescriptorEnumGlobal.TRANSLATOR);
-    register(ModifierDescriptorEnumGlobal.COLLECTIONDELIMITER);
-    register(ModifierDescriptorEnumGlobal.KEY2VALUEDELIMITER);
-    register(ModifierDescriptorEnumGlobal.NUMBERFORMAT);
-    register(ModifierDescriptorEnumGlobal.DATEFORMAT);
-    register(ModifierDescriptorEnumGlobal.PATHDELIMITER);
-    register(ModifierDescriptorEnumGlobal.UNIQUE);
-    register(ModifierDescriptorEnumGlobal.MANDATORY);
-    register(ModifierDescriptorEnumGlobal.IGNORE_NULL);
-    register(ModifierDescriptorEnumGlobal.MODE);
-    register(ModifierDescriptorEnumGlobal.VIRTUAL);
-    register(ModifierDescriptorEnumGlobal.DEFAULT);
-  }
-
-  private static void register(ModifierDescriptorEnum modifierDescriptorEnum) {
-    ModifierDescriptorBuilder<?, ?> builder =
-        ModifierDescriptor.builder(modifierDescriptorEnum, modifierDescriptorEnum.getScope())
-            .levels(modifierDescriptorEnum.getLevels())
-            .modes(modifierDescriptorEnum.getModes())
-            .basicTypes(modifierDescriptorEnum.getBasicTypes())
-            .groupTypes(modifierDescriptorEnum.getGroupTypes())
-            .actions(modifierDescriptorEnum.getActions())
-            .values(modifierDescriptorEnum.getValues())
-            .clazz(modifierDescriptorEnum.getClazz());
-
-    register(builder.build());
-  }
-
-  private static void register(ModifierDescriptor modifierDescriptor) {
-
-    String codeKey = modifierDescriptor.getCode().toLowerCase(Locale.ROOT);
-    String scopeKey = modifierDescriptor.getScope().getName();
-
-    if (!MODIFIERS_BY_SCOPE.containsKey(scopeKey)) {
-      MODIFIERS_BY_SCOPE.put(scopeKey, new HashMap<>());
-    }
-    ModifierDescriptor modifierDescriptorOldValue = MODIFIERS.put(codeKey, modifierDescriptor);
-    if (modifierDescriptorOldValue != null) {
-      throw new IllegalStateException(
-          MessageFormat.format(
-              "modifier conflict between (({0})) and (({1})) ",
-              modifierDescriptorOldValue, modifierDescriptor));
-    }
-
-    MODIFIERS_BY_SCOPE.get(scopeKey).put(codeKey, modifierDescriptor);
+    registerModifierManager.register(ModifierDescriptorEnumGlobal.BATCHMODE);
+    registerModifierManager.register(ModifierDescriptorEnumGlobal.LISTENER);
+    registerModifierManager.register(ModifierDescriptorEnumGlobal.ERRORHANDLER);
+    registerModifierManager.register(ModifierDescriptorEnumGlobal.CELLDECORATOR);
+    registerModifierManager.register(ModifierDescriptorEnumGlobal.TRANSLATOR);
+    registerModifierManager.register(ModifierDescriptorEnumGlobal.COLLECTIONDELIMITER);
+    registerModifierManager.register(ModifierDescriptorEnumGlobal.KEY2VALUEDELIMITER);
+    registerModifierManager.register(ModifierDescriptorEnumGlobal.NUMBERFORMAT);
+    registerModifierManager.register(ModifierDescriptorEnumGlobal.DATEFORMAT);
+    registerModifierManager.register(ModifierDescriptorEnumGlobal.PATHDELIMITER);
+    registerModifierManager.register(ModifierDescriptorEnumGlobal.UNIQUE);
+    registerModifierManager.register(ModifierDescriptorEnumGlobal.MANDATORY);
+    registerModifierManager.register(ModifierDescriptorEnumGlobal.IGNORE_NULL);
+    registerModifierManager.register(ModifierDescriptorEnumGlobal.MODE);
+    registerModifierManager.register(ModifierDescriptorEnumGlobal.VIRTUAL);
+    registerModifierManager.register(ModifierDescriptorEnumGlobal.DEFAULT);
   }
 
   /**
@@ -114,8 +75,7 @@ public final class ModifierDescriptorManager {
    */
   public ModifierDescriptor getValueByCode(String code) {
 
-    ModifierDescriptor modifierDescriptor = MODIFIERS.get(code.toLowerCase(Locale.ROOT));
-    return modifierDescriptor;
+    return registerModifierManager.getValueByCode(code.toLowerCase(Locale.ROOT));
   }
 
   /**
@@ -126,14 +86,7 @@ public final class ModifierDescriptorManager {
    * @throws IllegalArgumentException throw if no scope found by code
    */
   public Map<String, ModifierDescriptor> getValuesByScope(Scope scope) {
-
-    Map<String, ModifierDescriptor> modifiers = MODIFIERS_BY_SCOPE.get(scope.getName());
-
-    if (modifiers != null) {
-      return modifiers;
-    }
-
-    throw new IllegalArgumentException("Modifier scope (" + scope + ") not found");
+    return registerModifierManager.getValuesByScope(scope);
   }
 
   private static final class LazyHolder {
