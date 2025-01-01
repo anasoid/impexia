@@ -107,4 +107,16 @@ public class RegisterModifierManager {
 
     throw new IllegalArgumentException("Modifier scope (" + scope + ") not found");
   }
+
+  void unload() {
+    modifiers.clear();
+    modifiersByScope.clear();
+  }
+
+  public static class UnLoader {
+
+    public void unload() {
+      RegisterModifierManager.getInstance().unload();
+    }
+  }
 }

@@ -16,13 +16,18 @@
  * Date :   23-Dec-2024
  */
 
-package org.anasoid.impexia.jpa.importing.service;
+package org.anasoid.impexia.jpa.service;
 
-import org.anasoid.impexia.importing.service.AbstractImpexiaImportingService;
+import org.anasoid.impexia.importing.internal.service.AbstractImpexiaImportingService;
+import org.anasoid.impexia.jpa.importing.register.JpaImportingRegistrator;
 import org.anasoid.impexia.jpa.meta.JpaScopeEnum;
 import org.anasoid.impexia.meta.Scope;
 
 public class JpaImpexiaImportingService extends AbstractImpexiaImportingService {
+
+  public JpaImpexiaImportingService() {
+    super(new JpaImportingRegistrator());
+  }
 
   @Override
   protected Scope getScope() {

@@ -16,15 +16,21 @@
  * Date :   22-Dec-2024
  */
 
-package org.anasoid.impexia.importing.service;
+package org.anasoid.impexia.importing.internal.service;
 
 import org.anasoid.impexia.core.data.importing.DataReader;
 import org.anasoid.impexia.core.data.importing.HeaderReader;
+import org.anasoid.impexia.core.internal.spi.register.AbstractRegistrator;
+import org.anasoid.impexia.core.internal.spi.service.AbstractImpexiaService;
 import org.anasoid.impexia.core.parser.header.HeaderParser;
 import org.anasoid.impexia.meta.Scope;
 import org.anasoid.impexia.meta.header.ImpexHeader;
 
-public abstract class AbstractImpexiaImportingService {
+public abstract class AbstractImpexiaImportingService extends AbstractImpexiaService {
+
+  public AbstractImpexiaImportingService(AbstractRegistrator registrator) {
+    super(registrator);
+  }
 
   void importData(HeaderReader headerReader, DataReader dataReader, int maxPass) {
     parseHeader(headerReader.getHeader());
