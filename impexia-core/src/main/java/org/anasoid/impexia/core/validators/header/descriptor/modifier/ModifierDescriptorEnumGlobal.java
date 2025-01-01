@@ -18,6 +18,7 @@
 
 package org.anasoid.impexia.core.validators.header.descriptor.modifier;
 
+import static java.util.Collections.EMPTY_SET;
 import static java.util.Set.of;
 import static org.anasoid.impexia.core.validators.header.descriptor.modifier.BasicType.*;
 import static org.anasoid.impexia.core.validators.header.descriptor.modifier.GroupType.*;
@@ -26,8 +27,11 @@ import static org.anasoid.impexia.meta.Mode.*;
 import static org.anasoid.impexia.meta.header.ImpexAction.*;
 import static org.anasoid.impexia.meta.scope.ScopeEnum.*;
 
+import java.util.Arrays;
 import java.util.Set;
+import java.util.stream.Collectors;
 import lombok.Getter;
+import org.anasoid.impexia.meta.DataFormat;
 import org.anasoid.impexia.meta.Mode;
 import org.anasoid.impexia.meta.Scope;
 import org.anasoid.impexia.meta.header.ImpexAction;
@@ -39,40 +43,57 @@ import org.anasoid.impexia.meta.transformer.Translator;
 /** List of acceptable Modifiers. */
 public enum ModifierDescriptorEnumGlobal implements ModifierDescriptorEnum {
   BATCHMODE(of(TYPE), of(UPDATE, INSERT_UPDATE), of(IMPORT), Boolean.class, GLOBAL),
-  LISTENER(of(TYPE), of(), of(IMPORT), Listener.class, GLOBAL),
-  ERRORHANDLER(of(TYPE), of(), of(IMPORT), ErrorHandler.class, GLOBAL),
-  CELLDECORATOR(of(FIELD), of(), of(IMPORT, EXPORT), CellDecorator.class, GLOBAL),
-  TRANSLATOR(of(FIELD), of(), of(IMPORT), Translator.class, GLOBAL),
+  LISTENER(of(TYPE), EMPTY_SET, of(IMPORT), Listener.class, GLOBAL),
+  ERRORHANDLER(of(TYPE), EMPTY_SET, of(IMPORT), ErrorHandler.class, GLOBAL),
+  CELLDECORATOR(of(FIELD), EMPTY_SET, of(IMPORT, EXPORT), CellDecorator.class, GLOBAL),
+  TRANSLATOR(of(FIELD), EMPTY_SET, of(IMPORT), Translator.class, GLOBAL),
   COLLECTIONDELIMITER(
       of(FIELD, TYPE),
       of(UPDATE, INSERT_UPDATE, INSERT),
-      of(),
+      EMPTY_SET,
       String.class,
-      of(),
+      EMPTY_SET,
       of(MAP, COLLECTION),
-      of(),
+      EMPTY_SET,
       ORM),
   KEY2VALUEDELIMITER(
       of(FIELD, TYPE),
       of(UPDATE, INSERT_UPDATE, INSERT),
-      of(),
+      EMPTY_SET,
       String.class,
-      of(),
+      EMPTY_SET,
       of(MAP, COLLECTION),
-      of(),
+      EMPTY_SET,
       ORM),
-  NUMBERFORMAT(of(FIELD, TYPE), of(), of(), String.class, of(NUMBER), of(), of(), GLOBAL),
-  DATEFORMAT(of(FIELD, TYPE), of(), of(), String.class, of(DATE), of(), of(), GLOBAL),
-  PATHDELIMITER(of(FIELD, TYPE), of(), of(), String.class, GLOBAL),
-  UNIQUE(of(FIELD), of(), of(), Boolean.class, of(), of(SINGLE), of(), GLOBAL),
-  MANDATORY(of(FIELD), of(), of(IMPORT), Boolean.class, GLOBAL),
-  IGNORE_NULL(of(FIELD), of(), of(IMPORT), Boolean.class, of(), of(COLLECTION), of(), GLOBAL),
+  NUMBERFORMAT(
+      of(FIELD, TYPE),
+      EMPTY_SET,
+      EMPTY_SET,
+      String.class,
+      of(NUMBER),
+      EMPTY_SET,
+      EMPTY_SET,
+      GLOBAL),
+  DATEFORMAT(
+      of(FIELD, TYPE), EMPTY_SET, EMPTY_SET, String.class, of(DATE), EMPTY_SET, EMPTY_SET, GLOBAL),
+  PATHDELIMITER(of(FIELD, TYPE), EMPTY_SET, EMPTY_SET, String.class, GLOBAL),
+  UNIQUE(of(FIELD), EMPTY_SET, EMPTY_SET, Boolean.class, EMPTY_SET, of(SINGLE), EMPTY_SET, GLOBAL),
+  MANDATORY(of(FIELD), EMPTY_SET, of(IMPORT), Boolean.class, GLOBAL),
+  IGNORE_NULL(
+      of(FIELD),
+      EMPTY_SET,
+      of(IMPORT),
+      Boolean.class,
+      EMPTY_SET,
+      of(COLLECTION),
+      EMPTY_SET,
+      GLOBAL),
   MODE(
       of(FIELD),
       of(UPDATE, INSERT_UPDATE, INSERT),
       of(IMPORT),
       String.class,
-      of(),
+      EMPTY_SET,
       of(MAP, COLLECTION),
       of("append", "remove", "merge"),
       ORM),
@@ -82,12 +103,34 @@ public enum ModifierDescriptorEnumGlobal implements ModifierDescriptorEnum {
   @Getter private final Scope scope;
   @Getter private final Set<Level> levels;
   @Getter private final Set<ImpexAction> actions;
+  @Getter private final Set<DataFormat> dataFormats;
   @Getter private final Set<Mode> modes;
   @Getter private final Class<?> clazz;
 
   @Getter private final Set<BasicType> basicTypes;
   @Getter private final Set<GroupType> groupTypes;
   @Getter private final Set<String> values;
+
+  ModifierDescriptorEnumGlobal(
+      Set<Level> levels,
+      Set<ImpexAction> actions,
+      Set<Mode> modes,
+      Set<DataFormat> dataFormats,
+      Class<?> clazz,
+      Set<BasicType> basicTypes,
+      Set<GroupType> groupTypes,
+      Set<String> values,
+      Scope scope) {
+    this.levels = levels;
+    this.actions = actions;
+    this.modes = modes;
+    this.dataFormats = dataFormats;
+    this.clazz = clazz;
+    this.basicTypes = basicTypes;
+    this.groupTypes = groupTypes;
+    this.values = values;
+    this.scope = scope;
+  }
 
   ModifierDescriptorEnumGlobal(
       Set<Level> levels,
@@ -101,6 +144,7 @@ public enum ModifierDescriptorEnumGlobal implements ModifierDescriptorEnum {
     this.levels = levels;
     this.actions = actions;
     this.modes = modes;
+    this.dataFormats = Arrays.stream(DataFormat.values()).collect(Collectors.toSet());
     this.clazz = clazz;
     this.basicTypes = basicTypes;
     this.groupTypes = groupTypes;
@@ -110,6 +154,16 @@ public enum ModifierDescriptorEnumGlobal implements ModifierDescriptorEnum {
 
   ModifierDescriptorEnumGlobal(
       Set<Level> levels, Set<ImpexAction> actions, Set<Mode> modes, Class<?> clazz, Scope scope) {
-    this(levels, actions, modes, clazz, of(), of(), of(), scope);
+    this(levels, actions, modes, clazz, EMPTY_SET, EMPTY_SET, EMPTY_SET, scope);
+  }
+
+  ModifierDescriptorEnumGlobal(
+      Set<Level> levels,
+      Set<ImpexAction> actions,
+      Set<Mode> modes,
+      Set<DataFormat> dataFormats,
+      Class<?> clazz,
+      Scope scope) {
+    this(levels, actions, modes, dataFormats, clazz, EMPTY_SET, EMPTY_SET, EMPTY_SET, scope);
   }
 }

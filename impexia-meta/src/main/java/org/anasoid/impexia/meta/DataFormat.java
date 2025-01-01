@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2024 the original author or authors.
+ * Copyright 2020-2020 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License")
  * you may not use this file except in compliance with the License.
@@ -13,11 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * @author : anas
- * Date :   28-Dec-2024
+ * Date :   07-Nov-2020
  */
 
-package org.anasoid.impexia.core.manager.config;
+package org.anasoid.impexia.meta;
 
+/** Two mode for impex, Import and export. */
 public enum DataFormat {
-  CSV
+  CSV,
+  JSON
 }
