@@ -13,27 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * @author : anas
- * Date :   22-Dec-2024
+ * Date :   23-Dec-2024
  */
 
-package org.anasoid.impexia.importing.service;
+package org.anasoid.impexia.jpa.service;
 
-import org.anasoid.impexia.core.data.importing.DataReader;
-import org.anasoid.impexia.core.data.importing.HeaderReader;
-import org.anasoid.impexia.core.parser.header.HeaderParser;
+import org.anasoid.impexia.importing.internal.service.AbstractImpexiaImportingService;
+import org.anasoid.impexia.jpa.importing.register.JpaImportingRegistrator;
+import org.anasoid.impexia.jpa.meta.JpaScopeEnum;
 import org.anasoid.impexia.meta.Scope;
-import org.anasoid.impexia.meta.header.ImpexHeader;
 
-public abstract class AbstractImpexiaImportingService {
+public class JpaImpexiaImportingService extends AbstractImpexiaImportingService {
 
-  void importData(HeaderReader headerReader, DataReader dataReader, int maxPass) {
-    parseHeader(headerReader.getHeader());
+  public JpaImpexiaImportingService() {
+    super(new JpaImportingRegistrator());
   }
 
-  @SuppressWarnings("PMD.UseVarargs")
-  protected ImpexHeader parseHeader(String[] headerRecords) {
-    return HeaderParser.parse(headerRecords);
+  @Override
+  protected Scope getScope() {
+    return JpaScopeEnum.JPA;
   }
-
-  protected abstract Scope getScope();
 }

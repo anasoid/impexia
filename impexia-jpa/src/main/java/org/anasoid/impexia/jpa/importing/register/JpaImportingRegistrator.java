@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2024 the original author or authors.
+ * Copyright 2020-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License")
  * you may not use this file except in compliance with the License.
@@ -13,19 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * @author : anas
- * Date :   23-Dec-2024
+ * Date :   01-Jan-2025
  */
 
-package org.anasoid.impexia.jpa.importing.service;
+package org.anasoid.impexia.jpa.importing.register;
 
-import org.anasoid.impexia.importing.service.AbstractImpexiaImportingService;
-import org.anasoid.impexia.jpa.meta.JpaScopeEnum;
-import org.anasoid.impexia.meta.Scope;
+import org.anasoid.impexia.importing.internal.spi.ImportingRegistrator;
 
-public class JpaImpexiaImportingService extends AbstractImpexiaImportingService {
-
-  @Override
-  protected Scope getScope() {
-    return JpaScopeEnum.JPA;
-  }
-}
+public class JpaImportingRegistrator extends ImportingRegistrator {}
