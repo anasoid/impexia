@@ -33,6 +33,7 @@ import org.anasoid.impexia.core.data.DataLine;
 import org.anasoid.impexia.core.data.importing.DataReader;
 import org.anasoid.impexia.core.data.importing.HeaderReader;
 import org.anasoid.impexia.csv.exceptions.InvalidCsvFormatException;
+import org.anasoid.impexia.meta.DataFormat;
 import org.anasoid.impexia.meta.header.ImpexAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -233,6 +234,11 @@ public class CsvDataReader implements DataReader, HeaderReader, Closeable {
 
     String[] line = readRecord(false);
     return (line != null);
+  }
+
+  @Override
+  public DataFormat getDataFormat() {
+    return DataFormat.CSV;
   }
 
   private void initialize() {

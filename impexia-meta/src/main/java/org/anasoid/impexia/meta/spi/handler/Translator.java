@@ -13,26 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * @author : anas
- * Date :   22-Nov-2020
+ * Date :   03-Nov-2020
  */
 
-package org.anasoid.impexia.core.data.importing;
+package org.anasoid.impexia.meta.spi.handler;
 
-import java.io.IOException;
-import org.anasoid.impexia.core.data.DataLine;
-import org.anasoid.impexia.meta.DataFormat;
-
-/** Interface to define Data reader for Impex. */
-public interface DataReader {
-
-  /** get next record. */
-  DataLine nextRecord() throws IOException;
-
-  /** return total records, -1 if not calculated. */
-  int getRecordCount();
-
-  /** skip record. */
-  boolean skipRecord() throws IOException;
-
-  DataFormat getDataFormat();
-}
+public interface Translator extends ImpexHandler {}

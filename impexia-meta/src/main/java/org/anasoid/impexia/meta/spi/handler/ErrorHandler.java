@@ -16,6 +16,6 @@
  * Date :   03-Nov-2020
  */
 
-package org.anasoid.impexia.meta.transformer;
+package org.anasoid.impexia.meta.spi.handler;
 
-public interface Listener extends ImpexHandler {}
+public interface ErrorHandler extends ImpexHandler {}

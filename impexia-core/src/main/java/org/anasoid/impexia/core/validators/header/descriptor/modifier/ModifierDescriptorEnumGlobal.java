@@ -35,10 +35,10 @@ import org.anasoid.impexia.meta.DataFormat;
 import org.anasoid.impexia.meta.Mode;
 import org.anasoid.impexia.meta.Scope;
 import org.anasoid.impexia.meta.header.ImpexAction;
-import org.anasoid.impexia.meta.transformer.CellDecorator;
-import org.anasoid.impexia.meta.transformer.ErrorHandler;
-import org.anasoid.impexia.meta.transformer.Listener;
-import org.anasoid.impexia.meta.transformer.Translator;
+import org.anasoid.impexia.meta.spi.handler.CellDecorator;
+import org.anasoid.impexia.meta.spi.handler.ErrorHandler;
+import org.anasoid.impexia.meta.spi.handler.Listener;
+import org.anasoid.impexia.meta.spi.handler.Translator;
 
 /** List of acceptable Modifiers. */
 public enum ModifierDescriptorEnumGlobal implements ModifierDescriptorEnum {

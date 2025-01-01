@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2020 the original author or authors.
+ * Copyright 2020-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License")
  * you may not use this file except in compliance with the License.
@@ -13,9 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * @author : anas
- * Date :   03-Nov-2020
+ * Date :   01-Jan-2025
  */
 
-package org.anasoid.impexia.meta.transformer;
+package org.anasoid.impexia.core.manager.config;
 
-public interface CellDecorator extends ImpexHandler {}
+public enum DryRunEnum {
+  NONE,
+  CHECK_HEADER,
+  CHECK_DATA,
+  READ_ONLY
+}

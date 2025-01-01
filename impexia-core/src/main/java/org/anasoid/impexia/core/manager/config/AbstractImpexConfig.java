@@ -32,4 +32,5 @@ public abstract class AbstractImpexConfig {
   public static final String CONFIG_STRICT = PREFIX + "strict";
 
   private Boolean strict;
+  private DryRunEnum dryRun;
 }

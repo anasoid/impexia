@@ -29,7 +29,7 @@ import org.anasoid.impexia.meta.DataFormat;
 import org.anasoid.impexia.meta.Mode;
 import org.anasoid.impexia.meta.Scope;
 import org.anasoid.impexia.meta.header.ImpexAction;
-import org.anasoid.impexia.meta.transformer.ImpexHandler;
+import org.anasoid.impexia.meta.spi.handler.ImpexHandler;
 
 /** Modifiers container. */
 @SuperBuilder
