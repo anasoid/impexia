@@ -28,7 +28,7 @@ import org.anasoid.impexia.meta.header.ImpexHeader;
 
 public abstract class AbstractImpexiaImportingService extends AbstractImpexiaService {
 
-  public AbstractImpexiaImportingService(AbstractRegistrator registrator) {
+  protected AbstractImpexiaImportingService(AbstractRegistrator registrator) {
     super(registrator);
   }
 

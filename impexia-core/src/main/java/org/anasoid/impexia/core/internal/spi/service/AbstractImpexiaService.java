@@ -25,7 +25,7 @@ public abstract class AbstractImpexiaService {
 
   private final AbstractRegistrator registrator;
 
-  public AbstractImpexiaService(AbstractRegistrator registrator) {
+  protected AbstractImpexiaService(AbstractRegistrator registrator) {
     this.registrator = registrator;
 
     registrator.load();

@@ -1,6 +1,7 @@
 package org.anasoid.impexia.core.validators.header;
 
 import java.util.List;
+import org.anasoid.impexia.core.internal.spi.register.AbstractRegistrator;
 import org.anasoid.impexia.core.validators.header.descriptor.modifier.ModifierDescriptorEnumGlobal;
 import org.anasoid.impexia.meta.Mode;
 import org.anasoid.impexia.meta.exceptions.header.ActionException;
@@ -30,6 +31,8 @@ class HeaderValidatorManagerTest {
   @BeforeAll
   static void init() {
     headerValidator = new HeaderValidatorManager();
+    AbstractRegistrator registrator = new AbstractRegistrator() {};
+    registrator.load();
   }
 
   @Test

@@ -30,7 +30,7 @@ import org.anasoid.impexia.meta.Scope;
 public class RegisterModifierManager {
 
   @SuppressWarnings("PMD.UseConcurrentHashMap")
-  private final Map<String, ModifierDescriptor> modifiers = new HashMap<>();
+  private final Map<String, ModifierDescriptor> registeredModifiers = new HashMap<>();
 
   @SuppressWarnings("PMD.UseConcurrentHashMap")
   private final Map<String, Map<String, ModifierDescriptor>> modifiersByScope = new HashMap<>();
@@ -66,7 +66,8 @@ public class RegisterModifierManager {
     if (!modifiersByScope.containsKey(scopeKey)) {
       modifiersByScope.put(scopeKey, new HashMap<>());
     }
-    ModifierDescriptor modifierDescriptorOldValue = modifiers.put(codeKey, modifierDescriptor);
+    ModifierDescriptor modifierDescriptorOldValue =
+        registeredModifiers.put(codeKey, modifierDescriptor);
     if (modifierDescriptorOldValue != null) {
       throw new IllegalStateException(
           MessageFormat.format(
@@ -86,7 +87,7 @@ public class RegisterModifierManager {
    */
   public ModifierDescriptor getValueByCode(String code) {
 
-    ModifierDescriptor modifierDescriptor = modifiers.get(code.toLowerCase(Locale.ROOT));
+    ModifierDescriptor modifierDescriptor = registeredModifiers.get(code.toLowerCase(Locale.ROOT));
     return modifierDescriptor;
   }
 
@@ -109,7 +110,7 @@ public class RegisterModifierManager {
   }
 
   void unload() {
-    modifiers.clear();
+    registeredModifiers.clear();
     modifiersByScope.clear();
   }
 

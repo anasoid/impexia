@@ -33,7 +33,6 @@ public final class ModifierDescriptorManager {
 
   private ModifierDescriptorManager() {
     registerModifierManager = RegisterModifierManager.getInstance();
-    init();
   }
 
   /**
@@ -43,27 +42,6 @@ public final class ModifierDescriptorManager {
    */
   public static ModifierDescriptorManager getInstance() {
     return LazyHolder.INSTANCE;
-  }
-
-  @SuppressWarnings("PMD.ExcessiveMethodLength")
-  private void init() {
-    // batchmode
-    registerModifierManager.register(ModifierDescriptorEnumGlobal.BATCHMODE);
-    registerModifierManager.register(ModifierDescriptorEnumGlobal.LISTENER);
-    registerModifierManager.register(ModifierDescriptorEnumGlobal.ERRORHANDLER);
-    registerModifierManager.register(ModifierDescriptorEnumGlobal.CELLDECORATOR);
-    registerModifierManager.register(ModifierDescriptorEnumGlobal.TRANSLATOR);
-    registerModifierManager.register(ModifierDescriptorEnumGlobal.COLLECTIONDELIMITER);
-    registerModifierManager.register(ModifierDescriptorEnumGlobal.KEY2VALUEDELIMITER);
-    registerModifierManager.register(ModifierDescriptorEnumGlobal.NUMBERFORMAT);
-    registerModifierManager.register(ModifierDescriptorEnumGlobal.DATEFORMAT);
-    registerModifierManager.register(ModifierDescriptorEnumGlobal.PATHDELIMITER);
-    registerModifierManager.register(ModifierDescriptorEnumGlobal.UNIQUE);
-    registerModifierManager.register(ModifierDescriptorEnumGlobal.MANDATORY);
-    registerModifierManager.register(ModifierDescriptorEnumGlobal.IGNORE_NULL);
-    registerModifierManager.register(ModifierDescriptorEnumGlobal.MODE);
-    registerModifierManager.register(ModifierDescriptorEnumGlobal.VIRTUAL);
-    registerModifierManager.register(ModifierDescriptorEnumGlobal.DEFAULT);
   }
 
   /**

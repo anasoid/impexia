@@ -51,7 +51,9 @@ public final class ModifierRegistratorAgent implements RegistratorAgent {
   }
 
   @Override
-  public void unLoad() {}
+  public void unLoad() {
+    // Nothing to do
+  }
 
   @Override
   public void unLoadForce() {
