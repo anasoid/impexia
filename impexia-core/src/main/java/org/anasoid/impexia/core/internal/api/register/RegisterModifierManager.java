@@ -63,9 +63,8 @@ public class RegisterModifierManager {
     String codeKey = modifierDescriptor.getCode().toLowerCase(Locale.ROOT);
     String scopeKey = modifierDescriptor.getScope().getName();
 
-    if (!modifiersByScope.containsKey(scopeKey)) {
-      modifiersByScope.put(scopeKey, new HashMap<>());
-    }
+    modifiersByScope.computeIfAbsent(scopeKey, s -> new HashMap<>());
+
     ModifierDescriptor modifierDescriptorOldValue =
         registeredModifiers.put(codeKey, modifierDescriptor);
     if (modifierDescriptorOldValue != null) {
@@ -86,9 +85,7 @@ public class RegisterModifierManager {
    * @throws IllegalArgumentException throw if no modifier found by code
    */
   public ModifierDescriptor getValueByCode(String code) {
-
-    ModifierDescriptor modifierDescriptor = registeredModifiers.get(code.toLowerCase(Locale.ROOT));
-    return modifierDescriptor;
+    return registeredModifiers.get(code.toLowerCase(Locale.ROOT));
   }
 
   /**
