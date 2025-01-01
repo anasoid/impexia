@@ -50,7 +50,6 @@ public class CsvDataReader implements DataReader, HeaderReader, Closeable {
 
   private int recordNumber;
   private int recordCount = -1;
-  private int currentPass = 1;
   private long lineNumber;
   public static final char BLANK_CHARACTER = ' ';
 
@@ -234,21 +233,6 @@ public class CsvDataReader implements DataReader, HeaderReader, Closeable {
 
     String[] line = readRecord(false);
     return (line != null);
-  }
-
-  @Override
-  public int getCurrentPass() {
-    return currentPass;
-  }
-
-  @Override
-  public void restart() throws IOException {
-    LOGGER.debug("Restart for new pass : {}", file);
-    initialize();
-    currentPass++;
-    close();
-    csvReader = getCsvReader();
-    initializeHeader();
   }
 
   private void initialize() {

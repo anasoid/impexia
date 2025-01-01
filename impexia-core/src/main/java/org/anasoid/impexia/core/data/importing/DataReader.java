@@ -32,10 +32,4 @@ public interface DataReader {
 
   /** skip record. */
   boolean skipRecord() throws IOException;
-
-  /** get current pass, 1 for first. */
-  int getCurrentPass();
-
-  /** Restart for new pass. */
-  void restart() throws IOException;
 }

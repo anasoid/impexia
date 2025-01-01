@@ -41,7 +41,7 @@ class CsvDataReaderTest {
     Assertions.assertEquals("INSERT_UPDATE product", dateReader.getHeader()[0]);
     Assertions.assertEquals("description", dateReader.getHeader()[3]);
     Assertions.assertEquals(dateReader.getRecordCount(), -1);
-    Assertions.assertEquals(1, dateReader.getCurrentPass());
+
     // first line
     DataLine line = dateReader.nextRecord();
     Assertions.assertEquals("1", line.getRecords()[1].trim());
@@ -81,7 +81,7 @@ class CsvDataReaderTest {
     Assertions.assertEquals("INSERT_UPDATE product", dateReader.getHeader()[0]);
     Assertions.assertEquals("description", dateReader.getHeader()[3]);
     Assertions.assertEquals(3, dateReader.getRecordCount());
-    Assertions.assertEquals(1, dateReader.getCurrentPass());
+
     // first line
     DataLine line = dateReader.nextRecord();
     Assertions.assertEquals("1", line.getRecords()[1].trim());
@@ -135,7 +135,6 @@ class CsvDataReaderTest {
     DataLine line = dateReader.nextRecord();
     Assertions.assertEquals("code[unique = true]", line.getRecords()[1].trim());
     Assertions.assertEquals(2, dateReader.getRecordCount());
-    Assertions.assertEquals(1, dateReader.getCurrentPass());
   }
 
   @Test
@@ -225,7 +224,6 @@ class CsvDataReaderTest {
     Assertions.assertEquals("INSERT_UPDATE product", dateReader.getHeader()[0]);
     Assertions.assertEquals("description", dateReader.getHeader()[3]);
     Assertions.assertEquals(3, dateReader.getRecordCount());
-    Assertions.assertEquals(1, dateReader.getCurrentPass());
     // first line
     DataLine line = dateReader.nextRecord();
     Assertions.assertEquals("1", line.getRecords()[1].trim());
@@ -247,26 +245,6 @@ class CsvDataReaderTest {
     // end line
     line = dateReader.nextRecord();
     Assertions.assertNull(line);
-    // Restart
-    dateReader.restart();
-    Assertions.assertEquals(2, dateReader.getCurrentPass());
-    // header
-    // first line
-    line = dateReader.nextRecord();
-    Assertions.assertEquals("1", line.getRecords()[1].trim());
-    Assertions.assertEquals(6, line.getLineNumber());
-    Assertions.assertEquals(1, line.getRecordNumber());
-    // second line
-    Assertions.assertTrue(dateReader.skipRecord());
-    // third line
-    line = dateReader.nextRecord();
-    Assertions.assertEquals("3", line.getRecords()[1].trim());
-    Assertions.assertEquals(10, line.getLineNumber());
-    Assertions.assertEquals(3, line.getRecordNumber());
-    // end line
-    line = dateReader.nextRecord();
-    Assertions.assertNull(line);
-    Assertions.assertFalse(dateReader.skipRecord());
     dateReader.close();
   }
 }
