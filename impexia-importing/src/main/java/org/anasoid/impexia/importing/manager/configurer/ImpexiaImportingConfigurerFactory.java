@@ -24,11 +24,11 @@ import org.anasoid.impexia.core.manager.transformer.ChildTransformer;
 import org.anasoid.impexia.core.manager.transformer.Transformer;
 import org.anasoid.impexia.core.manager.transformer.TransformerOrder;
 import org.anasoid.impexia.core.manager.values.LineValues;
-import org.anasoid.impexia.importing.manager.config.ImportingImpexConfig;
+import org.anasoid.impexia.importing.manager.config.ImportingImpexSettings;
 import org.anasoid.impexia.meta.header.ImpexHeader;
 import org.apache.commons.lang3.tuple.Pair;
 
-public class ImpexiaImportingConfigurerFactory<C extends ImportingImpexConfig>
+public class ImpexiaImportingConfigurerFactory<C extends ImportingImpexSettings>
     implements ImpexiaImportingConfigurer<C> {
 
   @Override

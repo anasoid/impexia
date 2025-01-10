@@ -19,6 +19,7 @@
 package org.anasoid.impexia.core.validators.header.descriptor.modifier;
 
 import java.util.Set;
+import org.anasoid.impexia.meta.DataFormat;
 import org.anasoid.impexia.meta.Mode;
 import org.anasoid.impexia.meta.Scope;
 import org.anasoid.impexia.meta.header.ImpexAction;
@@ -30,6 +31,8 @@ public interface ModifierDescriptorEnum {
   Set<ImpexAction> getActions();
 
   Set<Mode> getModes();
+
+  Set<DataFormat> getDataFormats();
 
   Class<?> getClazz();
 

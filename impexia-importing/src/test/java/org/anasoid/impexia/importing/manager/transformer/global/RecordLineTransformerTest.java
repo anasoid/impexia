@@ -6,8 +6,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.anasoid.impexia.core.exceptions.InvalidLineStrictFormatException;
 import org.anasoid.impexia.core.manager.values.AtomicColumnReference;
 import org.anasoid.impexia.core.manager.values.LineValues;
-import org.anasoid.impexia.importing.manager.config.ImportingImpexConfig;
 import org.anasoid.impexia.importing.manager.config.ImportingImpexContext;
+import org.anasoid.impexia.importing.manager.config.ImportingImpexSettings;
 import org.anasoid.impexia.meta.header.ImpexAction;
 import org.anasoid.impexia.meta.header.ImpexAttribute;
 import org.anasoid.impexia.meta.header.ImpexHeader;
@@ -130,7 +130,7 @@ class RecordLineTransformerTest {
             new String[] {"aa"},
             impexHeader,
             ImportingImpexContext.builder()
-                .config(ImportingImpexConfig.builder().lineMissingColumnAsNull(true).build())
+                .settings(ImportingImpexSettings.builder().lineMissingColumnAsNull(true).build())
                 .build());
     assertThat(lineValue.size()).isEqualTo(2);
     AtomicColumnReference v1 = lineValue.getValues().get(0);
@@ -178,7 +178,7 @@ class RecordLineTransformerTest {
             new String[] {"aa", "bb"},
             impexHeader,
             ImportingImpexContext.builder()
-                .config(ImportingImpexConfig.builder().lineIgnoreAdditionalColumn(true).build())
+                .settings(ImportingImpexSettings.builder().lineIgnoreAdditionalColumn(true).build())
                 .build());
 
     AtomicColumnReference v1 = lineValue.getValues().get(0);

@@ -16,20 +16,24 @@
  * Date :   23-Dec-2024
  */
 
-package org.anasoid.impexia.core.manager.config;
+package org.anasoid.impexia.importing.manager.config;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import org.anasoid.impexia.core.manager.config.AbstractImpexSettings;
 
 @Getter
 @Setter
 @SuperBuilder
 @SuppressWarnings({"PMD.AbstractClassWithoutAbstractMethod", "PMD.AbstractClassWithoutAnyMethod"})
-public abstract class AbstractImpexConfig {
-  private static final String PREFIX = "config.";
+public class ImportingImpexSettings extends AbstractImpexSettings {
+  private static final String PREFIX = "settings.import.";
+  public static final String CONFIG_LINE_IGNORE_ADDITIONAL_COLUMN =
+      PREFIX + "line.ignore.additional.data";
+  public static final String CONFIG_LINE_MISSING_COLUMN_AS_NULL =
+      PREFIX + "line.missing.column.as.null";
 
-  public static final String CONFIG_STRICT = PREFIX + "strict";
-
-  private Boolean strict;
+  Boolean lineIgnoreAdditionalColumn;
+  Boolean lineMissingColumnAsNull;
 }

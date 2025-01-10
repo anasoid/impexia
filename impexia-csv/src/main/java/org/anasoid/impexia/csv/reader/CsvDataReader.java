@@ -33,6 +33,7 @@ import org.anasoid.impexia.core.data.DataLine;
 import org.anasoid.impexia.core.data.importing.DataReader;
 import org.anasoid.impexia.core.data.importing.HeaderReader;
 import org.anasoid.impexia.csv.exceptions.InvalidCsvFormatException;
+import org.anasoid.impexia.meta.DataFormat;
 import org.anasoid.impexia.meta.header.ImpexAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,7 +51,6 @@ public class CsvDataReader implements DataReader, HeaderReader, Closeable {
 
   private int recordNumber;
   private int recordCount = -1;
-  private int currentPass = 1;
   private long lineNumber;
   public static final char BLANK_CHARACTER = ' ';
 
@@ -237,18 +237,8 @@ public class CsvDataReader implements DataReader, HeaderReader, Closeable {
   }
 
   @Override
-  public int getCurrentPass() {
-    return currentPass;
-  }
-
-  @Override
-  public void restart() throws IOException {
-    LOGGER.debug("Restart for new pass : {}", file);
-    initialize();
-    currentPass++;
-    close();
-    csvReader = getCsvReader();
-    initializeHeader();
+  public DataFormat getDataFormat() {
+    return DataFormat.CSV;
   }
 
   private void initialize() {

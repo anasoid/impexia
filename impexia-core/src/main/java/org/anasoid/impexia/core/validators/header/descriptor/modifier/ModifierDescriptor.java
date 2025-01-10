@@ -25,10 +25,11 @@ import lombok.Getter;
 import lombok.Singular;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import org.anasoid.impexia.meta.DataFormat;
 import org.anasoid.impexia.meta.Mode;
 import org.anasoid.impexia.meta.Scope;
 import org.anasoid.impexia.meta.header.ImpexAction;
-import org.anasoid.impexia.meta.transformer.ImpexHandler;
+import org.anasoid.impexia.meta.spi.handler.ImpexHandler;
 
 /** Modifiers container. */
 @SuperBuilder
@@ -46,6 +47,7 @@ public class ModifierDescriptor {
 
   @Getter @ToString.Include private final Scope scope;
   @Getter @Singular private Set<Mode> modes;
+  @Getter @Singular private Set<DataFormat> dataFormats;
   @Getter @Singular private Set<Level> levels;
   @Getter @Singular private Set<BasicType> basicTypes;
   @Getter @Singular private Set<GroupType> groupTypes;

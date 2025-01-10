@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2020 the original author or authors.
+ * Copyright 2020-2024 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License")
  * you may not use this file except in compliance with the License.
@@ -13,9 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * @author : anas
- * Date :   03-Nov-2020
+ * Date :   23-Dec-2024
  */
 
-package org.anasoid.impexia.meta.transformer;
+package org.anasoid.impexia.core.manager.config;
 
-public interface CellDecorator extends ImpexHandler {}
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
+
+@Getter
+@Setter
+@SuperBuilder
+@SuppressWarnings({"PMD.AbstractClassWithoutAbstractMethod", "PMD.AbstractClassWithoutAnyMethod"})
+public abstract class AbstractImpexSettings {
+  private static final String PREFIX = "settings.";
+
+  public static final String CONFIG_STRICT = PREFIX + "strict";
+
+  private Boolean strict;
+  private DryRunEnum dryRun;
+}
