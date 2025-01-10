@@ -30,8 +30,8 @@ import org.anasoid.impexia.core.manager.values.AtomicColumnReference;
 import org.anasoid.impexia.core.manager.values.LineValues;
 import org.anasoid.impexia.core.manager.values.LineValues.LineValuesBuilder;
 import org.anasoid.impexia.core.manager.values.column.StringColumnValue;
-import org.anasoid.impexia.importing.manager.config.ImportingImpexConfig;
 import org.anasoid.impexia.importing.manager.config.ImportingImpexContext;
+import org.anasoid.impexia.importing.manager.config.ImportingImpexSettings;
 import org.anasoid.impexia.meta.header.ImpexAttribute;
 import org.anasoid.impexia.meta.header.ImpexHeader;
 import org.anasoid.impexia.meta.header.ImpexModifier;
@@ -52,7 +52,7 @@ public class RecordLineTransformer<C extends ImportingImpexContext<?>>
                 lineBuilder.value(getVirtualValue(atr));
               } else {
                 String value = null;
-                if (checkMissingColumn(records, i.get(), context.getConfig())) {
+                if (checkMissingColumn(records, i.get(), context.getSettings())) {
                   value = records[i.get()];
                 }
                 lineBuilder.value(
@@ -61,7 +61,7 @@ public class RecordLineTransformer<C extends ImportingImpexContext<?>>
                 i.getAndIncrement();
               }
             });
-    checkAdditionalColumn(records, i.get(), context.getConfig());
+    checkAdditionalColumn(records, i.get(), context.getSettings());
     return lineBuilder.build();
   }
 
@@ -79,18 +79,18 @@ public class RecordLineTransformer<C extends ImportingImpexContext<?>>
   }
 
   private void checkAdditionalColumn(
-      String[] records, int elementCount, ImportingImpexConfig config) {
+      String[] records, int elementCount, ImportingImpexSettings settings) {
     if (records.length > elementCount
-        && (config == null || !Boolean.TRUE.equals(config.getLineIgnoreAdditionalColumn()))) {
+        && (settings == null || !Boolean.TRUE.equals(settings.getLineIgnoreAdditionalColumn()))) {
       throw new InvalidLineStrictFormatException(
           MessageFormat.format("Line has more elements {0} than header", records.length));
     }
   }
 
   private boolean checkMissingColumn(
-      String[] records, int elementCount, ImportingImpexConfig config) {
+      String[] records, int elementCount, ImportingImpexSettings settings) {
     if (elementCount >= records.length) {
-      if (config == null || !Boolean.TRUE.equals(config.getLineMissingColumnAsNull())) {
+      if (settings == null || !Boolean.TRUE.equals(settings.getLineMissingColumnAsNull())) {
         throw new InvalidLineStrictFormatException(
             MessageFormat.format("Line has less elements {0} than header", records.length));
       }

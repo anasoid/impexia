@@ -26,8 +26,8 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder
 @SuppressWarnings({"PMD.AbstractClassWithoutAbstractMethod", "PMD.AbstractClassWithoutAnyMethod"})
-public abstract class AbstractImpexConfig {
-  private static final String PREFIX = "config.";
+public abstract class AbstractImpexSettings {
+  private static final String PREFIX = "settings.";
 
   public static final String CONFIG_STRICT = PREFIX + "strict";
 

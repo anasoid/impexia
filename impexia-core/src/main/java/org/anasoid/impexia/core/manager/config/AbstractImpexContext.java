@@ -21,14 +21,16 @@ package org.anasoid.impexia.core.manager.config;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import org.anasoid.impexia.meta.DataFormat;
 import org.anasoid.impexia.meta.Scope;
 
 @Getter
 @Setter
 @SuperBuilder
 @SuppressWarnings({"PMD.AbstractClassWithoutAbstractMethod", "PMD.AbstractClassWithoutAnyMethod"})
-public abstract class AbstractImpexContext<T extends AbstractImpexConfig> {
+public abstract class AbstractImpexContext<T extends AbstractImpexSettings> {
 
-  private T config;
+  private T settings;
   private final Scope scope;
+  private final DataFormat dataFormat;
 }
