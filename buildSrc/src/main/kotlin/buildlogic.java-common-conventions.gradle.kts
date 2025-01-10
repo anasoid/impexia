@@ -37,7 +37,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:5.11.4")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     // https://mvnrepository.com/artifact/org.assertj/assertj-core
-    testImplementation("org.assertj:assertj-core:3.27.0")
+    testImplementation("org.assertj:assertj-core:3.27.2")
 
 }
 
