@@ -22,24 +22,47 @@ import org.anasoid.impexia.core.data.importing.DataReader;
 import org.anasoid.impexia.core.data.importing.HeaderReader;
 import org.anasoid.impexia.core.internal.spi.register.AbstractRegistrator;
 import org.anasoid.impexia.core.internal.spi.service.AbstractImpexiaService;
-import org.anasoid.impexia.core.parser.header.HeaderParser;
+import org.anasoid.impexia.core.settings.SettingsLoader;
+import org.anasoid.impexia.importing.manager.config.ImportingImpexContext;
+import org.anasoid.impexia.importing.manager.config.ImportingImpexSettings;
 import org.anasoid.impexia.meta.Scope;
 import org.anasoid.impexia.meta.header.ImpexHeader;
 
-public abstract class AbstractImpexiaImportingService extends AbstractImpexiaService {
+public abstract class AbstractImpexiaImportingService<
+        T extends AbstractImpexiaImportingExecutor, F extends ImportingImpexContext<?>>
+    extends AbstractImpexiaService {
 
   protected AbstractImpexiaImportingService(AbstractRegistrator registrator) {
     super(registrator);
   }
 
-  void importData(HeaderReader headerReader, DataReader dataReader, int maxPass) {
-    parseHeader(headerReader.getHeader());
+  void importData(HeaderReader headerReader, DataReader dataReader) {
+    //
+  }
+
+  public T getExecutor(HeaderReader headerReader) {
+    ImportingImpexSettings importingImpexSettings = createSettings();
+    String[] headerRaw = headerReader.getHeader();
+    ImpexHeader impexHeader = prepare(headerRaw, importingImpexSettings);
+    return getInternalExecutor(impexHeader, importingImpexSettings);
   }
 
   @SuppressWarnings("PMD.UseVarargs")
-  protected ImpexHeader parseHeader(String[] headerRecords) {
-    return HeaderParser.parse(headerRecords);
+  ImpexHeader prepare(String[] headerRecords, ImportingImpexSettings importingImpexSettings) {
+
+    HeaderImportingHelper headerImportingHelper =
+        new HeaderImportingHelper(importingImpexSettings, getScope());
+    return headerImportingHelper.prepare(headerRecords);
+  }
+
+  ImportingImpexSettings createSettings() {
+    return SettingsLoader.load(ImportingImpexSettings.builder().build());
   }
 
   protected abstract Scope getScope();
+
+  protected abstract <S extends ImportingImpexSettings> F createContext(S settings);
+
+  public abstract T getInternalExecutor(
+      ImpexHeader impexHeader, ImportingImpexSettings importingImpexSettings);
 }

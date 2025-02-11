@@ -23,10 +23,11 @@ import org.anasoid.impexia.core.manager.transformer.ChainedTransformer;
 import org.anasoid.impexia.core.manager.transformer.Transformer;
 import org.anasoid.impexia.core.manager.transformer.TransformerOrder;
 import org.anasoid.impexia.core.manager.values.LineValues;
+import org.anasoid.impexia.importing.manager.config.ImportingImpexContext;
 import org.anasoid.impexia.importing.manager.config.ImportingImpexSettings;
 import org.apache.commons.lang3.tuple.Pair;
 
-public class PrepareValue<C extends ImportingImpexSettings> {
+public class PrepareValue<C extends ImportingImpexContext<? extends ImportingImpexSettings>> {
 
   ChainedTransformer<LineValues, C> ctxChainedTransformer;
 

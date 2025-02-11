@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2024 the original author or authors.
+ * Copyright 2020-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License")
  * you may not use this file except in compliance with the License.
@@ -13,25 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * @author : anas
- * Date :   23-Dec-2024
+ * Date :   12-Jan-2025
  */
 
-package org.anasoid.impexia.core.manager.config;
+package org.anasoid.impexia.jpa.service;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.SuperBuilder;
+import org.anasoid.impexia.importing.internal.service.AbstractImpexiaImportingExecutor;
+import org.anasoid.impexia.meta.header.ImpexHeader;
 
-@Getter
-@Setter
-@SuperBuilder
-@SuppressWarnings({"PMD.AbstractClassWithoutAbstractMethod", "PMD.AbstractClassWithoutAnyMethod"})
-public abstract class AbstractImpexSettings {
+public class JpaImpexiaImportingExecutor extends AbstractImpexiaImportingExecutor {
 
-  private static final String PREFIX = "settings.";
-
-  public static final String CONFIG_STRICT = PREFIX + "strict";
-
-  private Boolean strict;
-  private DryRunEnum dryRun;
+  public JpaImpexiaImportingExecutor(ImpexHeader impexHeader) {
+    super(impexHeader);
+  }
 }

@@ -18,7 +18,7 @@
 
 package org.anasoid.impexia.importing.manager.prepare;
 
-import java.util.List;
+import java.util.Collection;
 import org.anasoid.impexia.core.manager.transformer.ChainedTransformer;
 import org.anasoid.impexia.core.manager.transformer.Transformer;
 import org.anasoid.impexia.core.manager.transformer.TransformerOrder;
@@ -31,11 +31,12 @@ public class PrepareHeader<C extends ImportingImpexSettings> {
   ChainedTransformer<ImpexHeader, C> ctxChainedTransformer;
 
   public PrepareHeader(
-      List<Pair<TransformerOrder, Transformer<ImpexHeader, ImpexHeader, C>>> orderedTransformers) {
+      Collection<Pair<TransformerOrder, Transformer<ImpexHeader, ImpexHeader, C>>>
+          orderedTransformers) {
     ctxChainedTransformer = new ChainedTransformer<>(orderedTransformers);
   }
 
-  ImpexHeader prepare(ImpexHeader header, C context) {
-    return ctxChainedTransformer.transform(header, context);
+  public ImpexHeader prepare(ImpexHeader header, C settings) {
+    return ctxChainedTransformer.transform(header, settings);
   }
 }

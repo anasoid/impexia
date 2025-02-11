@@ -34,6 +34,6 @@ public class ImportingImpexSettings extends AbstractImpexSettings {
   public static final String CONFIG_LINE_MISSING_COLUMN_AS_NULL =
       PREFIX + "line.missing.column.as.null";
 
-  Boolean lineIgnoreAdditionalColumn;
-  Boolean lineMissingColumnAsNull;
+  private Boolean lineIgnoreAdditionalColumn;
+  private Boolean lineMissingColumnAsNull;
 }

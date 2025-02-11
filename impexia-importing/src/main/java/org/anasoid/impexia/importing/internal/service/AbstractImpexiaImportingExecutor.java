@@ -13,25 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * @author : anas
- * Date :   01-Jan-2025
+ * Date :   12-Jan-2025
  */
 
-package org.anasoid.impexia.importing.internal.spi;
+package org.anasoid.impexia.importing.internal.service;
 
-import org.anasoid.impexia.core.internal.spi.register.AbstractRegistrator;
-import org.anasoid.impexia.importing.register.HeaderPrepareRegistratorAgent;
+import org.anasoid.impexia.core.data.importing.DataReader;
+import org.anasoid.impexia.meta.header.ImpexHeader;
 
-public class ImportingRegistrator extends AbstractRegistrator {
+@SuppressWarnings("PMD.AbstractClassWithoutAbstractMethod")
+public abstract class AbstractImpexiaImportingExecutor {
+  @SuppressWarnings("PMD.UnusedPrivateField")
+  private final ImpexHeader impexHeader;
 
-  @Override
-  public void load() {
-    super.load();
-    HeaderPrepareRegistratorAgent.getInstance().load();
+  protected AbstractImpexiaImportingExecutor(ImpexHeader impexHeader) {
+    this.impexHeader = impexHeader;
   }
 
-  @Override
-  public void unLoad() {
-    super.unLoad();
-    HeaderPrepareRegistratorAgent.getInstance().unLoad();
-  }
+  void importData(DataReader dataReader) {}
 }
