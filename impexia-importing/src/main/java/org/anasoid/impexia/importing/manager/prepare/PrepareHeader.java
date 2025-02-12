@@ -20,23 +20,23 @@ package org.anasoid.impexia.importing.manager.prepare;
 
 import java.util.Collection;
 import org.anasoid.impexia.core.manager.transformer.ChainedTransformer;
-import org.anasoid.impexia.core.manager.transformer.Transformer;
+import org.anasoid.impexia.core.manager.transformer.MonoTransformer;
 import org.anasoid.impexia.core.manager.transformer.TransformerOrder;
-import org.anasoid.impexia.importing.manager.config.ImportingImpexSettings;
+import org.anasoid.impexia.importing.manager.config.ImportingImpexContext;
 import org.anasoid.impexia.meta.header.ImpexHeader;
 import org.apache.commons.lang3.tuple.Pair;
 
-public class PrepareHeader<C extends ImportingImpexSettings> {
+public class PrepareHeader {
 
-  ChainedTransformer<ImpexHeader, C> ctxChainedTransformer;
+  ChainedTransformer<ImpexHeader, ImportingImpexContext<?>> ctxChainedTransformer;
 
   public PrepareHeader(
-      Collection<Pair<TransformerOrder, Transformer<ImpexHeader, ImpexHeader, C>>>
+      Collection<Pair<TransformerOrder, MonoTransformer<ImpexHeader, ImportingImpexContext<?>>>>
           orderedTransformers) {
     ctxChainedTransformer = new ChainedTransformer<>(orderedTransformers);
   }
 
-  public ImpexHeader prepare(ImpexHeader header, C settings) {
-    return ctxChainedTransformer.transform(header, settings);
+  public ImpexHeader prepare(ImpexHeader header, ImportingImpexContext<?> context) {
+    return ctxChainedTransformer.transform(header, context);
   }
 }

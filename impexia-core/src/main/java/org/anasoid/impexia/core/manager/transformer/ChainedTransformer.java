@@ -23,12 +23,12 @@ import java.util.Comparator;
 import java.util.List;
 import org.apache.commons.lang3.tuple.Pair;
 
-public class ChainedTransformer<T, C> implements Transformer<T, T, C> {
+public class ChainedTransformer<T, C> implements MonoTransformer<T, C> {
 
-  private final List<Transformer<T, T, C>> transformers;
+  private final List<MonoTransformer<T, C>> transformers;
 
   public ChainedTransformer(
-      Collection<Pair<TransformerOrder, Transformer<T, T, C>>> orderedTransformers) {
+      Collection<Pair<TransformerOrder, MonoTransformer<T, C>>> orderedTransformers) {
     this.transformers =
         orderedTransformers.stream()
             .sorted(Comparator.comparing(p -> p.getLeft().getOrder()))

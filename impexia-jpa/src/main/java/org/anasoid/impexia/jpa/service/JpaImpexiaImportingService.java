@@ -51,7 +51,7 @@ public class JpaImpexiaImportingService
 
   @Override
   public JpaImpexiaImportingExecutor getInternalExecutor(
-      ImpexHeader impexHeader, ImportingImpexSettings importingImpexSettings) {
+      ImpexHeader impexHeader, ImportingImpexContext<?> context) {
     return null;
   }
 }

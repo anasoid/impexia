@@ -20,7 +20,7 @@ package org.anasoid.impexia.importing.manager.prepare;
 
 import java.util.List;
 import org.anasoid.impexia.core.manager.transformer.ChainedTransformer;
-import org.anasoid.impexia.core.manager.transformer.Transformer;
+import org.anasoid.impexia.core.manager.transformer.MonoTransformer;
 import org.anasoid.impexia.core.manager.transformer.TransformerOrder;
 import org.anasoid.impexia.core.manager.values.LineValues;
 import org.anasoid.impexia.importing.manager.config.ImportingImpexContext;
@@ -32,7 +32,7 @@ public class PrepareValue<C extends ImportingImpexContext<? extends ImportingImp
   ChainedTransformer<LineValues, C> ctxChainedTransformer;
 
   public PrepareValue(
-      List<Pair<TransformerOrder, Transformer<LineValues, LineValues, C>>> orderedTransformers) {
+      List<Pair<TransformerOrder, MonoTransformer<LineValues, C>>> orderedTransformers) {
     ctxChainedTransformer = new ChainedTransformer<>(orderedTransformers);
   }
 

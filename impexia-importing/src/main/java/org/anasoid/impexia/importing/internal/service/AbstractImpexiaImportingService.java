@@ -41,17 +41,16 @@ public abstract class AbstractImpexiaImportingService<
   }
 
   public T getExecutor(HeaderReader headerReader) {
-    ImportingImpexSettings importingImpexSettings = createSettings();
+    F context = createContext(createSettings());
     String[] headerRaw = headerReader.getHeader();
-    ImpexHeader impexHeader = prepare(headerRaw, importingImpexSettings);
-    return getInternalExecutor(impexHeader, importingImpexSettings);
+    ImpexHeader impexHeader = prepare(headerRaw, context);
+    return getInternalExecutor(impexHeader, context);
   }
 
   @SuppressWarnings("PMD.UseVarargs")
-  ImpexHeader prepare(String[] headerRecords, ImportingImpexSettings importingImpexSettings) {
+  ImpexHeader prepare(String[] headerRecords, ImportingImpexContext<?> context) {
 
-    HeaderImportingHelper headerImportingHelper =
-        new HeaderImportingHelper(importingImpexSettings, getScope());
+    HeaderImportingHelper headerImportingHelper = new HeaderImportingHelper(context, getScope());
     return headerImportingHelper.prepare(headerRecords);
   }
 
@@ -63,6 +62,5 @@ public abstract class AbstractImpexiaImportingService<
 
   protected abstract <S extends ImportingImpexSettings> F createContext(S settings);
 
-  public abstract T getInternalExecutor(
-      ImpexHeader impexHeader, ImportingImpexSettings importingImpexSettings);
+  public abstract T getInternalExecutor(ImpexHeader impexHeader, F context);
 }

@@ -20,27 +20,26 @@ package org.anasoid.impexia.importing.internal.service;
 
 import org.anasoid.impexia.core.parser.header.HeaderParser;
 import org.anasoid.impexia.importing.internal.api.register.HeaderPrepareRegister;
-import org.anasoid.impexia.importing.manager.config.ImportingImpexSettings;
+import org.anasoid.impexia.importing.manager.config.ImportingImpexContext;
 import org.anasoid.impexia.importing.manager.prepare.PrepareHeader;
 import org.anasoid.impexia.meta.Scope;
 import org.anasoid.impexia.meta.header.ImpexHeader;
 
 @SuppressWarnings("PMD.UnusedPrivateField")
 class HeaderImportingHelper {
-  private final PrepareHeader<ImportingImpexSettings> prepareHeader;
-  private final ImportingImpexSettings importingImpexSettings;
+  private final PrepareHeader prepareHeader;
+  private final ImportingImpexContext<?> context;
 
-  public HeaderImportingHelper(ImportingImpexSettings importingImpexSettings, Scope scope) {
-    this.importingImpexSettings = importingImpexSettings;
+  public HeaderImportingHelper(ImportingImpexContext<?> context, Scope scope) {
+    this.context = context;
     this.prepareHeader =
-        new PrepareHeader<>(HeaderPrepareRegister.getInstance().getPrepareHeaderByScope(scope));
+        new PrepareHeader(HeaderPrepareRegister.getInstance().getPrepareHeaderByScope(scope));
   }
 
   @SuppressWarnings("PMD.UseVarargs")
   ImpexHeader prepare(String[] headerRecords) {
     ImpexHeader impexHeader = parseHeader(headerRecords);
-
-    return prepareHeader.prepare(impexHeader, importingImpexSettings);
+    return prepareHeader.prepare(impexHeader, context);
   }
 
   @SuppressWarnings("PMD.UseVarargs")
