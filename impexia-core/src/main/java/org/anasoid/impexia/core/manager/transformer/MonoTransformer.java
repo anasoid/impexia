@@ -13,25 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * @author : anas
- * Date :   23-Dec-2024
+ * Date :   24-Dec-2024
  */
 
-package org.anasoid.impexia.core.manager.config;
+package org.anasoid.impexia.core.manager.transformer;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.SuperBuilder;
-
-@Getter
-@Setter
-@SuperBuilder
-@SuppressWarnings({"PMD.AbstractClassWithoutAbstractMethod", "PMD.AbstractClassWithoutAnyMethod"})
-public abstract class AbstractImpexSettings {
-
-  private static final String PREFIX = "settings.";
-
-  public static final String CONFIG_STRICT = PREFIX + "strict";
-
-  private Boolean strict;
-  private DryRunEnum dryRun;
-}
+public interface MonoTransformer<T, C> extends Transformer<T, T, C> {}

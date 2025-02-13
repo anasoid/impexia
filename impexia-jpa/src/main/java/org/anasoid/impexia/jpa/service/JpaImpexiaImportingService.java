@@ -18,19 +18,40 @@
 
 package org.anasoid.impexia.jpa.service;
 
+import org.anasoid.impexia.core.data.importing.HeaderReader;
 import org.anasoid.impexia.importing.internal.service.AbstractImpexiaImportingService;
+import org.anasoid.impexia.importing.manager.config.ImportingImpexContext;
+import org.anasoid.impexia.importing.manager.config.ImportingImpexSettings;
 import org.anasoid.impexia.jpa.importing.register.JpaImportingRegistrator;
 import org.anasoid.impexia.jpa.meta.JpaScopeEnum;
 import org.anasoid.impexia.meta.Scope;
+import org.anasoid.impexia.meta.header.ImpexHeader;
 
-public class JpaImpexiaImportingService extends AbstractImpexiaImportingService {
+public class JpaImpexiaImportingService
+    extends AbstractImpexiaImportingService<JpaImpexiaImportingExecutor, ImportingImpexContext<?>> {
 
   public JpaImpexiaImportingService() {
     super(new JpaImportingRegistrator());
   }
 
   @Override
+  public JpaImpexiaImportingExecutor getExecutor(HeaderReader headerReader) {
+    return null;
+  }
+
+  @Override
   protected Scope getScope() {
     return JpaScopeEnum.JPA;
+  }
+
+  @Override
+  protected <T extends ImportingImpexSettings> ImportingImpexContext<T> createContext(T settings) {
+    return null;
+  }
+
+  @Override
+  public JpaImpexiaImportingExecutor getInternalExecutor(
+      ImpexHeader impexHeader, ImportingImpexContext<?> context) {
+    return null;
   }
 }

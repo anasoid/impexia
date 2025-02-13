@@ -5,7 +5,7 @@ slf4j = "2.0.16"
 commonsIo = "2.18.0"
 opencsv = "5.10"
 commonsLang = "3.17.0"
-hibernate = "6.6.5.Final"
+hibernate = "6.6.7.Final"
 persistenceApi = "3.1.0"
 hsqldb="2.7.4"
 
@@ -17,7 +17,7 @@ plugin-spotless-version ="7.0.2"
 plugin-lombok={ group = "io.freefair.lombok", name = "io.freefair.lombok.gradle.plugin", version.ref = "plugin-lombok-version" }
 plugin-spotless={ group = "com.diffplug.spotless", name = "com.diffplug.spotless.gradle.plugin", version.ref = "plugin-spotless-version" }
 opencsv = { group = "com.opencsv", name = "opencsv", version.ref = "opencsv" }
-hibernate-core = { group = "org.hibernate", name = "hibernate-core", version.ref = "hibernate" }
+hibernate-core = { group = "org.hibernate.orm", name = "hibernate-core", version.ref = "hibernate" }
 jakarta-persistence-api = { group = "jakarta.persistence", name = "jakarta.persistence-api", version.ref = "persistenceApi" }
 hsqldb = { group = "org.hsqldb", name = "hsqldb", version.ref = "hsqldb" }
 commons-lang = { group = "org.apache.commons", name = "commons-lang3", version.ref = "commonsLang" }
