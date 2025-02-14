@@ -13,25 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * @author : anas
- * Date :   12-Jan-2025
+ * Date :   13-Feb-2025
  */
 
 package org.anasoid.impexia.core.settings;
 
-import java.util.Properties;
-import org.anasoid.impexia.core.manager.config.AbstractImpexSettings;
-import org.anasoid.impexia.core.manager.config.AbstractImpexSettings.AbstractImpexSettingsBuilder;
+@FunctionalInterface
+public interface Customizer<T> {
 
-public final class SettingsLoader {
+  /**
+   * Performs the customizations on the input argument.
+   * @param t the input argument
+   */
+  void customize(T t);
 
-  private SettingsLoader() {}
-
-  public static <T extends AbstractImpexSettings> T load(T settings) {
-    return settings;
+  /**
+   * Returns a {@link Customizer} that does not alter the input argument.
+   * @return a {@link Customizer} that does not alter the input argument.
+   */
+  static <T> Customizer<T> withDefaults() {
+    return (t) -> {
+    };
   }
 
-  public static <T extends AbstractImpexSettings, B extends AbstractImpexSettingsBuilder<T, ?>>
-      T load(T settings, Properties properties) {
-    return null;
-  }
 }

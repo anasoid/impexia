@@ -20,12 +20,10 @@ package org.anasoid.impexia.importing.manager.config;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.experimental.SuperBuilder;
 import org.anasoid.impexia.core.manager.config.AbstractImpexSettings;
 
 @Getter
 @Setter
-@SuperBuilder
 @SuppressWarnings({"PMD.AbstractClassWithoutAbstractMethod", "PMD.AbstractClassWithoutAnyMethod"})
 public class ImportingImpexSettings extends AbstractImpexSettings {
   private static final String PREFIX = "settings.import.";
@@ -36,4 +34,72 @@ public class ImportingImpexSettings extends AbstractImpexSettings {
 
   private Boolean lineIgnoreAdditionalColumn;
   private Boolean lineMissingColumnAsNull;
+
+  protected ImportingImpexSettings(ImportingImpexSettingsBuilder<?, ?> b) {
+    super(b);
+    this.lineIgnoreAdditionalColumn = b.lineIgnoreAdditionalColumn;
+    this.lineMissingColumnAsNull = b.lineMissingColumnAsNull;
+  }
+
+  public static ImportingImpexSettingsBuilder<?, ?> builder() {
+    return new ImportingImpexSettingsBuilderImpl();
+  }
+
+  public ImportingImpexSettingsBuilder<?, ?> toBuilder() {
+    return new ImportingImpexSettingsBuilderImpl().$fillValuesFrom(this);
+  }
+
+  public static abstract class ImportingImpexSettingsBuilder<C extends ImportingImpexSettings, B extends ImportingImpexSettingsBuilder<C, B>> extends
+      AbstractImpexSettingsBuilder<C, B> {
+
+    private Boolean lineIgnoreAdditionalColumn;
+    private Boolean lineMissingColumnAsNull;
+
+    private static void $fillValuesFromInstanceIntoBuilder(ImportingImpexSettings instance,
+        ImportingImpexSettingsBuilder<?, ?> b) {
+      b.lineIgnoreAdditionalColumn(instance.lineIgnoreAdditionalColumn);
+      b.lineMissingColumnAsNull(instance.lineMissingColumnAsNull);
+    }
+
+    public B lineIgnoreAdditionalColumn(Boolean lineIgnoreAdditionalColumn) {
+      this.lineIgnoreAdditionalColumn = lineIgnoreAdditionalColumn;
+      return self();
+    }
+
+    public B lineMissingColumnAsNull(Boolean lineMissingColumnAsNull) {
+      this.lineMissingColumnAsNull = lineMissingColumnAsNull;
+      return self();
+    }
+
+    protected abstract B self();
+
+    public abstract C build();
+
+    public String toString() {
+      return "ImportingImpexSettings.ImportingImpexSettingsBuilder(super=" + super.toString()
+          + ", lineIgnoreAdditionalColumn=" + this.lineIgnoreAdditionalColumn
+          + ", lineMissingColumnAsNull=" + this.lineMissingColumnAsNull + ")";
+    }
+
+    protected B $fillValuesFrom(C instance) {
+      super.$fillValuesFrom(instance);
+      ImportingImpexSettingsBuilder.$fillValuesFromInstanceIntoBuilder(instance, this);
+      return self();
+    }
+  }
+
+  private static final class ImportingImpexSettingsBuilderImpl extends
+      ImportingImpexSettingsBuilder<ImportingImpexSettings, ImportingImpexSettingsBuilderImpl> {
+
+    private ImportingImpexSettingsBuilderImpl() {
+    }
+
+    protected ImportingImpexSettingsBuilderImpl self() {
+      return this;
+    }
+
+    public ImportingImpexSettings build() {
+      return new ImportingImpexSettings(this);
+    }
+  }
 }
