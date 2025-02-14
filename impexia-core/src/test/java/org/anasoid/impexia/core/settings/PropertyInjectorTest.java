@@ -1,7 +1,5 @@
 package org.anasoid.impexia.core.settings;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 /*
  * Copyright 2020-2025 the original author or authors.
  *
@@ -19,13 +17,12 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author : anas
  * Date :   13-Feb-2025
  */
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.Properties;
 import lombok.Getter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.Properties;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PropertyInjectorTest {
 
@@ -39,6 +36,7 @@ public class PropertyInjectorTest {
     properties.setProperty("app.config.url", "http://example.com");
     properties.setProperty("app.config.apiKey", "12345");
     properties.setProperty("app.config.additionalProperty", "SomeParentValue");
+    properties.setProperty("app.config.enabled", "true");
   }
 
   @Test
@@ -53,6 +51,7 @@ public class PropertyInjectorTest {
     assertEquals(30, subConfig.getTimeout());
     assertEquals("http://example.com", subConfig.getUrl());
     assertEquals("12345", subConfig.getApiKey());
+    assertTrue(subConfig.isEnabled());
 
     // Verify the properties injected into SuperConfig class fields (parent class)
     assertEquals("SomeParentValue", subConfig.getAdditionalProperty());
@@ -72,28 +71,27 @@ public class PropertyInjectorTest {
 
     // Verify that only the available properties were injected
     assertEquals(45, subConfig.getTimeout());
-    assertEquals(null, subConfig.getUrl()); // Missing property should remain null
-    assertEquals(null, subConfig.getApiKey()); // Missing property should remain null
-    assertEquals(null, subConfig.getAdditionalProperty()); // Missing property in parent class
+    assertNull(subConfig.getUrl()); // Missing property should remain null
+    assertNull(subConfig.getApiKey()); // Missing property should remain null
+    assertNull(subConfig.getAdditionalProperty()); // Missing property in parent class
+    assertFalse(subConfig.isEnabled()); // Missing property should remain false
   }
 
   @Getter
   class SuperConfig {
 
-    @PropertyKey(key = "app.config.additionalProperty")
-    private String additionalProperty;
+    @PropertyKey(key = "app.config.additionalProperty") private String additionalProperty;
   }
 
   @Getter
   class SubConfig extends SuperConfig {
 
-    @PropertyKey(key = "app.config.timeout")
-    private int timeout;
+    @PropertyKey(key = "app.config.timeout") private int timeout;
 
-    @PropertyKey(key = "app.config.url")
-    private String url;
+    @PropertyKey(key = "app.config.url") private String url;
 
-    @PropertyKey(key = "app.config.apiKey")
-    private String apiKey;
+    @PropertyKey(key = "app.config.apiKey") private String apiKey;
+
+    @PropertyKey(key = "app.config.enabled") private boolean enabled;
   }
 }
