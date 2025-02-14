@@ -13,25 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * @author : anas
- * Date :   12-Jan-2025
+ * Date :   13-Feb-2025
  */
 
 package org.anasoid.impexia.core.settings;
 
-import java.util.Properties;
-import org.anasoid.impexia.core.manager.config.AbstractImpexSettings;
-import org.anasoid.impexia.core.manager.config.AbstractImpexSettings.AbstractImpexSettingsBuilder;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-public final class SettingsLoader {
+@Target({ElementType.FIELD})
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface PropertyKey {
 
-  private SettingsLoader() {}
-
-  public static <T extends AbstractImpexSettings> T load(T settings) {
-    return settings;
-  }
-
-  public static <T extends AbstractImpexSettings, B extends AbstractImpexSettingsBuilder<T, ?>>
-      T load(T settings, Properties properties) {
-    return null;
-  }
+  String key();
 }
