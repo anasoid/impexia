@@ -14,7 +14,7 @@ plugins {
 checkstyle {
 
     configFile = rootProject.file("config/checkstyle/google_checks.xml")
-    toolVersion = "10.21.2"
+    toolVersion = "10.21.3"
     maxErrors = 0
     maxWarnings = 0
 
