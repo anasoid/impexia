@@ -38,7 +38,7 @@ public class JpaImpexiaImportingService
   }
 
   @Override
-  public JpaImpexiaImportingExecutor getExecutor(
+  protected JpaImpexiaImportingExecutor getExecutor(
       HeaderReader headerReader, ImportingImpexSettings settings) {
     return null;
   }

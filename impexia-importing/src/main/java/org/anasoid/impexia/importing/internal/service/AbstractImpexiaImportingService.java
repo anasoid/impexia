@@ -41,7 +41,7 @@ public abstract class AbstractImpexiaImportingService<
     //
   }
 
-  public T getExecutor(HeaderReader headerReader, S settings) {
+  protected T getExecutor(HeaderReader headerReader, S settings) {
     F context = createContext(settings);
     String[] headerRaw = headerReader.getHeader();
     ImpexHeader impexHeader = prepare(headerRaw, context);
