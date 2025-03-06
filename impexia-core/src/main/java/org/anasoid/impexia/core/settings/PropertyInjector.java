@@ -46,7 +46,7 @@ public final class PropertyInjector {
       throws IllegalAccessException {
     if (field.isAnnotationPresent(PropertyKey.class)) {
       PropertyKey propertyKey = field.getAnnotation(PropertyKey.class);
-      String key = propertyKey.key();
+      String key = propertyKey.value();
       String value = properties.getProperty(key);
       if (value != null) {
         setFieldValue(target, field, value);

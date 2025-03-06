@@ -21,6 +21,7 @@ package org.anasoid.impexia.core.manager.config;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import org.anasoid.impexia.core.settings.PropertyKey;
 
 @Getter
 @Setter
@@ -28,10 +29,9 @@ import lombok.experimental.SuperBuilder;
 @SuppressWarnings({"PMD.AbstractClassWithoutAbstractMethod", "PMD.AbstractClassWithoutAnyMethod"})
 public class AbstractImpexSettings {
 
-  private static final String PREFIX = "settings.";
-
-  public static final String CONFIG_STRICT = PREFIX + "strict";
-
+  @PropertyKey("settings.strict")
   private Boolean strict;
+
+  @PropertyKey("settings.dryrun")
   private DryRunEnum dryRun;
 }

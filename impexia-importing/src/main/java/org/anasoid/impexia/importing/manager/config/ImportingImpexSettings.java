@@ -19,21 +19,18 @@
 package org.anasoid.impexia.importing.manager.config;
 
 import lombok.Getter;
-import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.anasoid.impexia.core.manager.config.AbstractImpexSettings;
+import org.anasoid.impexia.core.settings.PropertyKey;
 
 @Getter
-@Setter
 @SuperBuilder
 @SuppressWarnings({"PMD.AbstractClassWithoutAbstractMethod", "PMD.AbstractClassWithoutAnyMethod"})
 public class ImportingImpexSettings extends AbstractImpexSettings {
-  private static final String PREFIX = "settings.import.";
-  public static final String CONFIG_LINE_IGNORE_ADDITIONAL_COLUMN =
-      PREFIX + "line.ignore.additional.data";
-  public static final String CONFIG_LINE_MISSING_COLUMN_AS_NULL =
-      PREFIX + "line.missing.column.as.null";
 
+  @PropertyKey("settings.import.line.ignore.additional.data")
   private Boolean lineIgnoreAdditionalColumn;
+
+  @PropertyKey("settings.import.line.missing.column.as.null")
   private Boolean lineMissingColumnAsNull;
 }
