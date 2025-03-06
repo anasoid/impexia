@@ -24,7 +24,7 @@ import org.anasoid.impexia.core.manager.config.AbstractImpexSettings;
 import org.anasoid.impexia.core.settings.PropertyKey;
 
 @Getter
-@SuperBuilder
+@SuperBuilder(toBuilder = true)
 @SuppressWarnings({"PMD.AbstractClassWithoutAbstractMethod", "PMD.AbstractClassWithoutAnyMethod"})
 public class ImportingImpexSettings extends AbstractImpexSettings {
 
