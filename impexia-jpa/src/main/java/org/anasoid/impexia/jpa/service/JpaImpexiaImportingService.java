@@ -28,14 +28,18 @@ import org.anasoid.impexia.meta.Scope;
 import org.anasoid.impexia.meta.header.ImpexHeader;
 
 public class JpaImpexiaImportingService
-    extends AbstractImpexiaImportingService<JpaImpexiaImportingExecutor, ImportingImpexContext<?>> {
+    extends AbstractImpexiaImportingService<
+        JpaImpexiaImportingExecutor,
+        ImportingImpexSettings,
+        ImportingImpexContext<ImportingImpexSettings>> {
 
   public JpaImpexiaImportingService() {
     super(new JpaImportingRegistrator());
   }
 
   @Override
-  public JpaImpexiaImportingExecutor getExecutor(HeaderReader headerReader) {
+  public JpaImpexiaImportingExecutor getExecutor(
+      HeaderReader headerReader, ImportingImpexSettings settings) {
     return null;
   }
 
@@ -45,13 +49,14 @@ public class JpaImpexiaImportingService
   }
 
   @Override
-  protected <T extends ImportingImpexSettings> ImportingImpexContext<T> createContext(T settings) {
+  protected <S extends ImportingImpexSettings>
+      ImportingImpexContext<ImportingImpexSettings> createContext(S settings) {
     return null;
   }
 
   @Override
   public JpaImpexiaImportingExecutor getInternalExecutor(
-      ImpexHeader impexHeader, ImportingImpexContext<?> context) {
+      ImpexHeader impexHeader, ImportingImpexContext<ImportingImpexSettings> context) {
     return null;
   }
 }

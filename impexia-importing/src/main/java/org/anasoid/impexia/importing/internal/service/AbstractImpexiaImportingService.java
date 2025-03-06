@@ -22,14 +22,15 @@ import org.anasoid.impexia.core.data.importing.DataReader;
 import org.anasoid.impexia.core.data.importing.HeaderReader;
 import org.anasoid.impexia.core.internal.spi.register.AbstractRegistrator;
 import org.anasoid.impexia.core.internal.spi.service.AbstractImpexiaService;
-import org.anasoid.impexia.core.settings.SettingsLoader;
 import org.anasoid.impexia.importing.manager.config.ImportingImpexContext;
 import org.anasoid.impexia.importing.manager.config.ImportingImpexSettings;
 import org.anasoid.impexia.meta.Scope;
 import org.anasoid.impexia.meta.header.ImpexHeader;
 
 public abstract class AbstractImpexiaImportingService<
-        T extends AbstractImpexiaImportingExecutor, F extends ImportingImpexContext<?>>
+        T extends AbstractImpexiaImportingExecutor,
+        S extends ImportingImpexSettings,
+        F extends ImportingImpexContext<S>>
     extends AbstractImpexiaService {
 
   protected AbstractImpexiaImportingService(AbstractRegistrator registrator) {
@@ -40,8 +41,8 @@ public abstract class AbstractImpexiaImportingService<
     //
   }
 
-  public T getExecutor(HeaderReader headerReader) {
-    F context = createContext(createSettings());
+  public T getExecutor(HeaderReader headerReader, S settings) {
+    F context = createContext(settings);
     String[] headerRaw = headerReader.getHeader();
     ImpexHeader impexHeader = prepare(headerRaw, context);
     return getInternalExecutor(impexHeader, context);
@@ -52,10 +53,6 @@ public abstract class AbstractImpexiaImportingService<
 
     HeaderImportingHelper headerImportingHelper = new HeaderImportingHelper(context, getScope());
     return headerImportingHelper.prepare(headerRecords);
-  }
-
-  ImportingImpexSettings createSettings() {
-    return SettingsLoader.load(ImportingImpexSettings.builder().build());
   }
 
   protected abstract Scope getScope();
