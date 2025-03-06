@@ -28,9 +28,9 @@ import org.anasoid.impexia.core.settings.PropertyKey;
 @SuppressWarnings({"PMD.AbstractClassWithoutAbstractMethod", "PMD.AbstractClassWithoutAnyMethod"})
 public class ImportingImpexSettings extends AbstractImpexSettings {
 
-  @PropertyKey("settings.import.line.ignore.additional.data")
+  @PropertyKey("settings.import.ignore.additional.column") @Getter
   private Boolean lineIgnoreAdditionalColumn;
 
-  @PropertyKey("settings.import.line.missing.column.as.null")
+  @PropertyKey("settings.import.missing.column.null") @Getter
   private Boolean lineMissingColumnAsNull;
 }

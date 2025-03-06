@@ -80,23 +80,18 @@ public class PropertyInjectorTest {
   @Getter
   class SuperConfig {
 
-    @PropertyKey("app.config.additionalProperty")
-    private String additionalProperty;
+    @PropertyKey("app.config.additionalProperty") private String additionalProperty;
   }
 
   @Getter
   class SubConfig extends SuperConfig {
 
-    @PropertyKey("app.config.timeout")
-    private int timeout;
+    @PropertyKey("app.config.timeout") private int timeout;
 
-    @PropertyKey("app.config.url")
-    private String url;
+    @PropertyKey("app.config.url") private String url;
 
-    @PropertyKey("app.config.apiKey")
-    private String apiKey;
+    @PropertyKey("app.config.apiKey") private String apiKey;
 
-    @PropertyKey("app.config.enabled")
-    private boolean enabled;
+    @PropertyKey("app.config.enabled") private boolean enabled;
   }
 }
