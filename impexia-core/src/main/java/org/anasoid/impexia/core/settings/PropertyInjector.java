@@ -20,13 +20,13 @@ package org.anasoid.impexia.core.settings;
 
 import java.lang.reflect.Field;
 import java.util.Properties;
+import org.anasoid.impexia.core.exceptions.ImpexTechnicalException;
 
 public final class PropertyInjector {
 
   private PropertyInjector() {}
 
-  public static void injectProperties(Object target, Properties properties)
-      throws IllegalAccessException {
+  public static void injectProperties(Object target, Properties properties) {
     Class<?> currentClass = target.getClass();
     while (currentClass != null) {
       processClassFields(target, properties, currentClass);
@@ -35,21 +35,24 @@ public final class PropertyInjector {
   }
 
   private static void processClassFields(
-      Object target, Properties properties, Class<?> currentClass) throws IllegalAccessException {
+      Object target, Properties properties, Class<?> currentClass) {
     Field[] fields = currentClass.getDeclaredFields();
     for (Field field : fields) {
       processField(target, properties, field);
     }
   }
 
-  private static void processField(Object target, Properties properties, Field field)
-      throws IllegalAccessException {
+  private static void processField(Object target, Properties properties, Field field) {
     if (field.isAnnotationPresent(PropertyKey.class)) {
       PropertyKey propertyKey = field.getAnnotation(PropertyKey.class);
       String key = propertyKey.value();
       String value = properties.getProperty(key);
       if (value != null) {
-        setFieldValue(target, field, value);
+        try {
+          setFieldValue(target, field, value);
+        } catch (IllegalAccessException e) {
+          throw new ImpexTechnicalException(e);
+        }
       }
     }
   }
