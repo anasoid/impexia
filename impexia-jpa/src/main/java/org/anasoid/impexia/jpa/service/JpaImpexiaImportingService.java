@@ -21,21 +21,38 @@ package org.anasoid.impexia.jpa.service;
 import org.anasoid.impexia.core.data.importing.HeaderReader;
 import org.anasoid.impexia.importing.internal.service.AbstractImpexiaImportingService;
 import org.anasoid.impexia.importing.manager.config.ImportingImpexContext;
-import org.anasoid.impexia.importing.manager.config.ImportingImpexSettings;
+import org.anasoid.impexia.jpa.config.JpaImportingImpexSettings;
+import org.anasoid.impexia.jpa.config.JpaImportingImpexSettings.JpaImportingImpexSettingsBuilder;
 import org.anasoid.impexia.jpa.importing.register.JpaImportingRegistrator;
 import org.anasoid.impexia.jpa.meta.JpaScopeEnum;
 import org.anasoid.impexia.meta.Scope;
 import org.anasoid.impexia.meta.header.ImpexHeader;
 
 public class JpaImpexiaImportingService
-    extends AbstractImpexiaImportingService<JpaImpexiaImportingExecutor, ImportingImpexContext<?>> {
+    extends AbstractImpexiaImportingService<
+        JpaImpexiaImportingExecutor,
+        JpaImportingImpexSettings,
+        JpaImportingImpexSettingsBuilder<JpaImportingImpexSettings, ?>,
+        ImportingImpexContext<JpaImportingImpexSettings>> {
 
   public JpaImpexiaImportingService() {
     super(new JpaImportingRegistrator());
   }
 
   @Override
-  public JpaImpexiaImportingExecutor getExecutor(HeaderReader headerReader) {
+  protected JpaImportingImpexSettings getRawSettings() {
+    return null;
+  }
+
+  @Override
+  protected JpaImportingImpexSettingsBuilder<JpaImportingImpexSettings, ?> getSettingsBuilder(
+      JpaImportingImpexSettings settings) {
+    return null;
+  }
+
+  @Override
+  protected JpaImpexiaImportingExecutor getExecutor(
+      HeaderReader headerReader, JpaImportingImpexSettings settings) {
     return null;
   }
 
@@ -45,13 +62,14 @@ public class JpaImpexiaImportingService
   }
 
   @Override
-  protected <T extends ImportingImpexSettings> ImportingImpexContext<T> createContext(T settings) {
+  protected ImportingImpexContext<JpaImportingImpexSettings> createContext(
+      JpaImportingImpexSettings settings) {
     return null;
   }
 
   @Override
   public JpaImpexiaImportingExecutor getInternalExecutor(
-      ImpexHeader impexHeader, ImportingImpexContext<?> context) {
+      ImpexHeader impexHeader, ImportingImpexContext<JpaImportingImpexSettings> context) {
     return null;
   }
 }

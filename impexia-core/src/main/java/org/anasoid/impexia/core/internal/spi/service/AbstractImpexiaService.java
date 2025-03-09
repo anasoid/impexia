@@ -18,16 +18,21 @@
 
 package org.anasoid.impexia.core.internal.spi.service;
 
+import java.util.Properties;
+import lombok.Getter;
 import org.anasoid.impexia.core.internal.spi.register.AbstractRegistrator;
+import org.anasoid.impexia.core.settings.SettingsLoader;
 
 @SuppressWarnings("PMD.AbstractClassWithoutAbstractMethod")
 public abstract class AbstractImpexiaService {
 
   private final AbstractRegistrator registrator;
 
+  @Getter private final Properties defaultProperties;
+
   protected AbstractImpexiaService(AbstractRegistrator registrator) {
     this.registrator = registrator;
-
+    this.defaultProperties = SettingsLoader.loadDefaultProperties();
     registrator.load();
   }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2024 the original author or authors.
+ * Copyright 2020-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License")
  * you may not use this file except in compliance with the License.
@@ -13,23 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * @author : anas
- * Date :   23-Dec-2024
+ * Date :   13-Feb-2025
  */
 
-package org.anasoid.impexia.core.manager.config;
+package org.anasoid.impexia.core.settings;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.SuperBuilder;
-import org.anasoid.impexia.core.settings.PropertyKey;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-@Getter
-@Setter
-@SuperBuilder(toBuilder = true)
-@SuppressWarnings({"PMD.AbstractClassWithoutAbstractMethod", "PMD.AbstractClassWithoutAnyMethod"})
-public class AbstractImpexSettings {
+@Target({ElementType.FIELD})
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface PropertyKey {
 
-  @PropertyKey("settings.strict") private Boolean strict;
-
-  @PropertyKey("settings.dryrun") private DryRunEnum dryRun;
+  String value();
 }

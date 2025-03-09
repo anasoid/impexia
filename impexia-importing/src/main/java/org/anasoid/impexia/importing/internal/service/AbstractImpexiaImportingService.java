@@ -18,10 +18,14 @@
 
 package org.anasoid.impexia.importing.internal.service;
 
+import java.util.List;
+import java.util.Properties;
 import org.anasoid.impexia.core.data.importing.DataReader;
 import org.anasoid.impexia.core.data.importing.HeaderReader;
 import org.anasoid.impexia.core.internal.spi.register.AbstractRegistrator;
 import org.anasoid.impexia.core.internal.spi.service.AbstractImpexiaService;
+import org.anasoid.impexia.core.settings.Customizer;
+import org.anasoid.impexia.core.settings.PropertyInjector;
 import org.anasoid.impexia.core.settings.SettingsLoader;
 import org.anasoid.impexia.importing.manager.config.ImportingImpexContext;
 import org.anasoid.impexia.importing.manager.config.ImportingImpexSettings;
@@ -29,7 +33,10 @@ import org.anasoid.impexia.meta.Scope;
 import org.anasoid.impexia.meta.header.ImpexHeader;
 
 public abstract class AbstractImpexiaImportingService<
-        T extends AbstractImpexiaImportingExecutor, F extends ImportingImpexContext<?>>
+        T extends AbstractImpexiaImportingExecutor,
+        S extends ImportingImpexSettings,
+        B extends ImportingImpexSettings.ImportingImpexSettingsBuilder<S, ?>,
+        F extends ImportingImpexContext<S>>
     extends AbstractImpexiaService {
 
   protected AbstractImpexiaImportingService(AbstractRegistrator registrator) {
@@ -40,8 +47,19 @@ public abstract class AbstractImpexiaImportingService<
     //
   }
 
-  public T getExecutor(HeaderReader headerReader) {
-    F context = createContext(createSettings());
+  protected T getExecutor(
+      HeaderReader headerReader, Customizer<B> settingsCustomizer, List<String> configs) {
+
+    Properties properties = SettingsLoader.loadProperties(configs, getDefaultProperties(), true);
+    S settings = getRawSettings();
+    PropertyInjector.injectProperties(settings, properties);
+    B settingsBuilder = getSettingsBuilder(settings);
+    settingsCustomizer.customize(settingsBuilder);
+    return getExecutor(headerReader, settingsBuilder.build());
+  }
+
+  protected T getExecutor(HeaderReader headerReader, S settings) {
+    F context = createContext(settings);
     String[] headerRaw = headerReader.getHeader();
     ImpexHeader impexHeader = prepare(headerRaw, context);
     return getInternalExecutor(impexHeader, context);
@@ -54,13 +72,13 @@ public abstract class AbstractImpexiaImportingService<
     return headerImportingHelper.prepare(headerRecords);
   }
 
-  ImportingImpexSettings createSettings() {
-    return SettingsLoader.load(ImportingImpexSettings.builder().build());
-  }
-
   protected abstract Scope getScope();
 
-  protected abstract <S extends ImportingImpexSettings> F createContext(S settings);
+  protected abstract F createContext(S settings);
 
   public abstract T getInternalExecutor(ImpexHeader impexHeader, F context);
+
+  protected abstract S getRawSettings();
+
+  protected abstract B getSettingsBuilder(S settings);
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2024 the original author or authors.
+ * Copyright 2020-2020 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License")
  * you may not use this file except in compliance with the License.
@@ -13,23 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * @author : anas
- * Date :   23-Dec-2024
+ * Date :   30-Nov-2020
  */
 
-package org.anasoid.impexia.core.manager.config;
+package org.anasoid.impexia.core.exceptions;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.SuperBuilder;
-import org.anasoid.impexia.core.settings.PropertyKey;
+public class ImpexTechnicalException extends RuntimeException {
+  static final long serialVersionUID = -3387554564554229948L;
 
-@Getter
-@Setter
-@SuperBuilder(toBuilder = true)
-@SuppressWarnings({"PMD.AbstractClassWithoutAbstractMethod", "PMD.AbstractClassWithoutAnyMethod"})
-public class AbstractImpexSettings {
+  public ImpexTechnicalException(String message) {
+    super(message);
+  }
 
-  @PropertyKey("settings.strict") private Boolean strict;
+  public ImpexTechnicalException(String message, Throwable cause) {
+    super(message, cause);
+  }
 
-  @PropertyKey("settings.dryrun") private DryRunEnum dryRun;
+  public ImpexTechnicalException(Throwable cause) {
+    super(cause);
+  }
 }
