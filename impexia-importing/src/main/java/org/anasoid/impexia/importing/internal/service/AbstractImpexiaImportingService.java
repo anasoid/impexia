@@ -74,7 +74,7 @@ public abstract class AbstractImpexiaImportingService<
 
   protected abstract Scope getScope();
 
-  protected abstract <S extends ImportingImpexSettings> F createContext(S settings);
+  protected abstract F createContext(S settings);
 
   public abstract T getInternalExecutor(ImpexHeader impexHeader, F context);
 

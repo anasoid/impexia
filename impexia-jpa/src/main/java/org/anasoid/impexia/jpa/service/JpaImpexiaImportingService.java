@@ -21,7 +21,6 @@ package org.anasoid.impexia.jpa.service;
 import org.anasoid.impexia.core.data.importing.HeaderReader;
 import org.anasoid.impexia.importing.internal.service.AbstractImpexiaImportingService;
 import org.anasoid.impexia.importing.manager.config.ImportingImpexContext;
-import org.anasoid.impexia.importing.manager.config.ImportingImpexSettings;
 import org.anasoid.impexia.jpa.config.JpaImportingImpexSettings;
 import org.anasoid.impexia.jpa.config.JpaImportingImpexSettings.JpaImportingImpexSettingsBuilder;
 import org.anasoid.impexia.jpa.importing.register.JpaImportingRegistrator;
@@ -63,8 +62,8 @@ public class JpaImpexiaImportingService
   }
 
   @Override
-  protected <S extends ImportingImpexSettings>
-      ImportingImpexContext<JpaImportingImpexSettings> createContext(S settings) {
+  protected ImportingImpexContext<JpaImportingImpexSettings> createContext(
+      JpaImportingImpexSettings settings) {
     return null;
   }
 

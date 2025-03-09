@@ -24,12 +24,12 @@ import lombok.Getter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class PropertyInjectorTest {
+class PropertyInjectorTest {
 
   private Properties properties;
 
   @BeforeEach
-  public void setup() {
+  void setup() {
     // Initialize the Properties object and add test data
     properties = new Properties();
     properties.setProperty("app.config.timeout", "30");
@@ -40,7 +40,7 @@ public class PropertyInjectorTest {
   }
 
   @Test
-  public void testInjectProperties() throws IllegalAccessException {
+  void testInjectProperties() throws IllegalAccessException {
     // Create an instance of the subclass (SubConfig)
     SubConfig subConfig = new SubConfig();
 
@@ -58,7 +58,7 @@ public class PropertyInjectorTest {
   }
 
   @Test
-  public void testInjectPropertiesWithMissingProperties() throws IllegalAccessException {
+  void testInjectPropertiesWithMissingProperties() throws IllegalAccessException {
     // Create an instance of the subclass (SubConfig)
     SubConfig subConfig = new SubConfig();
 
