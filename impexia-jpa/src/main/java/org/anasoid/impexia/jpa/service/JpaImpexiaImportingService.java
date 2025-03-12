@@ -18,9 +18,8 @@
 
 package org.anasoid.impexia.jpa.service;
 
-import org.anasoid.impexia.core.data.importing.HeaderReader;
 import org.anasoid.impexia.importing.internal.service.AbstractImpexiaImportingService;
-import org.anasoid.impexia.importing.manager.config.ImportingImpexContext;
+import org.anasoid.impexia.jpa.config.JpaImportingImpexContext;
 import org.anasoid.impexia.jpa.config.JpaImportingImpexSettings;
 import org.anasoid.impexia.jpa.config.JpaImportingImpexSettings.JpaImportingImpexSettingsBuilder;
 import org.anasoid.impexia.jpa.importing.register.JpaImportingRegistrator;
@@ -33,7 +32,7 @@ public class JpaImpexiaImportingService
         JpaImpexiaImportingExecutor,
         JpaImportingImpexSettings,
         JpaImportingImpexSettingsBuilder<JpaImportingImpexSettings, ?>,
-        ImportingImpexContext<JpaImportingImpexSettings>> {
+        JpaImportingImpexContext> {
 
   public JpaImpexiaImportingService() {
     super(new JpaImportingRegistrator());
@@ -47,13 +46,8 @@ public class JpaImpexiaImportingService
   @Override
   protected JpaImportingImpexSettingsBuilder<JpaImportingImpexSettings, ?> getSettingsBuilder(
       JpaImportingImpexSettings settings) {
-    return null;
-  }
-
-  @Override
-  protected JpaImpexiaImportingExecutor getExecutor(
-      HeaderReader headerReader, JpaImportingImpexSettings settings) {
-    return null;
+    return (JpaImportingImpexSettingsBuilder<JpaImportingImpexSettings, ?>)
+        JpaImportingImpexSettings.builder();
   }
 
   @Override
@@ -62,14 +56,13 @@ public class JpaImpexiaImportingService
   }
 
   @Override
-  protected ImportingImpexContext<JpaImportingImpexSettings> createContext(
-      JpaImportingImpexSettings settings) {
-    return null;
+  protected JpaImportingImpexContext createContext(JpaImportingImpexSettings settings) {
+    return JpaImportingImpexContext.builder().settings(settings).build();
   }
 
   @Override
   public JpaImpexiaImportingExecutor getInternalExecutor(
-      ImpexHeader impexHeader, ImportingImpexContext<JpaImportingImpexSettings> context) {
-    return null;
+      ImpexHeader impexHeader, JpaImportingImpexContext context) {
+    return null; // TODO
   }
 }
