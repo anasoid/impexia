@@ -74,11 +74,14 @@ public abstract class AbstractImpexiaImportingService<
 
   protected abstract Scope getScope();
 
+  /** initial context with settings. */
   protected abstract F createContext(S settings);
 
   public abstract T getInternalExecutor(ImpexHeader impexHeader, F context);
 
+  /** new setting empty. */
   protected abstract S getRawSettings();
 
+  /** empty setting builder. */
   protected abstract B getSettingsBuilder(S settings);
 }
