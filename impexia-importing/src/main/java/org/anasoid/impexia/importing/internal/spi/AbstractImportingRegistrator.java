@@ -19,19 +19,19 @@
 package org.anasoid.impexia.importing.internal.spi;
 
 import org.anasoid.impexia.core.internal.spi.register.AbstractRegistrator;
-import org.anasoid.impexia.importing.register.HeaderPrepareRegistratorAgent;
+import org.anasoid.impexia.importing.register.ImportingHeaderPrepareRegistratorAgent;
 
-public class ImportingRegistrator extends AbstractRegistrator {
+public abstract class AbstractImportingRegistrator extends AbstractRegistrator {
 
   @Override
   public void load() {
     super.load();
-    HeaderPrepareRegistratorAgent.getInstance().load();
+    ImportingHeaderPrepareRegistratorAgent.getInstance().load();
   }
 
   @Override
   public void unLoad() {
     super.unLoad();
-    HeaderPrepareRegistratorAgent.getInstance().unLoad();
+    ImportingHeaderPrepareRegistratorAgent.getInstance().unLoad();
   }
 }

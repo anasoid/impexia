@@ -18,6 +18,6 @@
 
 package org.anasoid.impexia.jpa.importing.register;
 
-import org.anasoid.impexia.importing.internal.spi.ImportingRegistrator;
+import org.anasoid.impexia.importing.internal.spi.AbstractImportingRegistrator;
 
-public class JpaImportingRegistrator extends ImportingRegistrator {}
+public class JpaImportingRegistrator extends AbstractImportingRegistrator {}
