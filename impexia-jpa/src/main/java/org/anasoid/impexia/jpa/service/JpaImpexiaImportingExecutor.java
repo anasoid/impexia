@@ -19,11 +19,14 @@
 package org.anasoid.impexia.jpa.service;
 
 import org.anasoid.impexia.importing.internal.service.AbstractImpexiaImportingExecutor;
+import org.anasoid.impexia.jpa.config.JpaImportingImpexContext;
+import org.anasoid.impexia.jpa.config.JpaImportingImpexSettings;
 import org.anasoid.impexia.meta.header.ImpexHeader;
 
-public class JpaImpexiaImportingExecutor extends AbstractImpexiaImportingExecutor {
+public class JpaImpexiaImportingExecutor
+    extends AbstractImpexiaImportingExecutor<JpaImportingImpexSettings, JpaImportingImpexContext> {
 
-  public JpaImpexiaImportingExecutor(ImpexHeader impexHeader) {
-    super(impexHeader);
+  public JpaImpexiaImportingExecutor(ImpexHeader impexHeader, JpaImportingImpexContext context) {
+    super(impexHeader, context);
   }
 }

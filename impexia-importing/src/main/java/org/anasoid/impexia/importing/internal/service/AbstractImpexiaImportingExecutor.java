@@ -18,16 +18,25 @@
 
 package org.anasoid.impexia.importing.internal.service;
 
+import lombok.AccessLevel;
+import lombok.Getter;
 import org.anasoid.impexia.core.data.importing.DataReader;
+import org.anasoid.impexia.importing.manager.config.ImportingImpexContext;
+import org.anasoid.impexia.importing.manager.config.ImportingImpexSettings;
 import org.anasoid.impexia.meta.header.ImpexHeader;
 
 @SuppressWarnings("PMD.AbstractClassWithoutAbstractMethod")
-public abstract class AbstractImpexiaImportingExecutor {
+public abstract class AbstractImpexiaImportingExecutor<
+    T extends ImportingImpexSettings, C extends ImportingImpexContext<T>> {
   @SuppressWarnings("PMD.UnusedPrivateField")
   private final ImpexHeader impexHeader;
 
-  protected AbstractImpexiaImportingExecutor(ImpexHeader impexHeader) {
+  @Getter(AccessLevel.PROTECTED)
+  private final C context;
+
+  protected AbstractImpexiaImportingExecutor(ImpexHeader impexHeader, C context) {
     this.impexHeader = impexHeader;
+    this.context = context;
   }
 
   void importData(DataReader dataReader) {}

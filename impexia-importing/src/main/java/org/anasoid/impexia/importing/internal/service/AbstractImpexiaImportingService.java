@@ -37,7 +37,7 @@ public abstract class AbstractImpexiaImportingService<
         S extends ImportingImpexSettings,
         B extends ImportingImpexSettings.ImportingImpexSettingsBuilder<S, ?>,
         F extends ImportingImpexContext<S>>
-    extends AbstractImpexiaService {
+    extends AbstractImpexiaService implements ImpexiaImportingService<T, S, B> {
 
   protected AbstractImpexiaImportingService(AbstractRegistrator registrator) {
     super(registrator);
@@ -47,7 +47,8 @@ public abstract class AbstractImpexiaImportingService<
     //
   }
 
-  protected T getExecutor(
+  @Override
+  public T getExecutor(
       HeaderReader headerReader, Customizer<B> settingsCustomizer, List<String> configs) {
 
     Properties properties = SettingsLoader.loadProperties(configs, getDefaultProperties(), true);
@@ -58,7 +59,8 @@ public abstract class AbstractImpexiaImportingService<
     return getExecutor(headerReader, settingsBuilder.build());
   }
 
-  protected T getExecutor(HeaderReader headerReader, S settings) {
+  @Override
+  public T getExecutor(HeaderReader headerReader, S settings) {
     F context = createContext(settings);
     String[] headerRaw = headerReader.getHeader();
     ImpexHeader impexHeader = prepare(headerRaw, context);
@@ -82,6 +84,6 @@ public abstract class AbstractImpexiaImportingService<
   /** new setting empty. */
   protected abstract S getRawSettings();
 
-  /** empty setting builder. */
+  /** builder from settings. */
   protected abstract B getSettingsBuilder(S settings);
 }

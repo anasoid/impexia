@@ -40,14 +40,13 @@ public class JpaImpexiaImportingService
 
   @Override
   protected JpaImportingImpexSettings getRawSettings() {
-    return null;
+    return JpaImportingImpexSettings.builder().build();
   }
 
   @Override
   protected JpaImportingImpexSettingsBuilder<JpaImportingImpexSettings, ?> getSettingsBuilder(
       JpaImportingImpexSettings settings) {
-    return (JpaImportingImpexSettingsBuilder<JpaImportingImpexSettings, ?>)
-        JpaImportingImpexSettings.builder();
+    return (JpaImportingImpexSettingsBuilder<JpaImportingImpexSettings, ?>) settings.toBuilder();
   }
 
   @Override
@@ -63,6 +62,6 @@ public class JpaImpexiaImportingService
   @Override
   public JpaImpexiaImportingExecutor getInternalExecutor(
       ImpexHeader impexHeader, JpaImportingImpexContext context) {
-    return null; // TODO
+    return new JpaImpexiaImportingExecutor(impexHeader, context);
   }
 }
