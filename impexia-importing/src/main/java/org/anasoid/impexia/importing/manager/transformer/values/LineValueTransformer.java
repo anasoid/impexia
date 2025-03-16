@@ -16,7 +16,7 @@
  * Date :   22-Dec-2024
  */
 
-package org.anasoid.impexia.importing.manager.transformer;
+package org.anasoid.impexia.importing.manager.transformer.values;
 
 import org.anasoid.impexia.core.manager.transformer.Transformer;
 import org.anasoid.impexia.core.manager.values.LineValues;

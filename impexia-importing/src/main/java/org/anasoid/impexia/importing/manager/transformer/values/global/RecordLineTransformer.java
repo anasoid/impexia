@@ -16,7 +16,7 @@
  * Date :   22-Dec-2024
  */
 
-package org.anasoid.impexia.importing.manager.transformer.global;
+package org.anasoid.impexia.importing.manager.transformer.values.global;
 
 import static org.anasoid.impexia.core.validators.header.descriptor.modifier.ModifierDescriptorEnumGlobal.DEFAULT;
 import static org.anasoid.impexia.core.validators.header.descriptor.modifier.ModifierDescriptorEnumGlobal.VIRTUAL;
