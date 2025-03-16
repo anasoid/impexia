@@ -18,6 +18,20 @@
 
 package org.anasoid.impexia.jpa.importing.register;
 
+import org.anasoid.impexia.core.internal.spi.register.RegistratorAgent;
+import org.anasoid.impexia.core.validators.header.descriptor.modifier.ModifierDescriptorEnum;
+import org.anasoid.impexia.importing.internal.api.register.RegisterHeaderPrepareElement;
 import org.anasoid.impexia.importing.internal.spi.AbstractImportingRegistrator;
 
-public class JpaImportingRegistrator extends AbstractImportingRegistrator {}
+public class JpaImportingRegistrator extends AbstractImportingRegistrator {
+
+  @Override
+  protected RegistratorAgent<RegisterHeaderPrepareElement> getHeaderPrepareAgent() {
+    return null;
+  }
+
+  @Override
+  protected RegistratorAgent<ModifierDescriptorEnum> getModifierDescriptorAgent() {
+    return null;
+  }
+}

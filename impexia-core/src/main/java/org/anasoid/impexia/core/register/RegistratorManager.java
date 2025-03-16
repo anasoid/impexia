@@ -16,13 +16,9 @@
  * Date :   01-Jan-2025
  */
 
-package org.anasoid.impexia.core.internal.spi.register;
+package org.anasoid.impexia.core.register;
 
-public interface RegistratorAgent<T> {
+public interface RegistratorManager<T> {
 
-  void load();
-
-  void unLoad();
-
-  void unLoadForce();
+  void register(T t);
 }

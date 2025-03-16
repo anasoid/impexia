@@ -19,19 +19,21 @@
 package org.anasoid.impexia.importing.register;
 
 import org.anasoid.impexia.core.internal.spi.register.RegistratorAgent;
-import org.anasoid.impexia.importing.internal.api.register.HeaderPrepareRegister;
-import org.anasoid.impexia.importing.internal.api.register.HeaderPrepareRegister.UnLoader;
+import org.anasoid.impexia.importing.internal.api.register.RegisterHeaderPrepareElement;
+import org.anasoid.impexia.importing.internal.api.register.RegisterHeaderPrepareManager;
+import org.anasoid.impexia.importing.internal.api.register.RegisterHeaderPrepareManager.UnLoader;
 
-public final class ImportingHeaderPrepareRegistratorAgent implements RegistratorAgent {
+public final class ImportingHeaderPrepareRegistratorAgent
+    implements RegistratorAgent<RegisterHeaderPrepareElement> {
 
   @SuppressWarnings("PMD.UnusedPrivateField")
-  private final HeaderPrepareRegister headerPrepareManager;
+  private final RegisterHeaderPrepareManager headerPrepareManager;
 
   @SuppressWarnings("PMD.AvoidUsingVolatile")
   private volatile boolean loaded;
 
   private ImportingHeaderPrepareRegistratorAgent() {
-    headerPrepareManager = HeaderPrepareRegister.getInstance();
+    headerPrepareManager = RegisterHeaderPrepareManager.getInstance();
   }
 
   public static ImportingHeaderPrepareRegistratorAgent getInstance() {

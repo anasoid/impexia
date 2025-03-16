@@ -22,12 +22,13 @@ import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import org.anasoid.impexia.core.register.RegistratorManager;
 import org.anasoid.impexia.core.validators.header.descriptor.modifier.ModifierDescriptor;
 import org.anasoid.impexia.core.validators.header.descriptor.modifier.ModifierDescriptor.ModifierDescriptorBuilder;
 import org.anasoid.impexia.core.validators.header.descriptor.modifier.ModifierDescriptorEnum;
 import org.anasoid.impexia.meta.Scope;
 
-public class RegisterModifierManager {
+public class RegisterModifierManager implements RegistratorManager<ModifierDescriptorEnum> {
 
   @SuppressWarnings("PMD.UseConcurrentHashMap")
   private final Map<String, ModifierDescriptor> registeredModifiers = new HashMap<>();
@@ -44,6 +45,7 @@ public class RegisterModifierManager {
     static final RegisterModifierManager INSTANCE = new RegisterModifierManager(); // NOPMD
   }
 
+  @Override
   public void register(ModifierDescriptorEnum modifierDescriptorEnum) {
     ModifierDescriptorBuilder<?, ?> builder =
         ModifierDescriptor.builder(modifierDescriptorEnum, modifierDescriptorEnum.getScope())

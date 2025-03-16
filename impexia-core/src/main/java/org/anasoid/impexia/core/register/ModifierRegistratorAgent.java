@@ -21,9 +21,10 @@ package org.anasoid.impexia.core.register;
 import org.anasoid.impexia.core.internal.api.register.RegisterModifierManager;
 import org.anasoid.impexia.core.internal.api.register.RegisterModifierManager.UnLoader;
 import org.anasoid.impexia.core.internal.spi.register.RegistratorAgent;
+import org.anasoid.impexia.core.validators.header.descriptor.modifier.ModifierDescriptorEnum;
 import org.anasoid.impexia.core.validators.header.descriptor.modifier.ModifierDescriptorEnumGlobal;
 
-public final class ModifierRegistratorAgent implements RegistratorAgent {
+public final class ModifierRegistratorAgent implements RegistratorAgent<ModifierDescriptorEnum> {
 
   private final RegisterModifierManager registerModifierManager;
 
