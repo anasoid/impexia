@@ -19,7 +19,7 @@
 package org.anasoid.impexia.importing.internal.service;
 
 import org.anasoid.impexia.core.parser.header.HeaderParser;
-import org.anasoid.impexia.importing.internal.api.register.HeaderPrepareRegister;
+import org.anasoid.impexia.importing.internal.api.register.RegisterHeaderPrepareManager;
 import org.anasoid.impexia.importing.manager.config.ImportingImpexContext;
 import org.anasoid.impexia.importing.manager.prepare.PrepareHeader;
 import org.anasoid.impexia.meta.Scope;
@@ -33,7 +33,8 @@ class HeaderImportingHelper {
   public HeaderImportingHelper(ImportingImpexContext<?> context, Scope scope) {
     this.context = context;
     this.prepareHeader =
-        new PrepareHeader(HeaderPrepareRegister.getInstance().getPrepareHeaderByScope(scope));
+        new PrepareHeader(
+            RegisterHeaderPrepareManager.getInstance().getPrepareHeaderByScope(scope));
   }
 
   @SuppressWarnings("PMD.UseVarargs")

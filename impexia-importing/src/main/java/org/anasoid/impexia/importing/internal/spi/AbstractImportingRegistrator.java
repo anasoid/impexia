@@ -16,22 +16,24 @@
  * Date :   01-Jan-2025
  */
 
-package org.anasoid.impexia.jpa.importing.register;
+package org.anasoid.impexia.importing.internal.spi;
 
+import org.anasoid.impexia.core.internal.spi.register.AbstractRegistrator;
 import org.anasoid.impexia.core.internal.spi.register.RegistratorAgent;
-import org.anasoid.impexia.core.validators.header.descriptor.modifier.ModifierDescriptorEnum;
 import org.anasoid.impexia.importing.internal.api.register.RegisterHeaderPrepareElement;
-import org.anasoid.impexia.importing.internal.spi.AbstractImportingRegistrator;
+import org.anasoid.impexia.importing.register.ImportingHeaderPrepareRegistratorAgent;
 
-public class JpaImportingRegistrator extends AbstractImportingRegistrator {
+public abstract class AbstractImportingRegistrator extends AbstractRegistrator {
 
-  @Override
-  protected RegistratorAgent<RegisterHeaderPrepareElement> getHeaderPrepareAgent() {
-    return null;
+  @SuppressWarnings("PMD.ConstructorCallsOverridableMethod")
+  public AbstractImportingRegistrator() {
+    getRegistratorAgents().add(ImportingHeaderPrepareRegistratorAgent.getInstance());
+    RegistratorAgent<RegisterHeaderPrepareElement> importingHeaderPrepareAgent =
+        getHeaderPrepareAgent();
+    if (importingHeaderPrepareAgent != null) {
+      getRegistratorAgents().add(importingHeaderPrepareAgent);
+    }
   }
 
-  @Override
-  protected RegistratorAgent<ModifierDescriptorEnum> getModifierDescriptorAgent() {
-    return null;
-  }
+  protected abstract RegistratorAgent<RegisterHeaderPrepareElement> getHeaderPrepareAgent();
 }

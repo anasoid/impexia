@@ -18,16 +18,35 @@
 
 package org.anasoid.impexia.core.internal.spi.register;
 
+import java.util.ArrayList;
+import java.util.List;
+import lombok.AccessLevel;
+import lombok.Getter;
 import org.anasoid.impexia.core.register.ModifierRegistratorAgent;
+import org.anasoid.impexia.core.validators.header.descriptor.modifier.ModifierDescriptorEnum;
 
 @SuppressWarnings("PMD.AbstractClassWithoutAbstractMethod")
 public abstract class AbstractRegistrator {
 
+  @Getter(AccessLevel.PROTECTED)
+  protected List<RegistratorAgent> registratorAgents = new ArrayList<>();
+
+  @SuppressWarnings("PMD.ConstructorCallsOverridableMethod")
+  public AbstractRegistrator() {
+    registratorAgents.add(ModifierRegistratorAgent.getInstance());
+    RegistratorAgent<ModifierDescriptorEnum> modifierDescriptorAgent = getModifierDescriptorAgent();
+    if (modifierDescriptorAgent != null) {
+      getRegistratorAgents().add(modifierDescriptorAgent);
+    }
+  }
+
   public void load() {
-    ModifierRegistratorAgent.getInstance().load();
+    registratorAgents.forEach(RegistratorAgent::load);
   }
 
   public void unLoad() {
-    ModifierRegistratorAgent.getInstance().unLoad();
+    registratorAgents.forEach(RegistratorAgent::unLoad);
   }
+
+  protected abstract RegistratorAgent<ModifierDescriptorEnum> getModifierDescriptorAgent();
 }

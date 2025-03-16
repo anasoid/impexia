@@ -18,7 +18,7 @@
 
 package org.anasoid.impexia.core.internal.spi.register;
 
-public interface RegistratorAgent {
+public interface RegistratorAgent<T> {
 
   void load();
 

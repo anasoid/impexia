@@ -8,6 +8,7 @@ import org.anasoid.impexia.core.manager.values.AtomicColumnReference;
 import org.anasoid.impexia.core.manager.values.LineValues;
 import org.anasoid.impexia.importing.manager.config.ImportingImpexContext;
 import org.anasoid.impexia.importing.manager.config.ImportingImpexSettings;
+import org.anasoid.impexia.importing.manager.transformer.values.global.RecordLineTransformer;
 import org.anasoid.impexia.meta.header.ImpexAction;
 import org.anasoid.impexia.meta.header.ImpexAttribute;
 import org.anasoid.impexia.meta.header.ImpexHeader;

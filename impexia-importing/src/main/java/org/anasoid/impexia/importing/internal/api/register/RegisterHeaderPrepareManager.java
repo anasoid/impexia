@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 import org.anasoid.impexia.core.manager.transformer.MonoTransformer;
 import org.anasoid.impexia.core.manager.transformer.TransformerOrder;
+import org.anasoid.impexia.core.register.RegistratorManager;
 import org.anasoid.impexia.importing.manager.config.ImportingImpexContext;
 import org.anasoid.impexia.meta.Scope;
 import org.anasoid.impexia.meta.header.ImpexHeader;
@@ -30,7 +31,8 @@ import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 import org.apache.commons.lang3.tuple.Pair;
 
-public class HeaderPrepareRegister {
+public class RegisterHeaderPrepareManager
+    implements RegistratorManager<RegisterHeaderPrepareElement> {
 
   @SuppressWarnings("PMD.UseConcurrentHashMap")
   private final Map<
@@ -41,13 +43,23 @@ public class HeaderPrepareRegister {
           String, Pair<TransformerOrder, MonoTransformer<ImpexHeader, ImportingImpexContext<?>>>>
       headerPrepareFiltersByScope = new ArrayListValuedHashMap<>();
 
-  public static HeaderPrepareRegister getInstance() {
-    return HeaderPrepareRegister.LazyHolder.INSTANCE;
+  public static RegisterHeaderPrepareManager getInstance() {
+    return RegisterHeaderPrepareManager.LazyHolder.INSTANCE;
   }
 
   private static final class LazyHolder {
 
-    static final HeaderPrepareRegister INSTANCE = new HeaderPrepareRegister(); // NOPMD
+    static final RegisterHeaderPrepareManager INSTANCE =
+        new RegisterHeaderPrepareManager(); // NOPMD
+  }
+
+  @Override
+  public void register(RegisterHeaderPrepareElement element) {
+    this.register(
+        element.getName(),
+        element.getScope(),
+        element.getTransformerOrder(),
+        element.getTransformer());
   }
 
   public void register(
@@ -68,7 +80,7 @@ public class HeaderPrepareRegister {
   public static class UnLoader {
 
     public void unload() {
-      HeaderPrepareRegister.getInstance().unload();
+      RegisterHeaderPrepareManager.getInstance().unload();
     }
   }
 
