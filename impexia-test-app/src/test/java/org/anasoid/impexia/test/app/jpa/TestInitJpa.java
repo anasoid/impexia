@@ -30,13 +30,15 @@ class TestInitJpa {
   @Test
   void testSaveUser() {
 
-    EntityManager em = EntityManagerUtil.getEntityManager();
-    em.getTransaction().begin();
-    User user = new User();
-    user.setEmail("test@test.com");
-    user.setName(new Name("first", "middle", "last"));
-    em.persist(user);
-    em.getTransaction().commit();
-    Assertions.assertTrue(!Objects.isNull(user.getId()));
+    try (EntityManager em = EntityManagerUtil.getEntityManagerFactory().createEntityManager()) {
+
+      em.getTransaction().begin();
+      User user = new User();
+      user.setEmail("test@test.com");
+      user.setName(new Name("first", "middle", "last"));
+      em.persist(user);
+      em.getTransaction().commit();
+      Assertions.assertTrue(!Objects.isNull(user.getId()));
+    }
   }
 }

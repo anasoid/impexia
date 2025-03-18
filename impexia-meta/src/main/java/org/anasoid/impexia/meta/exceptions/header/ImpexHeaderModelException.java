@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2025 the original author or authors.
+ * Copyright 2020-2020 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License")
  * you may not use this file except in compliance with the License.
@@ -13,19 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * @author : anas
- * Date :   12-Mar-2025
+ * Date :   07-Nov-2020
  */
 
-package org.anasoid.impexia.jpa.config;
+package org.anasoid.impexia.meta.exceptions.header;
 
-import jakarta.persistence.EntityManager;
-import lombok.Getter;
-import lombok.experimental.SuperBuilder;
-import org.anasoid.impexia.importing.manager.config.ImportingImpexContext;
+public class ImpexHeaderModelException extends RuntimeException {
+  static final long serialVersionUID = -3387516993124229948L;
 
-@Getter
-@SuperBuilder
-public class JpaImportingImpexContext extends ImportingImpexContext<JpaImportingImpexSettings> {
-
-  private EntityManager entityManager;
+  public ImpexHeaderModelException(String message) {
+    super(message);
+  }
 }
