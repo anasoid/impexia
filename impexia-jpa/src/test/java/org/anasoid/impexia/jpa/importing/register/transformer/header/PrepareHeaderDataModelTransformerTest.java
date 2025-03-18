@@ -1,3 +1,7 @@
+package org.anasoid.impexia.jpa.importing.register.transformer.header;
+
+import static org.junit.jupiter.api.Assertions.*;
+
 /*
  * Copyright 2020-2025 the original author or authors.
  *
@@ -13,19 +17,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * @author : anas
- * Date :   12-Mar-2025
+ * Date :   16-Mar-2025
  */
 
-package org.anasoid.impexia.jpa.config;
-
-import jakarta.persistence.EntityManager;
-import lombok.Getter;
-import lombok.experimental.SuperBuilder;
-import org.anasoid.impexia.importing.manager.config.ImportingImpexContext;
-
-@Getter
-@SuperBuilder
-public class JpaImportingImpexContext extends ImportingImpexContext<JpaImportingImpexSettings> {
-
-  private EntityManager entityManager;
-}
+class PrepareHeaderDataModelTransformerTest {}
