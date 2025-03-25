@@ -9,5 +9,6 @@
   <suppress  files=".*.java" message=".*Missing a Javadoc comment.*" />
   <suppress  files=".*.java" message=".*must contain no more than '1' consecutive capital letters.*" />
   <suppress  files=".*.java" message=".*Using the '\.\*' form of import should be avoided.*" />
+  <suppress  files=".*.java" message=".* type name '.*' must match pattern.*" />
 
 </suppressions>

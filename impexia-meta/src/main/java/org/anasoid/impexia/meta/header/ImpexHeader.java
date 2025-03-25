@@ -61,7 +61,7 @@ public class ImpexHeader {
   List<ImpexAttribute> getAttributesByKey(String code) {
 
     return attributes.stream()
-        .filter(atr -> atr.getModifiers().stream().anyMatch(m -> m.key.equalsIgnoreCase(code)))
+        .filter(atr -> atr.getModifiers().stream().anyMatch(m -> m.getKey().equalsIgnoreCase(code)))
         .toList();
   }
 }
