@@ -30,9 +30,9 @@ import org.anasoid.impexia.importing.manager.config.ImportingImpexContext;
 import org.anasoid.impexia.meta.header.ImpexHeader;
 
 public class ImportProcessorManager<
-    D, S extends DataSourceContainer<D>, C extends ImportingImpexContext<?>, R, T> {
+    S extends DataSourceContainer<?>, C extends ImportingImpexContext<?>, R, T> {
 
-  private ImportProcessor<D, S, C, R, T> importProcessor;
+  private ImportProcessor<S, C, R, T> importProcessor;
 
   @SuppressWarnings("PMD.ExhaustiveSwitchHasDefault")
   public void process(S datasource, ImpexHeader impexHeader, C context, LineValues lineValues)

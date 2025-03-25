@@ -25,7 +25,7 @@ import org.anasoid.impexia.importing.manager.config.ImportingImpexContext;
 import org.anasoid.impexia.meta.header.ImpexHeader;
 
 public interface ImportProcessor<
-    D, S extends DataSourceContainer<D>, C extends ImportingImpexContext<?>, R, T> {
+    S extends DataSourceContainer<?>, C extends ImportingImpexContext<?>, R, T> {
 
   int insert(S datasource, ImpexHeader impexHeader, C context, LineValues lineValues);
 
