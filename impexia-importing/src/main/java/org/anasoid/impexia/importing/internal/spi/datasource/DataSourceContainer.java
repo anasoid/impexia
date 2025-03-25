@@ -18,7 +18,17 @@
 
 package org.anasoid.impexia.importing.internal.spi.datasource;
 
-public interface DataSourceContainer<T> {
+public interface DataSourceContainer<T, I, R> {
 
   T getDataSource();
+
+  void saveItem(I item);
+
+  void saveReference(R reference);
+
+  void beginTransaction();
+
+  void commitTransaction();
+
+  void rollbackTransaction();
 }
