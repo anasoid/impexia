@@ -29,18 +29,18 @@ import lombok.experimental.SuperBuilder;
 @ToString
 public class ImpexModifier {
 
-  @Getter protected String key;
-  @Getter protected String value;
+  @Getter private String key;
+  @Getter private String value;
 
   @Setter(AccessLevel.PROTECTED)
   @Getter
   @ToString.Exclude
-  protected ImpexAttribute attribute;
+  private ImpexAttribute attribute;
 
   @Setter(AccessLevel.PROTECTED)
   @Getter
   @ToString.Exclude
-  protected ImpexHeader header;
+  private ImpexHeader header;
 
   public static ImpexModifier.ImpexModifierBuilder builder(String key) {
     return new ImpexModifier.ImpexModifierBuilderImpl().key(key);

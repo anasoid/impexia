@@ -42,7 +42,7 @@ import org.anasoid.impexia.meta.spi.handler.Translator;
 
 /** List of acceptable Modifiers. */
 public enum ModifierDescriptorEnumGlobal implements ModifierDescriptorEnum {
-  BATCHMODE(of(TYPE), of(UPDATE, INSERT_UPDATE), of(IMPORT), Boolean.class, GLOBAL),
+  BATCHMODE(of(TYPE), of(UPDATE, INSERT_UPDATE, REMOVE), of(IMPORT), Boolean.class, GLOBAL),
   LISTENER(of(TYPE), EMPTY_SET, of(IMPORT), Listener.class, GLOBAL),
   ERRORHANDLER(of(TYPE), EMPTY_SET, of(IMPORT), ErrorHandler.class, GLOBAL),
   CELLDECORATOR(of(FIELD), EMPTY_SET, of(IMPORT, EXPORT), CellDecorator.class, GLOBAL),
