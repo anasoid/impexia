@@ -22,18 +22,30 @@ import java.util.Iterator;
 import org.anasoid.impexia.core.manager.values.LineValues;
 import org.anasoid.impexia.importing.internal.spi.datasource.DataSourceContainer;
 import org.anasoid.impexia.importing.manager.config.ImportingImpexContext;
-import org.anasoid.impexia.meta.header.ImpexHeader;
+import org.anasoid.impexia.importing.manager.processor.header.ImportHeaderProcessor;
 
 public interface ImportProcessor<
-    S extends DataSourceContainer<?>, C extends ImportingImpexContext<?>, R, T> {
+    S extends DataSourceContainer<?, ?, ?>, C extends ImportingImpexContext<?>, R, T> {
 
-  int insert(S datasource, ImpexHeader impexHeader, C context, LineValues lineValues);
+  void insert(
+      S datasource, ImportHeaderProcessor importHeaderProcessor, C context, LineValues lineValues);
 
-  int update(S datasource, ImpexHeader impexHeader, C context, R item, LineValues lineValues);
+  int update(
+      S datasource,
+      ImportHeaderProcessor importHeaderProcessor,
+      C context,
+      R item,
+      LineValues lineValues);
 
-  Iterator<R> load(S datasource, ImpexHeader impexHeader, C context, LineValues lineValues);
+  Iterator<R> load(
+      S datasource, ImportHeaderProcessor importHeaderProcessor, C context, LineValues lineValues);
 
-  int remove(S datasource, ImpexHeader impexHeader, C context, R item, LineValues lineValues);
+  int remove(
+      S datasource,
+      ImportHeaderProcessor importHeaderProcessor,
+      C context,
+      R item,
+      LineValues lineValues);
 
   T loadItem(C context, R itemReference);
 }

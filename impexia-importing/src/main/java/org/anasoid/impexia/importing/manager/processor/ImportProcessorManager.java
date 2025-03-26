@@ -27,52 +27,57 @@ import org.anasoid.impexia.core.utils.ImpexModifierUtils;
 import org.anasoid.impexia.importing.internal.spi.datasource.DataSourceContainer;
 import org.anasoid.impexia.importing.internal.spi.processor.ImportProcessor;
 import org.anasoid.impexia.importing.manager.config.ImportingImpexContext;
-import org.anasoid.impexia.meta.header.ImpexHeader;
+import org.anasoid.impexia.importing.manager.processor.header.ImportHeaderProcessor;
 
 public class ImportProcessorManager<
-    S extends DataSourceContainer<?>, C extends ImportingImpexContext<?>, R, T> {
+    S extends DataSourceContainer<?, ?, ?>, C extends ImportingImpexContext<?>, R, T> {
 
   private ImportProcessor<S, C, R, T> importProcessor;
 
   @SuppressWarnings("PMD.ExhaustiveSwitchHasDefault")
-  public void process(S datasource, ImpexHeader impexHeader, C context, LineValues lineValues)
+  public void process(
+      S datasource, ImportHeaderProcessor importHeaderProcessor, C context, LineValues lineValues)
       throws IllegalActionMultipleTargetException,
           IllegalActionItemAlreadyExistsException,
           IllegalActionNoItemFoundException {
 
-    switch (impexHeader.getAction()) {
+    switch (importHeaderProcessor.getImpexHeader().getAction()) {
       case INSERT:
-        this.insert(datasource, impexHeader, context, lineValues);
+        this.insert(datasource, importHeaderProcessor, context, lineValues);
         break;
       case UPDATE:
-        this.update(datasource, impexHeader, context, lineValues);
+        this.update(datasource, importHeaderProcessor, context, lineValues);
         break;
       case INSERT_UPDATE:
-        this.insertOrUpdate(datasource, impexHeader, context, lineValues);
+        this.insertOrUpdate(datasource, importHeaderProcessor, context, lineValues);
         break;
       case REMOVE:
-        this.remove(datasource, impexHeader, context, lineValues);
+        this.remove(datasource, importHeaderProcessor, context, lineValues);
         break;
       default:
         break;
     }
   }
 
-  protected int insert(S datasource, ImpexHeader impexHeader, C context, LineValues lineValues)
+  protected void insert(
+      S datasource, ImportHeaderProcessor importHeaderProcessor, C context, LineValues lineValues)
       throws IllegalActionItemAlreadyExistsException {
-    Iterator<R> iteratorItemReference = this.load(datasource, impexHeader, context, lineValues);
+    Iterator<R> iteratorItemReference =
+        this.load(datasource, importHeaderProcessor, context, lineValues);
     if (!iteratorItemReference.hasNext()) {
-      return importProcessor.insert(datasource, impexHeader, context, lineValues);
+      importProcessor.insert(datasource, importHeaderProcessor, context, lineValues);
     } else {
       throw new IllegalActionItemAlreadyExistsException();
     }
   }
 
-  protected int update(S datasource, ImpexHeader impexHeader, C context, LineValues lineValues)
+  protected int update(
+      S datasource, ImportHeaderProcessor importHeaderProcessor, C context, LineValues lineValues)
       throws IllegalActionMultipleTargetException, IllegalActionNoItemFoundException {
-    Iterator<R> iteratorItemReference = this.load(datasource, impexHeader, context, lineValues);
+    Iterator<R> iteratorItemReference =
+        this.load(datasource, importHeaderProcessor, context, lineValues);
     if (iteratorItemReference.hasNext()) {
-      return update(datasource, impexHeader, context, iteratorItemReference, lineValues);
+      return update(datasource, importHeaderProcessor, context, iteratorItemReference, lineValues);
     } else {
       throw new IllegalActionNoItemFoundException();
     }
@@ -80,54 +85,64 @@ public class ImportProcessorManager<
 
   private int update(
       S datasource,
-      ImpexHeader impexHeader,
+      ImportHeaderProcessor importHeaderProcessor,
       C context,
       Iterator<R> iteratorItemReference,
       LineValues lineValues)
       throws IllegalActionMultipleTargetException {
 
     R itemReference = iteratorItemReference.next();
-    if (!ImpexModifierUtils.isBatchMode(impexHeader) && iteratorItemReference.hasNext()) {
+    if (!ImpexModifierUtils.isBatchMode(importHeaderProcessor.getImpexHeader())
+        && iteratorItemReference.hasNext()) {
       throw new IllegalActionMultipleTargetException();
     }
 
     int result =
-        importProcessor.update(datasource, impexHeader, context, itemReference, lineValues);
+        importProcessor.update(
+            datasource, importHeaderProcessor, context, itemReference, lineValues);
     while (iteratorItemReference.hasNext()) {
       itemReference = iteratorItemReference.next();
-      result += importProcessor.update(datasource, impexHeader, context, itemReference, lineValues);
+      result +=
+          importProcessor.update(
+              datasource, importHeaderProcessor, context, itemReference, lineValues);
     }
     return result;
   }
 
   protected int insertOrUpdate(
-      S datasource, ImpexHeader impexHeader, C context, LineValues lineValues)
+      S datasource, ImportHeaderProcessor importHeaderProcessor, C context, LineValues lineValues)
       throws IllegalActionMultipleTargetException {
-    Iterator<R> iteratorItemReference = this.load(datasource, impexHeader, context, lineValues);
+    Iterator<R> iteratorItemReference =
+        this.load(datasource, importHeaderProcessor, context, lineValues);
     if (iteratorItemReference.hasNext()) {
-      return update(datasource, impexHeader, context, iteratorItemReference, lineValues);
+      return update(datasource, importHeaderProcessor, context, iteratorItemReference, lineValues);
     } else {
-      importProcessor.insert(datasource, impexHeader, context, lineValues);
+      importProcessor.insert(datasource, importHeaderProcessor, context, lineValues);
       return 1;
     }
   }
 
-  protected int remove(S datasource, ImpexHeader impexHeader, C context, LineValues lineValues)
+  protected int remove(
+      S datasource, ImportHeaderProcessor importHeaderProcessor, C context, LineValues lineValues)
       throws IllegalActionNoItemFoundException, IllegalActionMultipleTargetException {
 
-    Iterator<R> iteratorItemReference = this.load(datasource, impexHeader, context, lineValues);
+    Iterator<R> iteratorItemReference =
+        this.load(datasource, importHeaderProcessor, context, lineValues);
     if (iteratorItemReference.hasNext()) {
       R itemReference = iteratorItemReference.next();
-      if (!ImpexModifierUtils.isBatchMode(impexHeader) && iteratorItemReference.hasNext()) {
+      if (!ImpexModifierUtils.isBatchMode(importHeaderProcessor.getImpexHeader())
+          && iteratorItemReference.hasNext()) {
         throw new IllegalActionMultipleTargetException();
       }
 
       int result =
-          importProcessor.remove(datasource, impexHeader, context, itemReference, lineValues);
+          importProcessor.remove(
+              datasource, importHeaderProcessor, context, itemReference, lineValues);
       while (iteratorItemReference.hasNext()) {
         itemReference = iteratorItemReference.next();
         result +=
-            importProcessor.remove(datasource, impexHeader, context, itemReference, lineValues);
+            importProcessor.remove(
+                datasource, importHeaderProcessor, context, itemReference, lineValues);
       }
       return result;
     } else {
@@ -135,7 +150,8 @@ public class ImportProcessorManager<
     }
   }
 
-  Iterator<R> load(S datasource, ImpexHeader impexHeader, C context, LineValues lineValues) {
-    return importProcessor.load(datasource, impexHeader, context, lineValues);
+  Iterator<R> load(
+      S datasource, ImportHeaderProcessor importHeaderProcessor, C context, LineValues lineValues) {
+    return importProcessor.load(datasource, importHeaderProcessor, context, lineValues);
   }
 }
