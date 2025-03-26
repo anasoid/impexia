@@ -18,38 +18,49 @@
 
 package org.anasoid.impexia.importing.internal.spi.processor;
 
+import java.util.Iterator;
+import java.util.Map;
 import org.anasoid.impexia.core.manager.values.LineValues;
 import org.anasoid.impexia.importing.internal.spi.datasource.DataSourceContainer;
 import org.anasoid.impexia.importing.manager.config.ImportingImpexContext;
-import org.anasoid.impexia.meta.header.ImpexHeader;
-import java.util.Iterator;
-import java.util.Map;
+import org.anasoid.impexia.importing.manager.processor.header.ImportHeaderProcessor;
 
 public class DefaultImportProcessor implements ImportProcessor {
   Map<String, AttributeProcessor<?, ?>> attributeProcessors;
 
   @Override
-  public int insert(DataSourceContainer datasource, ImpexHeader impexHeader,
-      ImportingImpexContext context, LineValues lineValues) {
+  public void insert(
+      DataSourceContainer datasource,
+      ImportHeaderProcessor importHeaderProcessor,
+      ImportingImpexContext context,
+      LineValues lineValues) {}
 
+  @Override
+  public int update(
+      DataSourceContainer datasource,
+      ImportHeaderProcessor importHeaderProcessor,
+      ImportingImpexContext context,
+      Object item,
+      LineValues lineValues) {
     return 0;
   }
 
   @Override
-  public int update(DataSourceContainer datasource, ImpexHeader impexHeader,
-      ImportingImpexContext context, Object item, LineValues lineValues) {
-    return 0;
-  }
-
-  @Override
-  public Iterator load(DataSourceContainer datasource, ImpexHeader impexHeader,
-      ImportingImpexContext context, LineValues lineValues) {
+  public Iterator load(
+      DataSourceContainer datasource,
+      ImportHeaderProcessor importHeaderProcessor,
+      ImportingImpexContext context,
+      LineValues lineValues) {
     return null;
   }
 
   @Override
-  public int remove(DataSourceContainer datasource, ImpexHeader impexHeader,
-      ImportingImpexContext context, Object item, LineValues lineValues) {
+  public int remove(
+      DataSourceContainer datasource,
+      ImportHeaderProcessor importHeaderProcessor,
+      ImportingImpexContext context,
+      Object item,
+      LineValues lineValues) {
     return 0;
   }
 
