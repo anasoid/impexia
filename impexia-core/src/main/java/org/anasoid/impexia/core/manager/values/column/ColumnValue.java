@@ -21,4 +21,6 @@ package org.anasoid.impexia.core.manager.values.column;
 @SuppressWarnings("PMD.ImplicitFunctionalInterface")
 public interface ColumnValue<T> {
   T getValue();
+
+  ValueType getType();
 }

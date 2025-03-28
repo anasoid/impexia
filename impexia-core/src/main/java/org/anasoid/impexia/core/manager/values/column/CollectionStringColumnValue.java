@@ -18,16 +18,9 @@
 
 package org.anasoid.impexia.core.manager.values.column;
 
-import java.util.Map;
 import lombok.Getter;
-import lombok.Singular;
 import lombok.experimental.SuperBuilder;
 
 @SuperBuilder
 @Getter
-@SuppressWarnings({"PMD.ImmutableField"})
-public class MapColumnValue<T extends AbstractColumnValue> implements ColumnValue<Map<String, T>> {
-
-  @Singular("value")
-  Map<String, T> value;
-}
+public class CollectionStringColumnValue extends AbstractCollectionColumnValue<StringColumnValue> {}

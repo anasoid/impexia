@@ -19,14 +19,13 @@
 package org.anasoid.impexia.importing.internal.spi.processor;
 
 import java.util.Iterator;
-import java.util.Map;
 import org.anasoid.impexia.core.manager.values.LineValues;
 import org.anasoid.impexia.importing.internal.spi.datasource.DataSourceContainer;
 import org.anasoid.impexia.importing.manager.config.ImportingImpexContext;
 import org.anasoid.impexia.importing.manager.processor.header.ImportHeaderProcessor;
 
 public class DefaultImportProcessor implements ImportProcessor {
-  Map<String, AttributeProcessor<?, ?>> attributeProcessors;
+  AttributeProcessor<?, ?> basicAttributeProcessors;
 
   @Override
   public void insert(

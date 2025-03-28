@@ -25,9 +25,14 @@ import lombok.experimental.SuperBuilder;
 
 @SuperBuilder
 @Getter
-@SuppressWarnings({"PMD.ImmutableField"})
-public class CollectionColumnValue<T extends AbstractColumnValue> implements ColumnValue<List<T>> {
+public abstract class AbstractCollectionColumnValue<T extends AbstractColumnValue>
+    implements ColumnValue<List<T>> {
 
   @Singular("value")
-  List<T> value;
+  private List<T> value;
+
+  @Override
+  public ValueType getType() {
+    return ValueType.COLLECTION;
+  }
 }
