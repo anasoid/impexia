@@ -24,4 +24,10 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @Getter
 @SuppressWarnings({"PMD.ImmutableField"})
-public class StringColumnValue extends AbstractColumnValue<String> {}
+public class StringColumnValue extends AbstractColumnValue<String> {
+
+  @Override
+  public ValueType getType() {
+    return ValueType.STRING;
+  }
+}

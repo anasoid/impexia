@@ -20,6 +20,7 @@ package org.anasoid.impexia.importing.manager;
 
 import org.anasoid.impexia.meta.header.ImpexHeader;
 
+@Deprecated
 public class ImpexiaPersisterManager {
 
   void persist(ImpexHeader impexHeader, String line) {

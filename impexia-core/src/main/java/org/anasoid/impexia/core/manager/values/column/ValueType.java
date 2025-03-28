@@ -18,11 +18,23 @@
 
 package org.anasoid.impexia.core.manager.values.column;
 
-import java.util.Date;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.experimental.SuperBuilder;
 
-@SuperBuilder
-@Getter
-@SuppressWarnings({"PMD.ImmutableField"})
-public class DateColumnValue extends AbstractColumnValue<Date> {}
+@AllArgsConstructor
+public enum ValueType {
+  STRING(Structure.SIMPLE),
+  DATE(Structure.SIMPLE),
+  NUMBER(Structure.SIMPLE),
+  BOOLEAN(Structure.SIMPLE),
+  COLLECTION(Structure.SIMPLE),
+  MAP(Structure.MAP);
+
+  @Getter private final Structure structure;
+
+  public enum Structure {
+    MAP,
+    SIMPLE,
+    COLLECTION;
+  }
+}

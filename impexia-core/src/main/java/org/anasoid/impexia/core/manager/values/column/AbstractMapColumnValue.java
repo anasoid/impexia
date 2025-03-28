@@ -13,20 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * @author : anas
- * Date :   21-Dec-2024
+ * Date :   22-Dec-2024
  */
 
-package org.anasoid.impexia.importing.manager.persister;
+package org.anasoid.impexia.core.manager.values.column;
 
-import java.util.List;
-import org.anasoid.impexia.meta.header.ImpexHeader;
+import java.util.Map;
+import lombok.Getter;
+import lombok.Singular;
+import lombok.experimental.SuperBuilder;
 
-@Deprecated
-public interface IDataPersister {
+@SuperBuilder
+@Getter
+public abstract class AbstractMapColumnValue<T extends AbstractColumnValue>
+    implements ColumnValue<Map<String, T>> {
 
-  void update(ImpexHeader impexHeader, List<?> values);
+  @Singular("value")
+  private Map<String, T> value;
 
-  void insert(ImpexHeader impexHeader, List<?> values);
-
-  void remove(ImpexHeader impexHeader, List<?> values);
+  @Override
+  public ValueType getType() {
+    return ValueType.MAP;
+  }
 }

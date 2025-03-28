@@ -13,20 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * @author : anas
- * Date :   21-Dec-2024
+ * Date :   22-Dec-2024
  */
 
-package org.anasoid.impexia.importing.manager.persister;
+package org.anasoid.impexia.core.manager.values.column;
 
-import java.util.List;
-import org.anasoid.impexia.meta.header.ImpexHeader;
+import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 
-@Deprecated
-public interface IDataPersister {
-
-  void update(ImpexHeader impexHeader, List<?> values);
-
-  void insert(ImpexHeader impexHeader, List<?> values);
-
-  void remove(ImpexHeader impexHeader, List<?> values);
-}
+@SuperBuilder
+@Getter
+@SuppressWarnings({"PMD.ImmutableField"})
+public class MapStringColumnValue extends AbstractMapColumnValue<StringColumnValue> {}
