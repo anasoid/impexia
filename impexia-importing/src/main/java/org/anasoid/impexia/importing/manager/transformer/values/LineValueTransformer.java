@@ -22,5 +22,6 @@ import org.anasoid.impexia.core.manager.transformer.Transformer;
 import org.anasoid.impexia.core.manager.values.LineValues;
 import org.anasoid.impexia.importing.manager.config.ImportingImpexContext;
 
+@FunctionalInterface
 public interface LineValueTransformer<C extends ImportingImpexContext<?>>
     extends Transformer<LineValues, LineValues, C> {}

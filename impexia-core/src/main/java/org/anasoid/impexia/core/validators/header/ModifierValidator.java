@@ -23,6 +23,7 @@ import org.anasoid.impexia.meta.exceptions.header.ImpexHeaderException;
 import org.anasoid.impexia.meta.header.ImpexModifier;
 
 /** Header validator interface. */
+@FunctionalInterface
 public interface ModifierValidator {
 
   /**
