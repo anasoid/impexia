@@ -18,6 +18,7 @@
 
 package org.anasoid.impexia.core.register;
 
+@SuppressWarnings("PMD.ImplicitFunctionalInterface")
 public interface RegistratorManager<T> {
 
   void register(T t);

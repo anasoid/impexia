@@ -18,6 +18,7 @@
 
 package org.anasoid.impexia.core.manager.transformer;
 
+@FunctionalInterface
 public interface TransformerOrder {
 
   Integer getOrder();

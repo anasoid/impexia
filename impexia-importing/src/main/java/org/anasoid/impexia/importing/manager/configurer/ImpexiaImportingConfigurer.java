@@ -25,6 +25,7 @@ import org.anasoid.impexia.importing.manager.config.ImportingImpexSettings;
 import org.anasoid.impexia.meta.header.ImpexHeader;
 import org.apache.commons.lang3.tuple.Pair;
 
+@SuppressWarnings("PMD.ImplicitFunctionalInterface")
 public interface ImpexiaImportingConfigurer<C extends ImportingImpexSettings> {
 
   List<Pair<TransformerOrder, Transformer<ImpexHeader, ImpexHeader, C>>> getHeaderTransformer();

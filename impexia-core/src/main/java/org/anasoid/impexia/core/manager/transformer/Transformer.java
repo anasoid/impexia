@@ -18,6 +18,7 @@
 
 package org.anasoid.impexia.core.manager.transformer;
 
+@FunctionalInterface
 public interface Transformer<T, V, C> {
 
   T transform(V value, C ctx);

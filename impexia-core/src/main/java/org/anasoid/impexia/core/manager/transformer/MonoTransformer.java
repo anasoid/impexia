@@ -18,4 +18,5 @@
 
 package org.anasoid.impexia.core.manager.transformer;
 
+@FunctionalInterface
 public interface MonoTransformer<T, C> extends Transformer<T, T, C> {}

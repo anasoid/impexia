@@ -19,11 +19,9 @@
 package org.anasoid.impexia.core.data.importing;
 
 /** Interface to header reader Impex. */
+@SuppressWarnings("PMD.ImplicitFunctionalInterface")
 public interface HeaderReader {
 
-  /**
-   * get Impex header as String array.
-   *
-   */
+  /** get Impex header as String array. */
   String[] getHeader();
 }
