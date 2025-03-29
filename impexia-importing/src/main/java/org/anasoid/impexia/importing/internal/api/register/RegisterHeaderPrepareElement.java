@@ -22,8 +22,8 @@ import lombok.Getter;
 import org.anasoid.impexia.core.manager.transformer.MonoTransformer;
 import org.anasoid.impexia.core.manager.transformer.TransformerOrder;
 import org.anasoid.impexia.importing.manager.config.ImportingImpexContext;
+import org.anasoid.impexia.importing.manager.processor.header.ImportHeaderProcessor;
 import org.anasoid.impexia.meta.Scope;
-import org.anasoid.impexia.meta.header.ImpexHeader;
 
 @Getter
 public class RegisterHeaderPrepareElement {
@@ -31,13 +31,13 @@ public class RegisterHeaderPrepareElement {
   private final String name;
   private final Scope scope;
   private final TransformerOrder transformerOrder;
-  private final MonoTransformer<ImpexHeader, ImportingImpexContext<?>> transformer;
+  private final MonoTransformer<ImportHeaderProcessor, ImportingImpexContext<?>> transformer;
 
   public RegisterHeaderPrepareElement(
       String name,
       Scope scope,
       TransformerOrder transformerOrder,
-      MonoTransformer<ImpexHeader, ImportingImpexContext<?>> transformer) {
+      MonoTransformer<ImportHeaderProcessor, ImportingImpexContext<?>> transformer) {
     this.name = name;
     this.scope = scope;
     this.transformerOrder = transformerOrder;

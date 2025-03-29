@@ -25,8 +25,8 @@ import org.anasoid.impexia.core.manager.transformer.MonoTransformer;
 import org.anasoid.impexia.core.manager.transformer.TransformerOrder;
 import org.anasoid.impexia.core.register.RegistratorManager;
 import org.anasoid.impexia.importing.manager.config.ImportingImpexContext;
+import org.anasoid.impexia.importing.manager.processor.header.ImportHeaderProcessor;
 import org.anasoid.impexia.meta.Scope;
-import org.anasoid.impexia.meta.header.ImpexHeader;
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 import org.apache.commons.lang3.tuple.Pair;
@@ -36,11 +36,13 @@ public class RegisterHeaderPrepareManager
 
   @SuppressWarnings("PMD.UseConcurrentHashMap")
   private final Map<
-          String, Pair<TransformerOrder, MonoTransformer<ImpexHeader, ImportingImpexContext<?>>>>
+          String,
+          Pair<TransformerOrder, MonoTransformer<ImportHeaderProcessor, ImportingImpexContext<?>>>>
       headerPrepareFilters = new HashMap<>();
 
   private final MultiValuedMap<
-          String, Pair<TransformerOrder, MonoTransformer<ImpexHeader, ImportingImpexContext<?>>>>
+          String,
+          Pair<TransformerOrder, MonoTransformer<ImportHeaderProcessor, ImportingImpexContext<?>>>>
       headerPrepareFiltersByScope = new ArrayListValuedHashMap<>();
 
   public static RegisterHeaderPrepareManager getInstance() {
@@ -66,9 +68,9 @@ public class RegisterHeaderPrepareManager
       String name,
       Scope scope,
       TransformerOrder transformerOrder,
-      MonoTransformer<ImpexHeader, ImportingImpexContext<?>> transformer) {
-    Pair<TransformerOrder, MonoTransformer<ImpexHeader, ImportingImpexContext<?>>> prepareFilter =
-        Pair.of(transformerOrder, transformer);
+      MonoTransformer<ImportHeaderProcessor, ImportingImpexContext<?>> transformer) {
+    Pair<TransformerOrder, MonoTransformer<ImportHeaderProcessor, ImportingImpexContext<?>>>
+        prepareFilter = Pair.of(transformerOrder, transformer);
     headerPrepareFilters.put(name, prepareFilter);
     scope.getScopesAsString().forEach(s -> headerPrepareFiltersByScope.put(s, prepareFilter));
   }
@@ -84,7 +86,8 @@ public class RegisterHeaderPrepareManager
     }
   }
 
-  public Collection<Pair<TransformerOrder, MonoTransformer<ImpexHeader, ImportingImpexContext<?>>>>
+  public Collection<
+          Pair<TransformerOrder, MonoTransformer<ImportHeaderProcessor, ImportingImpexContext<?>>>>
       getPrepareHeaderByScope(Scope scope) {
     return headerPrepareFiltersByScope.get(scope.getName());
   }

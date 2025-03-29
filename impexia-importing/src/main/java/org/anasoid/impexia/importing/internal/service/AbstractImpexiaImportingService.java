@@ -29,8 +29,8 @@ import org.anasoid.impexia.core.settings.PropertyInjector;
 import org.anasoid.impexia.core.settings.SettingsLoader;
 import org.anasoid.impexia.importing.manager.config.ImportingImpexContext;
 import org.anasoid.impexia.importing.manager.config.ImportingImpexSettings;
+import org.anasoid.impexia.importing.manager.processor.header.ImportHeaderProcessor;
 import org.anasoid.impexia.meta.Scope;
-import org.anasoid.impexia.meta.header.ImpexHeader;
 
 public abstract class AbstractImpexiaImportingService<
         T extends AbstractImpexiaImportingExecutor,
@@ -63,12 +63,12 @@ public abstract class AbstractImpexiaImportingService<
   public T getExecutor(HeaderReader headerReader, S settings) {
     F context = createContext(settings);
     String[] headerRaw = headerReader.getHeader();
-    ImpexHeader impexHeader = prepare(headerRaw, context);
-    return getInternalExecutor(impexHeader, context);
+    ImportHeaderProcessor importHeaderProcessor = prepare(headerRaw, context);
+    return getInternalExecutor(importHeaderProcessor, context);
   }
 
   @SuppressWarnings("PMD.UseVarargs")
-  ImpexHeader prepare(String[] headerRecords, ImportingImpexContext<?> context) {
+  ImportHeaderProcessor prepare(String[] headerRecords, ImportingImpexContext<?> context) {
 
     HeaderImportingHelper headerImportingHelper = new HeaderImportingHelper(context, getScope());
     return headerImportingHelper.prepare(headerRecords);
@@ -79,7 +79,7 @@ public abstract class AbstractImpexiaImportingService<
   /** initial context with settings. */
   protected abstract F createContext(S settings);
 
-  public abstract T getInternalExecutor(ImpexHeader impexHeader, F context);
+  public abstract T getInternalExecutor(ImportHeaderProcessor impexHeaderProcessor, F context);
 
   /** new setting empty. */
   protected abstract S getRawSettings();
