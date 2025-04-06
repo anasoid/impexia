@@ -5,7 +5,7 @@ slf4j = "2.0.16"
 commonsIo = "2.18.0"
 opencsv = "5.10"
 commonsLang = "3.17.0"
-hibernate = "6.6.12.Final"
+hibernate = "6.6.13.Final"
 persistenceApi = "3.1.0"
 hsqldb="2.7.4"
 
