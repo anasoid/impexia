@@ -20,7 +20,7 @@ repositories {
 dependencies {
     constraints {
         // Define dependency versions as constraints
-        implementation("org.apache.commons:commons-text:1.13.0")
+        implementation("org.apache.commons:commons-text:1.13.1")
     }
 
     // SLF4J as a facade over Log4j2 required dependencies
