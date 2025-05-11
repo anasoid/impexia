@@ -5,14 +5,14 @@ slf4j = "2.0.16"
 commonsIo = "2.18.0"
 opencsv = "5.10"
 commonsLang = "3.17.0"
-hibernate = "6.6.11.Final"
+hibernate = "6.6.13.Final"
 persistenceApi = "3.1.0"
 hsqldb="2.7.4"
 
 spring-dependency = "1.1.7"
 sonar = "6.1.0.5360"
 plugin-lombok-version ="8.13.1"
-plugin-spotless-version ="7.0.2"
+plugin-spotless-version ="7.0.3"
 [libraries]
 plugin-lombok={ group = "io.freefair.lombok", name = "io.freefair.lombok.gradle.plugin", version.ref = "plugin-lombok-version" }
 plugin-spotless={ group = "com.diffplug.spotless", name = "com.diffplug.spotless.gradle.plugin", version.ref = "plugin-spotless-version" }
