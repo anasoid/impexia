@@ -2,7 +2,7 @@
 junit = "5.3.1"
 log4j2 = "2.24.3"
 slf4j = "2.0.16"
-commonsIo = "2.18.0"
+commonsIo = "2.19.0"
 opencsv = "5.10"
 commonsLang = "3.17.0"
 hibernate = "6.6.14.Final"
