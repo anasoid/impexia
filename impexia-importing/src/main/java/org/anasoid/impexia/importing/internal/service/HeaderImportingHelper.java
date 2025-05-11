@@ -18,30 +18,33 @@
 
 package org.anasoid.impexia.importing.internal.service;
 
+import org.anasoid.impexia.core.manager.transformer.ChainedTransformer;
+import org.anasoid.impexia.core.manager.transformer.ChainedTransformerBuilder;
 import org.anasoid.impexia.core.parser.header.HeaderParser;
-import org.anasoid.impexia.importing.internal.api.register.RegisterHeaderPrepareManager;
+import org.anasoid.impexia.importing.internal.spi.factory.AbstractImportingFactory;
 import org.anasoid.impexia.importing.manager.config.ImportingImpexContext;
-import org.anasoid.impexia.importing.manager.prepare.PrepareHeader;
 import org.anasoid.impexia.importing.manager.processor.header.ImportHeaderProcessor;
-import org.anasoid.impexia.meta.Scope;
 import org.anasoid.impexia.meta.header.ImpexHeader;
 
 @SuppressWarnings("PMD.UnusedPrivateField")
 class HeaderImportingHelper {
-  private final PrepareHeader prepareHeader;
-  private final ImportingImpexContext<?> context;
+  private final AbstractImportingFactory importingFactory;
 
-  public HeaderImportingHelper(ImportingImpexContext<?> context, Scope scope) {
-    this.context = context;
-    this.prepareHeader =
-        new PrepareHeader(
-            RegisterHeaderPrepareManager.getInstance().getPrepareHeaderByScope(scope));
+  HeaderImportingHelper(AbstractImportingFactory importingFactory) {
+    this.importingFactory = importingFactory;
   }
 
   @SuppressWarnings("PMD.UseVarargs")
-  ImportHeaderProcessor prepare(String[] headerRecords) {
+  ImportHeaderProcessor prepare(String[] headerRecords, ImportingImpexContext<?> context) {
     ImpexHeader impexHeader = parseHeader(headerRecords);
-    return prepareHeader.prepare(impexHeader, context);
+    ChainedTransformerBuilder<ImportHeaderProcessor, ImportingImpexContext<?>> builder =
+        ChainedTransformer.builder();
+    importingFactory.getOrderedPreparingHeaderTransformers().stream()
+        .forEach(t -> builder.addTransformer(t.getOrder(), t.getTransformer()));
+
+    ChainedTransformer<ImportHeaderProcessor, ImportingImpexContext<?>> ctxChainedTransformer =
+        builder.build();
+    return ctxChainedTransformer.transform(new ImportHeaderProcessor(impexHeader), context);
   }
 
   @SuppressWarnings("PMD.UseVarargs")

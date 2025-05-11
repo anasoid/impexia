@@ -18,22 +18,27 @@
 
 package org.anasoid.impexia.importing.manager.prepare;
 
+import java.util.Comparator;
 import java.util.List;
 import org.anasoid.impexia.core.manager.transformer.ChainedTransformer;
 import org.anasoid.impexia.core.manager.transformer.MonoTransformer;
-import org.anasoid.impexia.core.manager.transformer.TransformerOrder;
+import org.anasoid.impexia.core.manager.transformer.OrderedTransformer;
 import org.anasoid.impexia.core.manager.values.LineValues;
 import org.anasoid.impexia.importing.manager.config.ImportingImpexContext;
 import org.anasoid.impexia.importing.manager.config.ImportingImpexSettings;
-import org.apache.commons.lang3.tuple.Pair;
 
 public class PrepareValue<C extends ImportingImpexContext<? extends ImportingImpexSettings>> {
 
   ChainedTransformer<LineValues, C> ctxChainedTransformer;
 
   public PrepareValue(
-      List<Pair<TransformerOrder, MonoTransformer<LineValues, C>>> orderedTransformers) {
-    ctxChainedTransformer = new ChainedTransformer<>(orderedTransformers);
+      List<OrderedTransformer<MonoTransformer<LineValues, C>>> orderedTransformers) {
+    ctxChainedTransformer =
+        new ChainedTransformer<>(
+            orderedTransformers.stream()
+                .sorted(Comparator.comparing(p -> p.getOrder().getOrder()))
+                .map(OrderedTransformer::getTransformer)
+                .toList());
   }
 
   public LineValues prepare(LineValues values, C context) {

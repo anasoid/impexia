@@ -22,11 +22,13 @@ import java.util.List;
 import java.util.Properties;
 import org.anasoid.impexia.core.data.importing.DataReader;
 import org.anasoid.impexia.core.data.importing.HeaderReader;
+import org.anasoid.impexia.core.internal.spi.factory.AbstractBaseImportingFactory;
 import org.anasoid.impexia.core.internal.spi.register.AbstractRegistrator;
 import org.anasoid.impexia.core.internal.spi.service.AbstractImpexiaService;
 import org.anasoid.impexia.core.settings.Customizer;
 import org.anasoid.impexia.core.settings.PropertyInjector;
 import org.anasoid.impexia.core.settings.SettingsLoader;
+import org.anasoid.impexia.importing.internal.spi.factory.AbstractImportingFactory;
 import org.anasoid.impexia.importing.manager.config.ImportingImpexContext;
 import org.anasoid.impexia.importing.manager.config.ImportingImpexSettings;
 import org.anasoid.impexia.importing.manager.processor.header.ImportHeaderProcessor;
@@ -39,8 +41,9 @@ public abstract class AbstractImpexiaImportingService<
         F extends ImportingImpexContext<S>>
     extends AbstractImpexiaService implements ImpexiaImportingService<T, S, B> {
 
-  protected AbstractImpexiaImportingService(AbstractRegistrator registrator) {
-    super(registrator);
+  protected AbstractImpexiaImportingService(
+      AbstractRegistrator registrator, AbstractBaseImportingFactory importingFactory) {
+    super(registrator, importingFactory);
   }
 
   void importData(HeaderReader headerReader, DataReader dataReader) {
@@ -67,11 +70,16 @@ public abstract class AbstractImpexiaImportingService<
     return getInternalExecutor(importHeaderProcessor, context);
   }
 
+  @Override
+  public AbstractImportingFactory getImportingFactory() {
+    return (AbstractImportingFactory) super.getImportingFactory();
+  }
+
   @SuppressWarnings("PMD.UseVarargs")
   ImportHeaderProcessor prepare(String[] headerRecords, ImportingImpexContext<?> context) {
 
-    HeaderImportingHelper headerImportingHelper = new HeaderImportingHelper(context, getScope());
-    return headerImportingHelper.prepare(headerRecords);
+    HeaderImportingHelper headerImportingHelper = new HeaderImportingHelper(getImportingFactory());
+    return headerImportingHelper.prepare(headerRecords, context);
   }
 
   protected abstract Scope getScope();
