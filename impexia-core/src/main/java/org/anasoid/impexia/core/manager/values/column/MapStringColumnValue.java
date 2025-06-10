@@ -23,5 +23,4 @@ import lombok.experimental.SuperBuilder;
 
 @SuperBuilder
 @Getter
-@SuppressWarnings({"PMD.ImmutableField"})
 public class MapStringColumnValue extends AbstractMapColumnValue<StringColumnValue> {}

@@ -143,7 +143,6 @@ final class HeaderRawExtractor {
     return field;
   }
 
-  @SuppressWarnings("PMD.NPathComplexity")
   protected static List<String> splitMapping(String rawMapping) {
     if (StringUtils.isBlank(rawMapping)) {
       return new ArrayList<>();
@@ -213,7 +212,6 @@ final class HeaderRawExtractor {
     return result;
   }
 
-  @SuppressWarnings("PMD.NPathComplexity")
   protected static List<String> splitModifier(String rawModifiers) {
     if (StringUtils.isBlank(rawModifiers)) {
       return new ArrayList<>();

@@ -26,8 +26,7 @@ import org.anasoid.impexia.importing.internal.api.register.RegisterHeaderPrepare
 public final class ImportingHeaderPrepareRegistratorAgent
     implements RegistratorAgent<RegisterHeaderPrepareElement> {
 
-  @SuppressWarnings("PMD.UnusedPrivateField")
-  private final RegisterHeaderPrepareManager headerPrepareManager;
+  private final RegisterHeaderPrepareManager headerPrepareManager; // NOPMD
 
   @SuppressWarnings("PMD.AvoidUsingVolatile")
   private volatile boolean loaded;
@@ -43,7 +42,7 @@ public final class ImportingHeaderPrepareRegistratorAgent
   private static final class LazyHolder {
 
     static final ImportingHeaderPrepareRegistratorAgent INSTANCE =
-        new ImportingHeaderPrepareRegistratorAgent(); // NOPMD
+        new ImportingHeaderPrepareRegistratorAgent();
   }
 
   @Override

@@ -23,7 +23,6 @@ import lombok.experimental.SuperBuilder;
 
 @SuperBuilder
 @Getter
-@SuppressWarnings({"PMD.ImmutableField"})
 public class NumberColumnValue extends AbstractColumnValue<Double> {
 
   @Override

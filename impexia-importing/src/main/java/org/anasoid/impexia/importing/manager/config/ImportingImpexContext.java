@@ -24,7 +24,6 @@ import org.anasoid.impexia.core.manager.config.AbstractImpexContext;
 
 @Getter
 @SuperBuilder
-@SuppressWarnings({"PMD.AbstractClassWithoutAbstractMethod", "PMD.AbstractClassWithoutAnyMethod"})
 public class ImportingImpexContext<T extends ImportingImpexSettings>
     extends AbstractImpexContext<T> {
 

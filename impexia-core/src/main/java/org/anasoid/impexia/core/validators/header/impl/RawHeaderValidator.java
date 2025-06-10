@@ -31,7 +31,6 @@ import org.anasoid.impexia.meta.header.ImpexHeader;
 import org.anasoid.impexia.meta.header.ImpexModifier;
 
 /** Default header Validator. */
-@SuppressWarnings("PMD.LawOfDemeter")
 public class RawHeaderValidator extends AbstractHeaderValidator {
 
   @Override
@@ -39,7 +38,6 @@ public class RawHeaderValidator extends AbstractHeaderValidator {
     return false;
   }
 
-  @SuppressWarnings({"PMD.EmptyCatchBlock"})
   @Override
   protected boolean validateModifier(ImpexModifier impexModifier, Mode mode)
       throws ImpexHeaderException {

@@ -25,7 +25,6 @@ import org.anasoid.impexia.core.settings.PropertyKey;
 
 @Getter
 @SuperBuilder(toBuilder = true)
-@SuppressWarnings({"PMD.AbstractClassWithoutAbstractMethod", "PMD.AbstractClassWithoutAnyMethod"})
 public class ImportingImpexSettings extends AbstractImpexSettings {
 
   @PropertyKey("settings.import.ignore.additional.column") @Getter

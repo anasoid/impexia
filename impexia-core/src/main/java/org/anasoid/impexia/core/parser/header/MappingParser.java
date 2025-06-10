@@ -31,7 +31,6 @@ public final class MappingParser {
 
   private MappingParser() {}
 
-  @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
   protected static List<ImpexMapping> parse(String rawMapping) {
     List<ImpexMapping> result = new ArrayList<>();
 

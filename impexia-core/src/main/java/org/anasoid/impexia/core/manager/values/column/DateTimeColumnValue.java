@@ -24,7 +24,6 @@ import lombok.experimental.SuperBuilder;
 
 @SuperBuilder
 @Getter
-@SuppressWarnings({"PMD.ImmutableField"})
 public class DateTimeColumnValue extends AbstractColumnValue<LocalDateTime> {
 
   @Override

@@ -26,7 +26,6 @@ import org.anasoid.impexia.core.settings.PropertyKey;
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)
-@SuppressWarnings({"PMD.AbstractClassWithoutAbstractMethod", "PMD.AbstractClassWithoutAnyMethod"})
 public class AbstractImpexSettings {
 
   @PropertyKey("settings.strict") private Boolean strict;

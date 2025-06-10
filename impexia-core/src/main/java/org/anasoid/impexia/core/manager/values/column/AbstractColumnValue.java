@@ -23,7 +23,7 @@ import lombok.experimental.SuperBuilder;
 
 @SuperBuilder
 @Getter
-@SuppressWarnings({"PMD.AbstractClassWithoutAbstractMethod", "PMD.AbstractClassWithoutAnyMethod"})
+@SuppressWarnings("PMD.AbstractClassWithoutAnyMethod")
 public abstract class AbstractColumnValue<T> implements ColumnValue<T> {
   T value;
 }

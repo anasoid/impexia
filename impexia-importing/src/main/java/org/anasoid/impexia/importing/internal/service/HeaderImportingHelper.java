@@ -26,7 +26,6 @@ import org.anasoid.impexia.importing.manager.config.ImportingImpexContext;
 import org.anasoid.impexia.importing.manager.processor.header.ImportHeaderProcessor;
 import org.anasoid.impexia.meta.header.ImpexHeader;
 
-@SuppressWarnings("PMD.UnusedPrivateField")
 class HeaderImportingHelper {
   private final AbstractImportingFactory importingFactory;
 
@@ -34,7 +33,6 @@ class HeaderImportingHelper {
     this.importingFactory = importingFactory;
   }
 
-  @SuppressWarnings("PMD.UseVarargs")
   ImportHeaderProcessor prepare(String[] headerRecords, ImportingImpexContext<?> context) {
     ImpexHeader impexHeader = parseHeader(headerRecords);
     ChainedTransformerBuilder<ImportHeaderProcessor, ImportingImpexContext<?>> builder =

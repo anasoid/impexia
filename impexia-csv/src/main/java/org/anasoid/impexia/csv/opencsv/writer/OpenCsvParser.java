@@ -28,7 +28,6 @@ import java.util.Locale;
  *
  * @see CSVParser
  */
-@SuppressWarnings("PMD")
 public abstract class OpenCsvParser extends CustomOpenCsvParser {
 
   protected OpenCsvParser(

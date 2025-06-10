@@ -69,6 +69,6 @@ public final class ModifierDescriptorManager {
 
   private static final class LazyHolder {
 
-    static final ModifierDescriptorManager INSTANCE = new ModifierDescriptorManager(); // NOPMD
+    static final ModifierDescriptorManager INSTANCE = new ModifierDescriptorManager();
   }
 }

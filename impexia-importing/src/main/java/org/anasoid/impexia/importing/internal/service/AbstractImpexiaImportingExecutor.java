@@ -28,7 +28,7 @@ import org.anasoid.impexia.importing.manager.processor.header.ImportHeaderProces
 @SuppressWarnings("PMD.AbstractClassWithoutAbstractMethod")
 public abstract class AbstractImpexiaImportingExecutor<
     T extends ImportingImpexSettings, C extends ImportingImpexContext<T>> {
-  @SuppressWarnings("PMD.UnusedPrivateField")
+
   private final ImportHeaderProcessor impexHeaderProcessor;
 
   @Getter(AccessLevel.PROTECTED)

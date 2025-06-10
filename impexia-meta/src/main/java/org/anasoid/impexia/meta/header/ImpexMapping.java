@@ -27,7 +27,6 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 /** Impex mapping description container. */
-@SuppressWarnings({"PMD.AbstractClassWithoutAbstractMethod"})
 @SuperBuilder
 @Getter
 @ToString

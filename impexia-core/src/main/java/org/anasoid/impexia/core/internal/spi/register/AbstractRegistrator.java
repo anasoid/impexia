@@ -25,7 +25,6 @@ import lombok.Getter;
 import org.anasoid.impexia.core.register.ModifierRegistratorAgent;
 import org.anasoid.impexia.core.validators.header.descriptor.modifier.ModifierDescriptorEnum;
 
-@SuppressWarnings("PMD.AbstractClassWithoutAbstractMethod")
 public abstract class AbstractRegistrator {
 
   @Getter(AccessLevel.PROTECTED)

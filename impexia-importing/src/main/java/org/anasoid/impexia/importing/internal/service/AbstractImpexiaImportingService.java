@@ -75,7 +75,6 @@ public abstract class AbstractImpexiaImportingService<
     return (AbstractImportingFactory) super.getImportingFactory();
   }
 
-  @SuppressWarnings("PMD.UseVarargs")
   ImportHeaderProcessor prepare(String[] headerRecords, ImportingImpexContext<?> context) {
 
     HeaderImportingHelper headerImportingHelper = new HeaderImportingHelper(getImportingFactory());
