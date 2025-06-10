@@ -47,8 +47,7 @@ public class RegisterHeaderPrepareManager
 
   private static final class LazyHolder {
 
-    static final RegisterHeaderPrepareManager INSTANCE =
-        new RegisterHeaderPrepareManager(); // NOPMD
+    static final RegisterHeaderPrepareManager INSTANCE = new RegisterHeaderPrepareManager();
   }
 
   @Override

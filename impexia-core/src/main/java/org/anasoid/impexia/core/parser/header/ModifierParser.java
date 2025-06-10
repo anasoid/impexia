@@ -29,7 +29,6 @@ public final class ModifierParser {
 
   private ModifierParser() {}
 
-  @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
   protected static List<ImpexModifier> parse(String rawModifiers) {
     List<ImpexModifier> result = new ArrayList<>();
     List<String> rawModifierList = HeaderRawExtractor.splitModifier(rawModifiers);

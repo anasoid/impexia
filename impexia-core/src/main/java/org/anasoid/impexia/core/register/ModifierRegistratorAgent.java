@@ -41,7 +41,7 @@ public final class ModifierRegistratorAgent implements RegistratorAgent<Modifier
 
   private static final class LazyHolder {
 
-    static final ModifierRegistratorAgent INSTANCE = new ModifierRegistratorAgent(); // NOPMD
+    static final ModifierRegistratorAgent INSTANCE = new ModifierRegistratorAgent();
   }
 
   @Override

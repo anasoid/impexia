@@ -26,12 +26,11 @@ import org.anasoid.impexia.meta.header.ImpexHeader;
 import org.apache.commons.lang3.StringUtils;
 
 /** Header parser. */
-@SuppressWarnings("PMD.AbstractClassWithoutAbstractMethod")
 public final class HeaderParser {
 
   private HeaderParser() {}
 
-  @SuppressWarnings({"PMD.AvoidInstantiatingObjectsInLoops", "PMD.AvoidLiteralsInIfCondition"})
+  @SuppressWarnings({"PMD.AvoidLiteralsInIfCondition"})
   public static ImpexHeader parse(String... columns) {
 
     if (columns.length < 2) {

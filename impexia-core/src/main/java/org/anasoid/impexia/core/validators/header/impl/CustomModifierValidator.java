@@ -32,7 +32,6 @@ import org.anasoid.impexia.meta.header.ImpexModifier;
 public class CustomModifierValidator implements ModifierValidator {
 
   @Override
-  @SuppressWarnings({"PMD.EmptyCatchBlock"})
   public boolean validate(ImpexModifier impexModifier, Mode mode) throws ImpexHeaderException {
 
     ModifierDescriptor modifierDescriptor =
@@ -42,7 +41,6 @@ public class CustomModifierValidator implements ModifierValidator {
     return false;
   }
 
-  @SuppressWarnings({"PMD.EmptyCatchBlock", "PMD.CognitiveComplexity"})
   protected void validateCustomModifier(
       ImpexModifier impexModifier, ModifierDescriptor modifierDescriptor)
       throws ImpexHeaderException {

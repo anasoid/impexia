@@ -42,7 +42,7 @@ public class RegisterModifierManager implements RegistratorManager<ModifierDescr
 
   private static final class LazyHolder {
 
-    static final RegisterModifierManager INSTANCE = new RegisterModifierManager(); // NOPMD
+    static final RegisterModifierManager INSTANCE = new RegisterModifierManager();
   }
 
   @Override

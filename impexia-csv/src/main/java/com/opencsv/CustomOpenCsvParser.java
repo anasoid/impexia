@@ -21,7 +21,6 @@ package com.opencsv;
 import com.opencsv.enums.CSVReaderNullFieldIndicator;
 import java.util.Locale;
 
-@SuppressWarnings("PMD")
 public abstract class CustomOpenCsvParser extends CSVParser {
 
   protected CustomOpenCsvParser(

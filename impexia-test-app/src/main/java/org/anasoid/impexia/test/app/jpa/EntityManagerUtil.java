@@ -32,7 +32,7 @@ public final class EntityManagerUtil {
   private EntityManagerUtil() {}
 
   /** get (test-app-jpa) EntityManager. */
-  @SuppressWarnings({"PMD.CloseResource", "PMD.AvoidSynchronizedAtMethodLevel"})
+  @SuppressWarnings({"PMD.AvoidSynchronizedAtMethodLevel"})
   public static synchronized EntityManagerFactory getEntityManagerFactory() {
     if (entityManagerFactory == null) {
       // the same in persistence.xml
