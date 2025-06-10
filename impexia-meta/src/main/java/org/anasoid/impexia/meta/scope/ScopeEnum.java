@@ -18,14 +18,13 @@
 
 package org.anasoid.impexia.meta.scope;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import lombok.Getter;
 import org.anasoid.impexia.meta.Scope;
 
 public enum ScopeEnum implements Scope {
-  GLOBAL("GLOBAL", Collections.EMPTY_SET),
+  GLOBAL("GLOBAL", new HashSet<>()),
   ORM("ORM", Set.of(GLOBAL));
   @Getter private final String name;
   @Getter private final Set<Scope> scopes;
