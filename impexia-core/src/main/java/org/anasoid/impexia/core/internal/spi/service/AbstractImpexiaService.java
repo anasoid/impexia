@@ -36,7 +36,7 @@ public abstract class AbstractImpexiaService {
     this.registrator = registrator;
     this.importingFactory = importingFactory;
     this.defaultProperties = SettingsLoader.loadDefaultProperties();
-    registrator.load();
+    this.registrator.load();
   }
 
   public AbstractBaseImportingFactory getImportingFactory() {
