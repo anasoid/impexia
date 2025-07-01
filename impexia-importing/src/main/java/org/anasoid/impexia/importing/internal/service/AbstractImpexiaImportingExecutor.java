@@ -29,7 +29,7 @@ import org.anasoid.impexia.importing.manager.processor.header.ImportHeaderProces
 public abstract class AbstractImpexiaImportingExecutor<
     T extends ImportingImpexSettings, C extends ImportingImpexContext<T>> {
 
-  private final ImportHeaderProcessor impexHeaderProcessor;
+  protected final ImportHeaderProcessor impexHeaderProcessor;
 
   @Getter(AccessLevel.PROTECTED)
   private final C context;
