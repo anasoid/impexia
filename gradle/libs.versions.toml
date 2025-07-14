@@ -1,10 +1,6 @@
 [versions]
-junit = "5.3.1"
-log4j2 = "2.24.3"
-slf4j = "2.0.16"
 opencsv = "5.11.2"
-commonsLang = "3.17.0"
-hibernate = "7.0.5.Final"
+hibernate = "7.0.6.Final"
 persistenceApi = "3.1.0"
 hsqldb="2.7.4"
 
@@ -19,7 +15,6 @@ opencsv = { group = "com.opencsv", name = "opencsv", version.ref = "opencsv" }
 hibernate-core = { group = "org.hibernate.orm", name = "hibernate-core", version.ref = "hibernate" }
 jakarta-persistence-api = { group = "jakarta.persistence", name = "jakarta.persistence-api", version.ref = "persistenceApi" }
 hsqldb = { group = "org.hsqldb", name = "hsqldb", version.ref = "hsqldb" }
-commons-lang = { group = "org.apache.commons", name = "commons-lang3", version.ref = "commonsLang" }
 
 
 
