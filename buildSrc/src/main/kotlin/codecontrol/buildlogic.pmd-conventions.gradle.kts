@@ -14,7 +14,7 @@ plugins {
 pmd {
     toolVersion = "7.16.0"
     isConsoleOutput = true
-    sourceSets = listOf(java.sourceSets.findByName("main"))
+    sourceSets = listOfNotNull(java.sourceSets.findByName("main"))
     ruleSetFiles = files("${rootProject.projectDir}/config/pmd/pmd.xml")
     ruleSets = listOf()
 }
