@@ -29,8 +29,8 @@ import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.persistence.Version;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -49,10 +49,10 @@ public class User {
   private Name name;
 
   @Temporal(TemporalType.TIMESTAMP)
-  private Date createDate;
+  private LocalDateTime createDate;
 
   @Temporal(TemporalType.TIMESTAMP)
-  private Date modifyDate;
+  private LocalDateTime modifyDate;
 
   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Phone> phones = new ArrayList<>();
@@ -89,21 +89,21 @@ public class User {
     this.phones = phones;
   }
 
-  public Date getCreateDate() {
+  public LocalDateTime getCreateDate() {
     return createDate;
   }
 
-  public Date getModifyDate() {
+  public LocalDateTime getModifyDate() {
     return modifyDate;
   }
 
   @PrePersist
   protected void onCreate() {
-    createDate = new Date();
+    createDate = LocalDateTime.now();
   }
 
   @PreUpdate
   protected void onUpdate() {
-    modifyDate = new Date();
+    modifyDate = LocalDateTime.now();
   }
 }

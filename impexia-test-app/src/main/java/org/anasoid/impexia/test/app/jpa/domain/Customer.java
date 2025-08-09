@@ -23,7 +23,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -32,7 +32,7 @@ import java.util.Set;
 public class Customer extends User {
 
   @Temporal(TemporalType.DATE)
-  private Date birthDay;
+  private LocalDate birthDay;
 
   @OneToMany(mappedBy = "customer")
   private Set<Order> orders = new HashSet<>();
@@ -40,11 +40,11 @@ public class Customer extends User {
   @OneToOne(orphanRemoval = true)
   private Address deliveryAddress;
 
-  public Date getBirthDay() {
+  public LocalDate getBirthDay() {
     return birthDay;
   }
 
-  public void setBirthDay(Date birthDay) {
+  public void setBirthDay(LocalDate birthDay) {
     this.birthDay = birthDay;
   }
 
