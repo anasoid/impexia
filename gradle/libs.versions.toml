@@ -1,6 +1,6 @@
 [versions]
 opencsv = "5.12.0"
-hibernate = "7.0.8.Final"
+hibernate = "7.1.0.Final"
 persistenceApi = "3.1.0"
 hsqldb="2.7.4"
 
