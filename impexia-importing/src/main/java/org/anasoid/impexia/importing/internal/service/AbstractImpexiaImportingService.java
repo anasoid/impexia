@@ -23,7 +23,6 @@ import java.util.Properties;
 import org.anasoid.impexia.core.data.importing.DataReader;
 import org.anasoid.impexia.core.data.importing.HeaderReader;
 import org.anasoid.impexia.core.internal.spi.factory.AbstractBaseImportingFactory;
-import org.anasoid.impexia.core.internal.spi.register.AbstractRegistrator;
 import org.anasoid.impexia.core.internal.spi.service.AbstractImpexiaService;
 import org.anasoid.impexia.core.settings.Customizer;
 import org.anasoid.impexia.core.settings.PropertyInjector;
@@ -41,9 +40,8 @@ public abstract class AbstractImpexiaImportingService<
         F extends ImportingImpexContext<S>>
     extends AbstractImpexiaService implements ImpexiaImportingService<T, S, B> {
 
-  protected AbstractImpexiaImportingService(
-      AbstractRegistrator registrator, AbstractBaseImportingFactory importingFactory) {
-    super(registrator, importingFactory);
+  protected AbstractImpexiaImportingService(AbstractBaseImportingFactory importingFactory) {
+    super(importingFactory);
   }
 
   void importData(HeaderReader headerReader, DataReader dataReader) {

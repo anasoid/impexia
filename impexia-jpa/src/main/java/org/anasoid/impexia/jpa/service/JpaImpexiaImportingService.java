@@ -23,7 +23,6 @@ import org.anasoid.impexia.importing.manager.processor.header.ImportHeaderProces
 import org.anasoid.impexia.jpa.config.JpaImportingImpexContext;
 import org.anasoid.impexia.jpa.config.JpaImportingImpexSettings;
 import org.anasoid.impexia.jpa.config.JpaImportingImpexSettings.JpaImportingImpexSettingsBuilder;
-import org.anasoid.impexia.jpa.importing.register.JpaImportingRegistrator;
 import org.anasoid.impexia.jpa.internal.factory.JpaImportingFactory;
 import org.anasoid.impexia.jpa.meta.JpaScopeEnum;
 import org.anasoid.impexia.meta.Scope;
@@ -36,7 +35,7 @@ public class JpaImpexiaImportingService
         JpaImportingImpexContext> {
 
   public JpaImpexiaImportingService() {
-    super(new JpaImportingRegistrator(), new JpaImportingFactory());
+    super(new JpaImportingFactory());
   }
 
   @Override

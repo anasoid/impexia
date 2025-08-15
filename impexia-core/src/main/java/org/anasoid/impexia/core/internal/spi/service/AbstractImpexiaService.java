@@ -21,22 +21,18 @@ package org.anasoid.impexia.core.internal.spi.service;
 import java.util.Properties;
 import lombok.Getter;
 import org.anasoid.impexia.core.internal.spi.factory.AbstractBaseImportingFactory;
-import org.anasoid.impexia.core.internal.spi.register.AbstractRegistrator;
 import org.anasoid.impexia.core.settings.SettingsLoader;
 
 @SuppressWarnings("PMD.AbstractClassWithoutAbstractMethod")
 public abstract class AbstractImpexiaService {
 
-  private final AbstractRegistrator registrator;
   protected final AbstractBaseImportingFactory importingFactory;
   @Getter private final Properties defaultProperties;
 
-  protected AbstractImpexiaService(
-      AbstractRegistrator registrator, AbstractBaseImportingFactory importingFactory) {
-    this.registrator = registrator;
+  protected AbstractImpexiaService(AbstractBaseImportingFactory importingFactory) {
     this.importingFactory = importingFactory;
     this.defaultProperties = SettingsLoader.loadDefaultProperties();
-    this.registrator.load();
+    importingFactory.getRegistrator().load();
   }
 
   public AbstractBaseImportingFactory getImportingFactory() {

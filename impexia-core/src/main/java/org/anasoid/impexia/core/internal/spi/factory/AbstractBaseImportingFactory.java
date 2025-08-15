@@ -18,5 +18,17 @@
 
 package org.anasoid.impexia.core.internal.spi.factory;
 
-@SuppressWarnings({"PMD.AbstractClassWithoutAbstractMethod", "PMD.AbstractClassWithoutAnyMethod"})
-public abstract class AbstractBaseImportingFactory {}
+import org.anasoid.impexia.core.internal.spi.register.AbstractRegistrator;
+
+public abstract class AbstractBaseImportingFactory {
+  private AbstractRegistrator registrator;
+
+  public AbstractRegistrator getRegistrator() {
+    if (registrator != null) {
+      registrator = createRegistrator();
+    }
+    return registrator;
+  }
+
+  protected abstract AbstractRegistrator createRegistrator();
+}

@@ -20,14 +20,21 @@ package org.anasoid.impexia.jpa.internal.factory;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.anasoid.impexia.core.internal.spi.register.AbstractRegistrator;
 import org.anasoid.impexia.core.manager.transformer.OrderedTransformer;
 import org.anasoid.impexia.importing.internal.spi.factory.AbstractImportingFactory;
 import org.anasoid.impexia.importing.manager.prepare.ImportHeaderTransformer;
+import org.anasoid.impexia.jpa.importing.register.JpaImportingRegistrator;
 
 public class JpaImportingFactory extends AbstractImportingFactory {
 
   @Override
   public List<OrderedTransformer<ImportHeaderTransformer>> getOrderedPreparingHeaderTransformers() {
     return new ArrayList(super.getOrderedPreparingHeaderTransformers());
+  }
+
+  @Override
+  protected AbstractRegistrator createRegistrator() {
+    return new JpaImportingRegistrator();
   }
 }
