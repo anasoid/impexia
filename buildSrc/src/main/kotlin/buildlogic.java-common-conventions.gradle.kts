@@ -24,7 +24,7 @@ dependencies {
     }
 
     // SLF4J as a facade over Log4j2 required dependencies
-    implementation("org.apache.logging.log4j:log4j-slf4j-impl:2.25.1")
+    implementation("org.apache.logging.log4j:log4j-slf4j-impl:2.25.2")
     // Bridges from other logging implementations to SLF4J. Be careful not to bridge SLF4J itself to
     implementation("org.slf4j:slf4j-api:2.0.17")
 
