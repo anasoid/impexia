@@ -5,7 +5,7 @@ persistenceApi = "3.1.0"
 hsqldb="2.7.4"
 
 spring-dependency = "1.1.7"
-sonar = "6.3.1.5724"
+sonar = "7.0.1.6134"
 plugin-lombok-version ="9.0.0"
 plugin-spotless-version ="8.0.0"
 [libraries]
