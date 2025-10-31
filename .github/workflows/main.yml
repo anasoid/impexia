@@ -47,7 +47,7 @@ jobs :
           github_token : ${{ secrets.GITHUB_TOKEN }}
 
       - name : Upload artifact Report
-        uses : actions/upload-artifact@v4
+        uses : actions/upload-artifact@v5
         with :
           name : reports
           path : '**/build/reports/**'
