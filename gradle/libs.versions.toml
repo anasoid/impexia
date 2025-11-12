@@ -6,7 +6,7 @@ hsqldb="2.7.4"
 
 spring-dependency = "1.1.7"
 sonar = "7.0.1.6134"
-plugin-lombok-version ="9.0.0"
+plugin-lombok-version ="9.1.0"
 plugin-spotless-version ="8.0.0"
 [libraries]
 plugin-lombok={ group = "io.freefair.lombok", name = "io.freefair.lombok.gradle.plugin", version.ref = "plugin-lombok-version" }
