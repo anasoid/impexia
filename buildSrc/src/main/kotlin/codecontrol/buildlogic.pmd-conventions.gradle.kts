@@ -12,7 +12,7 @@ plugins {
     pmd
 }
 pmd {
-    toolVersion = "7.16.0"
+    toolVersion = "7.18.0"
     isConsoleOutput = true
     sourceSets = listOfNotNull(java.sourceSets.findByName("main"))
     ruleSetFiles = files("${rootProject.projectDir}/config/pmd/pmd.xml")
