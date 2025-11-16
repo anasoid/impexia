@@ -30,7 +30,7 @@ dependencies {
 
     //Apache common
 
-    implementation("org.apache.commons:commons-lang3:3.19.0")
+    implementation("org.apache.commons:commons-lang3:3.20.0")
     implementation("org.apache.commons:commons-collections4:4.5.0")
     testImplementation("commons-io:commons-io:2.21.0")
 
